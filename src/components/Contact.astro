@@ -1,0 +1,45 @@
+---
+import { site } from '@/data/site';
+---
+
+<section class="contact section" id="contact">
+  <div class="wrap contact__inner">
+    <span class="eyebrow">04 — Contact</span>
+    <h2 class="contact__title">Let's build something worth maintaining.</h2>
+    <p class="contact__note">{site.location} · Usually replies within a day or two.</p>
+
+    <a class="btn btn--primary contact__cta" href={`mailto:${site.email}`}>{site.email}</a>
+  </div>
+</section>
+
+<style>
+  .contact {
+    background: var(--bg-surface);
+    border-top: 1px solid var(--border-subtle);
+    text-align: center;
+  }
+
+  .contact__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .contact__title {
+    margin-top: 1rem;
+    font-size: clamp(1.8rem, 4vw, 2.75rem);
+    max-width: 20ch;
+    color: var(--fg-primary);
+  }
+
+  .contact__note {
+    margin-top: 1rem;
+    color: var(--fg-muted);
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+  }
+
+  .contact__cta {
+    margin-top: 2.25rem;
+  }
+</style>

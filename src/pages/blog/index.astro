@@ -1,0 +1,91 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import { site } from '@/data/site';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const posts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const formatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+---
+
+<Layout title={`Writing — ${site.name}`} description="All posts.">
+  <Header />
+  <main>
+    <section class="section">
+      <div class="wrap">
+        <span class="eyebrow">Writing</span>
+        <h1 class="section-title section-title--with-eyebrow">All posts</h1>
+
+        <ul class="post-list">
+          {posts.map((post) => (
+            <li class="post-list__item">
+              <a href={`/blog/${post.slug}`} class="post-list__link">
+                <time class="post-list__date" datetime={post.data.date.toISOString()}>
+                  {formatter.format(post.data.date)}
+                </time>
+                <h2 class="post-list__title">{post.data.title}</h2>
+                <p class="post-list__excerpt">{post.data.excerpt}</p>
+                <ul class="post-list__tags">
+                  {post.data.tags.map((tag) => (
+                    <li class="tag">{tag}</li>
+                  ))}
+                </ul>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .post-list {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .post-list__item {
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .post-list__item:last-child {
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .post-list__link {
+    display: block;
+    padding-block: 2rem;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .post-list__date {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--fg-faint);
+  }
+
+  .post-list__title {
+    margin-top: 0.5rem;
+    font-size: 1.4rem;
+    color: var(--fg-primary);
+  }
+
+  .post-list__excerpt {
+    margin-top: 0.6rem;
+    color: var(--fg-muted);
+    max-width: 65ch;
+  }
+
+  .post-list__tags {
+    margin-top: 1rem;
+    display: flex;
+    gap: 0.5rem;
+  }
+</style>

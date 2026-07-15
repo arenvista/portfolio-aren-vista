@@ -1,0 +1,104 @@
+---
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const posts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()).slice(0, 3);
+
+const formatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+---
+
+<section class="blog section" id="blog">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">03 — Writing</span>
+        <h2 class="section-title section-title--with-eyebrow">From the blog</h2>
+      </div>
+      <a class="section-note blog__all-link" href="/blog">All posts →</a>
+    </div>
+
+    <ul class="blog__list">
+      {posts.map((post) => (
+        <li class="blog__item">
+          <a href={`/blog/${post.slug}`} class="blog__link">
+            <time class="blog__date" datetime={post.data.date.toISOString()}>
+              {formatter.format(post.data.date)}
+            </time>
+            <h3 class="blog__title">{post.data.title}</h3>
+            <p class="blog__excerpt">{post.data.excerpt}</p>
+            <span class="blog__read-more">Read post →</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .blog__all-link {
+    text-decoration: none;
+    color: var(--accent-teal);
+  }
+
+  .blog__list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .blog__item {
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .blog__item:last-child {
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .blog__link {
+    display: grid;
+    grid-template-columns: 9rem 1fr auto;
+    align-items: start;
+    gap: 1.5rem;
+    padding-block: 1.75rem;
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.2s ease;
+  }
+
+  .blog__link:hover {
+    opacity: 0.75;
+  }
+
+  .blog__date {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--fg-faint);
+    padding-top: 0.25rem;
+  }
+
+  .blog__title {
+    font-size: 1.1rem;
+    color: var(--fg-primary);
+    margin-bottom: 0.45rem;
+  }
+
+  .blog__excerpt {
+    color: var(--fg-muted);
+    font-size: 0.92rem;
+    max-width: 55ch;
+  }
+
+  .blog__read-more {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--accent-blue);
+    white-space: nowrap;
+    padding-top: 0.25rem;
+  }
+
+  @media (max-width: 700px) {
+    .blog__link {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+  }
+</style>

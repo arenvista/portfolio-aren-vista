@@ -1,0 +1,113 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Layout from '@/layouts/Layout.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+
+const formatter = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+---
+
+<Layout title={post.data.title} description={post.data.excerpt}>
+  <Header />
+  <main>
+    <article class="section post">
+      <div class="wrap post__wrap">
+        <a class="post__back" href="/blog">← All posts</a>
+
+        <time class="post__date" datetime={post.data.date.toISOString()}>
+          {formatter.format(post.data.date)}
+        </time>
+        <h1 class="post__title">{post.data.title}</h1>
+
+        <ul class="post__tags">
+          {post.data.tags.map((tag) => (
+            <li class="tag">{tag}</li>
+          ))}
+        </ul>
+
+        <div class="post__content">
+          <Content />
+        </div>
+      </div>
+    </article>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .post__wrap {
+    max-width: 42rem;
+  }
+
+  .post__back {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--accent-teal);
+    text-decoration: none;
+  }
+
+  .post__date {
+    display: block;
+    margin-top: 2rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--fg-faint);
+  }
+
+  .post__title {
+    margin-top: 0.75rem;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    color: var(--fg-primary);
+  }
+
+  .post__tags {
+    margin-top: 1.25rem;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .post__content {
+    margin-top: 2.5rem;
+    color: var(--fg-muted);
+    font-size: 1.05rem;
+    line-height: 1.75;
+  }
+
+  .post__content :global(p) {
+    margin-bottom: 1.5rem;
+  }
+
+  .post__content :global(h2) {
+    color: var(--fg-primary);
+    font-size: 1.3rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .post__content :global(a) {
+    color: var(--accent-blue);
+  }
+
+  .post__content :global(code) {
+    font-family: var(--font-mono);
+    background: var(--bg-surface);
+    padding: 0.15em 0.4em;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+</style>

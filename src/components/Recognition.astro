@@ -1,0 +1,246 @@
+---
+import { publications, conferences, teaching } from '@/data/recognition';
+---
+
+<section class="recognition" id="recognition">
+  <div class="recognition__bar">
+    <span class="recognition__bar-label">Recognition</span>
+  </div>
+
+  <div class="recognition__grid">
+    <div class="recognition__cell recognition__cell--wide" data-reveal>
+      <span class="recognition__cell-label">Publications &amp; Acknowledgements</span>
+      <ul class="recognition__citations">
+        {publications.map((pub) => (
+          <li>
+            <strong>{pub.type}:</strong> {pub.authors} ({pub.year}). {pub.title}
+            <em>{pub.source}</em>, {pub.detail}.
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="recognition__cell recognition__cell--stat" data-reveal style="--reveal-delay: 0.06s;">
+      <span class="recognition__stat-number">102</span>
+      <span class="recognition__stat-label">Students Tutored</span>
+    </div>
+
+    <div class="recognition__cell" data-reveal style="--reveal-delay: 0.1s;">
+      <span class="recognition__cell-label">Conferences</span>
+      <ul class="recognition__list">
+        {conferences.map((conf) => (
+          <li>
+            <span>{conf.name}</span>
+            <span class="recognition__year">{conf.year}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="recognition__cell recognition__cell--wide" data-reveal style="--reveal-delay: 0.14s;">
+      <span class="recognition__cell-label">Teaching</span>
+      <ul class="recognition__list recognition__list--teaching">
+        {teaching.map((role) => (
+          <li>
+            <div>
+              <span class="recognition__role-title">{role.title}</span>
+              <span class="recognition__role-org">{role.organization}</span>
+            </div>
+            <span class="recognition__year">{role.date}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initScrollReveal } from '@/scripts/reveal';
+  initScrollReveal();
+</script>
+
+<style>
+  .recognition {
+    background: var(--ctp-crust);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Radiating thin-line motif in the corners, echoing the reference's
+     line-art without reproducing it: pure CSS conic gradients. */
+  .recognition::before,
+  .recognition::after {
+    content: '';
+    position: absolute;
+    width: 60vmax;
+    height: 60vmax;
+    pointer-events: none;
+    opacity: 0.08;
+    background: repeating-conic-gradient(
+      from 0deg,
+      var(--accent-teal) 0deg 0.6deg,
+      transparent 0.6deg 6deg
+    );
+  }
+
+  .recognition::before {
+    top: -30vmax;
+    left: -30vmax;
+  }
+
+  .recognition::after {
+    bottom: -30vmax;
+    right: -30vmax;
+    background: repeating-conic-gradient(
+      from 0deg,
+      var(--accent-mauve) 0deg 0.6deg,
+      transparent 0.6deg 6deg
+    );
+  }
+
+  .recognition__bar {
+    position: relative;
+    z-index: 1;
+    background: var(--ctp-mantle);
+    border-block: 1px solid var(--border-subtle);
+    padding-block: 0.6rem;
+    text-align: center;
+  }
+
+  .recognition__bar-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-teal);
+  }
+
+  .recognition__grid {
+    position: relative;
+    z-index: 1;
+    max-width: var(--content-width);
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: auto;
+  }
+
+  .recognition__cell {
+    border-right: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+  }
+
+  .recognition__cell--wide {
+    grid-column: span 2;
+  }
+
+  .recognition__cell-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+    margin-bottom: 1.25rem;
+  }
+
+  .recognition__cell--stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: var(--ctp-mantle);
+  }
+
+  .recognition__stat-number {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(3.5rem, 8vw, 5.5rem);
+    line-height: 1;
+    background: linear-gradient(135deg, var(--accent-mauve), var(--accent-blue));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .recognition__stat-label {
+    margin-top: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--fg-muted);
+  }
+
+  .recognition__citations {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .recognition__citations li {
+    color: var(--fg-muted);
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  .recognition__citations strong {
+    color: var(--fg-primary);
+  }
+
+  .recognition__citations em {
+    color: var(--accent-sapphire, var(--accent-teal));
+    font-style: normal;
+  }
+
+  .recognition__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .recognition__list li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.92rem;
+    color: var(--fg-primary);
+  }
+
+  .recognition__list--teaching li {
+    align-items: flex-start;
+  }
+
+  .recognition__role-title {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.98rem;
+  }
+
+  .recognition__role-org {
+    display: block;
+    margin-top: 0.2rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--accent-mauve);
+  }
+
+  .recognition__year {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--fg-faint);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 800px) {
+    .recognition__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .recognition__cell--wide {
+      grid-column: span 1;
+    }
+  }
+</style>

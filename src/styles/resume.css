@@ -1,0 +1,139 @@
+/* Base Container */
+.content {
+    background-color: white !important;
+    color: #333 !important; /* Softened from #000 */
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 13px; /* Smaller base font size */
+    line-height: 1.25; /* Tighter line height */
+    padding: 30px 40px; /* Reduced outer padding */
+    max-width: 900px;
+    margin: 0 auto;
+    min-height: 100vh;
+}
+
+/* Typography & Links */
+.content h1, 
+.content h2 {
+    color: #333 !important; /* Softened from #000 */
+    font-weight: 300; /* Subtle bolding instead of 'bold' */
+    margin: 0;
+}
+
+.content a {
+    color: #333 !important; /* Softened from #000 */
+    text-decoration: none;
+    border-bottom: 1px solid #999; /* Softer underline */
+}
+
+/* Header Section */
+.header {
+    text-align: center;
+    margin-bottom: 12px; /* Tighter spacing */
+}
+
+.header h1 {
+    text-transform: uppercase;
+    font-size: 1.5em; /* Scaled down */
+    margin-bottom: 2px;
+}
+
+.contact-info {
+    font-size: 0.95em;
+}
+
+/* Sections */
+.section {
+    margin-bottom: 12px; /* Tighter spacing between sections */
+}
+
+.section h2 {
+    border-bottom: 1px solid #ccc; /* Thinner, lighter line */
+    padding-bottom: 2px;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    font-size: 1.1em;
+}
+
+/* Flexbox Layouts */
+.flex-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2px;
+}
+
+.flex-col-main { flex: 0 0 55%; }
+.flex-col-sub { flex: 0 0 35%; font-style: italic; }
+.flex-col-date { flex: 0 0 10%; }
+
+.right-align { text-align: right; }
+.bold { font-weight: 300; } /* Subtle bolding (medium weight) */
+
+/* Item Blocks (Experience) */
+.item-block {
+    margin-bottom: 8px;
+}
+
+.item-header {
+    font-size: 1em;
+}
+
+.org-text {
+    font-weight: 300;
+    font-style: italic;
+    color: #555; /* Softened from #333 */
+}
+
+/* Lists */
+.content ul {
+    margin: 2px 0 0 0;
+    padding-left: 16px;
+}
+
+.content li {
+    margin-bottom: 1px; /* Heavily compressed bullets */
+}
+
+/* Compact Text Sections */
+.citation, 
+.tutor-compact div, 
+.skills-compact div, 
+.projects-compact div {
+    margin-bottom: 2px;
+    font-weight: 300; 
+}
+
+.tutor-compact {
+    padding-left: 12px;
+    font-size: 0.95em;
+}
+/* Projects Section Layout */
+.projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* Subtle spacing between project rows */
+}
+
+.project-row {
+    display: flex;
+    align-items: baseline; /* Ensures text baselines align perfectly */
+}
+
+.project-name {
+    flex: 0 0 180px; /* Allocates a fixed, uniform width for project titles */
+    font-weight: 500;
+}
+
+.project-name a {
+    border-bottom: 1px solid transparent; /* Removes heavy underline default */
+    color: #333 !important;
+}
+
+.project-name a:hover {
+    border-bottom: 1px solid #999; /* Smooth underline feedback only on hover */
+}
+
+.project-desc {
+    flex: 1;
+    font-weight: 300;
+    color: #444;
+}

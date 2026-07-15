@@ -1,0 +1,190 @@
+---
+import { site, experience, skills } from '@/data/site';
+const categoryLabels: Record<string, string> = {
+  language: 'Languages',
+  tool: 'Libraries & Tools',
+  concept: 'Concepts',
+};
+const grouped = skills.reduce<Record<string, string[]>>((acc, skill) => {
+  (acc[skill.category] ??= []).push(skill.label);
+  return acc;
+}, {});
+---
+
+<div class="about__experience" data-reveal>
+  <ol class="about__timeline" data-reveal style="--reveal-delay: 0.16s;">
+    {experience.map((item) => (
+      <li class="about__timeline-item">
+        <!-- Metadata Header -->
+        <div class="about__timeline-info">
+          <span class="about__timeline-title">{item.title}</span>
+          <div class="about__timeline-subhead">
+            <span class="about__timeline-org">{item.organization}</span>
+            {item.location && <span class="about__timeline-location">({item.location})</span>}
+            <span class="about__timeline-separator">•</span>
+            <span class="about__timeline-date">{item.date}</span>
+          </div>
+        </div>
+        
+        <!-- Description Bullets -->
+        <ul class="about__timeline-bullets">
+          {item.bullets.map((bullet) => (
+            <li>{bullet}</li>
+          ))}
+        </ul>
+      </li>
+    ))}
+  </ol>
+</div>
+
+<script>
+  import { initScrollReveal } from '@/scripts/reveal';
+  initScrollReveal();
+</script>
+
+<style>
+  .about {
+    background: var(--bg-surface);
+    border-block: 1px solid var(--border-subtle);
+  }
+  .about__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr);
+    gap: clamp(2rem, 6vw, 5rem);
+  }
+  .about__intro {
+    position: sticky;
+    top: 6rem;
+    align-self: start;
+  }
+  .about__body p {
+    color: var(--fg-muted);
+    font-size: 1.05rem;
+    max-width: 62ch;
+  }
+  .about__body p + p {
+    margin-top: 1.25rem;
+  }
+  .about__skills-block {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .about__skills-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent-teal);
+    margin-bottom: 0.6rem;
+  }
+  .about__skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  /* --- Two-Column Experience Grid --- */
+  .about__experience {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* ADDED: Bottom margin to separate this block from elements below */
+    margin-bottom: clamp(3rem, 8vw, 6rem); 
+  }
+  .about__timeline {
+    margin-top: 3rem;
+    width: 100%;
+    max-width: 1100px; 
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 3rem 2.5rem; 
+  }
+  .about__timeline-item {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column; 
+    gap: 1.25rem;
+    align-items: start;
+  }
+  .about__timeline-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 0.35rem;
+  }
+  .about__timeline-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--fg-primary);
+    font-size: 1.1rem;
+    line-height: 1.3;
+  }
+  .about__timeline-subhead {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .about__timeline-org {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--accent-mauve);
+  }
+  .about__timeline-location {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--fg-faint);
+  }
+  .about__timeline-separator {
+    color: var(--border-subtle);
+    font-size: 0.8rem;
+    user-select: none;
+  }
+  .about__timeline-date {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--fg-faint);
+    white-space: nowrap;
+  }
+  .about__timeline-bullets {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+    width: 100%;
+    text-align: left;
+  }
+  .about__timeline-bullets li {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    color: var(--fg-muted);
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+  .about__timeline-bullets li::before {
+    content: '';
+    width: 0.4rem;
+    height: 1px;
+    background: var(--accent-teal);
+    flex-shrink: 0;
+    margin-top: 0.75rem;
+  }
+
+  /* Responsive styling for tablet/mobile screens */
+  @media (max-width: 900px) {
+    .about__timeline {
+      grid-template-columns: 1fr; 
+      gap: 2.5rem;
+    }
+  }
+</style>

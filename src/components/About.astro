@@ -1,0 +1,180 @@
+---
+import { site, experience, skills } from '@/data/site';
+
+const categoryLabels: Record<string, string> = {
+  language: 'Languages',
+  tool: 'Libraries & Tools',
+  concept: 'Concepts',
+};
+
+const grouped = skills.reduce<Record<string, string[]>>((acc, skill) => {
+  (acc[skill.category] ??= []).push(skill.label);
+  return acc;
+}, {});
+---
+
+<section class="about section" id="about">
+  <div class="wrap about__grid">
+    <div class="about__intro" data-reveal>
+      <span class="eyebrow">01 — About</span>
+      <h2 class="section-title section-title--with-eyebrow">A little about my work</h2>
+    </div>
+
+    <div class="about__body">
+      <div data-reveal>
+        {site.bio.map((paragraph) => (
+          <p>{paragraph}</p>
+        ))}
+      </div>
+
+      <div class="about__skills-block" data-reveal style="--reveal-delay: 0.08s;">
+        {Object.entries(grouped).map(([category, labels]) => (
+          <div class="about__skills-group">
+            <span class="about__skills-label">{categoryLabels[category] ?? category}</span>
+            <ul class="about__skills" aria-label={categoryLabels[category] ?? category}>
+              {labels.map((label) => (
+                <li class="tag">{label}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+<script>
+  import { initScrollReveal } from '@/scripts/reveal';
+  initScrollReveal();
+</script>
+
+<style>
+  .about {
+    background: var(--bg-surface);
+    border-block: 1px solid var(--border-subtle);
+  }
+
+  .about__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr);
+    gap: clamp(2rem, 6vw, 5rem);
+  }
+
+  .about__intro {
+    position: sticky;
+    top: 6rem;
+    align-self: start;
+  }
+
+  .about__body p {
+    color: var(--fg-muted);
+    font-size: 1.05rem;
+    max-width: 62ch;
+  }
+
+  .about__body p + p {
+    margin-top: 1.25rem;
+  }
+
+  .about__skills-block {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .about__skills-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent-teal);
+    margin-bottom: 0.6rem;
+  }
+
+  .about__skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .about__timeline {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .about__timeline-item {
+    padding-block: 1.5rem;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .about__timeline-item:last-child {
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .about__timeline-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+  }
+
+  .about__timeline-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--fg-primary);
+    font-size: 1.05rem;
+  }
+
+  .about__timeline-date {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--fg-faint);
+    white-space: nowrap;
+  }
+
+  .about__timeline-org {
+    display: block;
+    margin-top: 0.3rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--accent-mauve);
+  }
+
+  .about__timeline-bullets {
+    margin-top: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .about__timeline-bullets li {
+    position: relative;
+    padding-left: 1.1rem;
+    color: var(--fg-muted);
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  .about__timeline-bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 0.4rem;
+    height: 1px;
+    background: var(--accent-teal);
+  }
+
+  @media (max-width: 800px) {
+    .about__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .about__intro {
+      position: static;
+    }
+  }
+</style>

@@ -1,0 +1,30 @@
+---
+import { projects } from '@/data/projects';
+import ProjectCard from '@/components/ProjectCard.astro';
+---
+
+<section class="projects section" id="projects">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">02 — Projects</span>
+        <h2 class="section-title section-title--with-eyebrow">Selected work</h2>
+      </div>
+      <p class="section-note">A handful of things I've built and shipped.</p>
+    </div>
+
+    <div class="projects__grid">
+      {projects.map((project) => (
+        <ProjectCard project={project} />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .projects__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 1.5rem;
+  }
+</style>

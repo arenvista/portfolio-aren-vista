@@ -1,0 +1,219 @@
+---
+import { site } from '@/data/site';
+
+// Fallback in case roles is not defined yet
+const rolesList = site.roles || [site.role]; 
+---
+
+<section class="hero" id="top">
+  <canvas class="hero__canvas" data-wave-canvas aria-hidden="true"></canvas>
+
+  <div class="hero__content wrap">
+    {site.available && (
+      <p class="hero__status">
+        <span class="hero__status-dot" aria-hidden="true"></span>
+        Available for new work
+      </p>
+    )}
+
+    <h1 class="hero__title">
+      {site.name}
+      <!-- 1. Pass the list via data-roles, default to first item -->
+      <span class="hero__title-role" data-roles={JSON.stringify(rolesList)}>
+        {rolesList[0]}
+      </span>
+    </h1>
+
+    <p class="hero__tagline">{site.tagline}</p>
+
+    <div class="hero__actions">
+      <a class="btn btn--primary" href="#projects">View projects</a>
+      <a class="btn btn--ghost" href="#contact">Get in touch</a>
+    </div>
+  </div>
+
+  <a class="hero__scroll-cue" href="#about" aria-label="Scroll to about section">
+    <span></span>
+  </a>
+</section>
+
+<script>
+  import { initWaveField } from '@/scripts/wave';
+
+  // Canvas Init
+  const canvas = document.querySelector<HTMLCanvasElement>('[data-wave-canvas]');
+  if (canvas) {
+    initWaveField(canvas);
+  }
+
+  // 2. Client-side Text Rotation Logic
+  const roleElement = document.querySelector<HTMLElement>('[data-roles]');
+  if (roleElement) {
+    const roles = JSON.parse(roleElement.dataset.roles || '[]');
+    
+    if (roles.length > 1) {
+      let currentIndex = 0;
+
+      setInterval(() => {
+        // Trigger fade-out animation
+        roleElement.classList.add('role-fade');
+
+        // Wait for fade-out to finish, swap text, then fade-in
+        setTimeout(() => {
+          currentIndex = (currentIndex + 1) % roles.length;
+          roleElement.textContent = roles[currentIndex];
+          roleElement.classList.remove('role-fade');
+        }, 300); // Matches the CSS transition duration (0.3s)
+      }, 3500); // Rotates every 3.5 seconds
+    }
+  }
+</script>
+
+<style>
+  /* Keep your existing styles... */
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: radial-gradient(120% 100% at 50% 0%, var(--ctp-base) 0%, var(--bg-page) 65%);
+  }
+
+  .hero__canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    cursor: none;
+  }
+
+  .hero__content {
+    position: relative;
+    z-index: 1;
+    padding-block: 6rem;
+    pointer-events: none;
+  }
+
+  .hero__content > * {
+    pointer-events: auto;
+  }
+
+  .hero__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--accent-teal);
+    margin-bottom: 1.5rem;
+    padding: 0.4em 0.85em;
+    border: 1px solid var(--border-subtle);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--bg-surface) 60%, transparent);
+  }
+
+  .hero__status-dot {
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 50%;
+    background: var(--accent-teal);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-teal) 25%, transparent);
+  }
+
+  .hero__title {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: clamp(2.6rem, 7vw, 5rem);
+    color: var(--fg-primary);
+    max-width: 16ch;
+  }
+
+  /* 3. Updated styles to handle smooth fading transitions */
+  .hero__title-role {
+    display: inline-block; /* Allows transform scaling and translating */
+    font-family: var(--font-mono);
+    font-size: clamp(1rem, 2vw, 1.35rem);
+    font-weight: 400;
+    color: var(--accent-mauve);
+    letter-spacing: 0.01em;
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  /* Transition state class */
+  .hero__title-role.role-fade {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  .hero__tagline {
+    margin-top: 1.75rem;
+    max-width: 42ch;
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    color: var(--fg-muted);
+  }
+
+  .hero__actions {
+    margin-top: 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .hero__scroll-cue {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1.5rem;
+    height: 2.5rem;
+    border: 1px solid var(--border-strong);
+    border-radius: 999px;
+    display: flex;
+    justify-content: center;
+    padding-top: 0.4rem;
+    z-index: 1;
+  }
+
+  .hero__scroll-cue span {
+    width: 0.3rem;
+    height: 0.3rem;
+    border-radius: 50%;
+    background: var(--accent-primary);
+    animation: hero-scroll-cue 1.8s ease-in-out infinite;
+  }
+
+  @keyframes hero-scroll-cue {
+    0% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    70% {
+      opacity: 0;
+      transform: translateY(0.8rem);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(0.8rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__scroll-cue span {
+      animation: none;
+    }
+    /* Prevent text jumping transitions for accessibility */
+    .hero__title-role {
+      transition: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero__canvas {
+      cursor: auto;
+    }
+  }
+</style>

@@ -1,0 +1,376 @@
+---
+import '../styles/resume.css'; // Adjust this path depending on where your CSS is stored
+
+// ==========================================
+// TYPE DEFINITIONS
+// ==========================================
+
+interface ContactInfo {
+    websiteLabel: string;
+    websiteUrl: string;
+    email: string;
+    phoneLabel: string;
+    phoneUrl: string;
+}
+
+interface EducationItem {
+    degree: string;
+    school: string;
+    year: string;
+}
+
+interface ExperienceItem {
+    title: string;
+    date: string;
+    organization: string;
+    bullets: string[];
+}
+
+interface PublicationItem {
+    type: string;
+    authors: string;
+    year: string;
+    title: string;
+    source: string;
+    detail: string;
+}
+
+interface TeachingItem {
+    title: string;
+    organization: string;
+    date: string;
+}
+
+interface TutoringInfo {
+    title: string;
+    organization: string;
+    date: string;
+}
+
+interface CourseItem {
+    code: string;
+    name: string;
+}
+
+interface ProjectItem {
+    name: string;
+    link: string;
+    desc: string;
+}
+
+// ==========================================
+// RESUME DATA
+// ==========================================
+
+const CONTACT: ContactInfo = {
+    websiteLabel: 'portfolio.arenvista.me',
+    websiteUrl: 'https://portfolio.arenvista.me',
+    email: 'arenvista1@gmail.com',
+    phoneLabel: '443-805-9112',
+    phoneUrl: 'tel:4438059112'
+};
+
+const EDUCATION: EducationItem[] = [
+    {
+        degree: 'Bachelor of Science: Mathematics, Computer Science, Biochemistry',
+        school: 'University of Maryland, Baltimore County',
+        year: '2027'
+    }
+];
+
+const EXPERIENCE: ExperienceItem[] = [
+    {
+        title: 'Undergraduate Researcher: Mathematics',
+        date: 'Dec 2025 - Present',
+        organization: 'Bedrich Sousedik: UMBC',
+        bullets: [
+            'Conduct research on optimized betting strategies using Markov Chain Monte Carlo (MCMC) methods.',
+            'Develop probabilistic models to evaluate risk, expected return, and long-term strategy performance.',
+            'Analyze simulation results to identify efficient and statistically robust decision-making approaches.'
+        ]
+    },
+    {
+        title: 'Undergraduate Researcher: Computer Engineering',
+        date: 'Dec 2025 - Present',
+        organization: 'Riadul Islam: UMBC',
+        bullets: [
+            'Develop Spiking Neural Networks (SNNs) for the classification of temporal data.',
+            'Design Convolutional Neural Networks (CNNs) for image classification tasks.',
+            'Evaluate architectures and performance to improve accuracy and computational efficiency.'
+        ]
+    },
+    {
+        title: 'Project Lead - Computational Biologist',
+        date: 'Jun 2021 - Jun 2023',
+        organization: 'National Institutes of Health',
+        bullets: [
+            'Established a Git-based version control system to coordinate software development across laboratories.',
+            'Applied K-Means and DBSCAN to cluster multivariate data for anomaly detection and disease pathology.',
+            'Built automated HPC and SWARM workflows and a CLI tool to accelerate 3D amino acid structure generation.'
+        ]
+    },
+    {
+        title: 'Undergraduate Researcher - Organic Chemistry',
+        date: 'Jun 2017 - Jun 2020',
+        organization: 'Seley Radtke Lab: UMBC',
+        bullets: [
+            'Curated a comprehensive database of approved nucleoside analogues using Python, BS4, and Selenium.',
+            'Designed a synthetic pathway for N-glycosylated imidazole 4-boronic acids, increasing yields by 40%.',
+            'Synthesized fleximer nucleoside analogues targeting viral replication complexes in SARS-CoV and Ebola.'
+        ]
+    },
+    {
+        title: 'Undergraduate Researcher - Molecular Biology',
+        date: 'Jun 2017 - Jun 2020',
+        organization: 'Vasta Lab - IMET',
+        bullets: [
+            'Developed a lactose-conjugated Sepharose synthesis scheme that reduced reagent costs fivefold.',
+            'Optimized cloning, protein purification, and protein modification workflows to improve reliability.'
+        ]
+    }
+];
+
+const PUBLICATIONS: PublicationItem[] = [
+    {
+        type: 'Publication',
+        authors: 'Vasta, G. R., et al.',
+        year: '2020',
+        title: 'Biochemical Characterization of Oyster and Clam Galectins.',
+        source: 'Frontiers in Chemistry, 8',
+        detail: '98'
+    },
+    {
+        type: 'Acknowledgement',
+        authors: 'Brown, S. M., et al.',
+        year: '2025',
+        title: 'Mapping the Edges of Mass Spectral Prediction.',
+        source: 'Analytical Chemistry',
+        detail: '97(19)'
+    }
+];
+
+const CONFERENCES: string[] = [
+    'Gordon Research Conference (2024)',
+    'URCAD UMBC (2020)',
+    'NIH Glycoscience (2019)'
+];
+
+const TEACHING_ROLES: TeachingItem[] = [
+    {
+        title: 'CAPSTONE Coordinator',
+        organization: 'Stephen Freeland: UMBC',
+        date: 'Jan 2025 - Aug 2025'
+    },
+    {
+        title: 'Teaching Assistant: Linear Algebra',
+        organization: 'Osman Guler, Daniel Reynolds: UMBC',
+        date: 'Aug 2025 - Present'
+    }
+];
+
+const TUTORING: TutoringInfo = {
+    title: 'CRLA Certified Tutor',
+    organization: 'Department of Undergraduate Affairs: UMBC',
+    date: 'Aug 2025 - Present'
+};
+
+const TUTORING_COURSES: CourseItem[] = [
+    { code: 'MATH 151', name: 'Calculus I' },
+    { code: 'MATH 152', name: 'Calculus II' },
+    { code: 'MATH 251', name: 'Multivariate Calculus' },
+    { code: 'MATH 221', name: 'Linear Algebra' },
+    { code: 'MATH 225', name: 'Differential Equations' },
+    { code: 'MATH 300', name: 'Mathematical Reasoning' },
+    { code: 'CMSC 201', name: 'Computer Science I' },
+    { code: 'CMSC 202', name: 'Computer Science II' },
+    { code: 'CMSC 341', name: 'Data Structures' },
+    { code: 'CMSC 203', name: 'Discrete Structures' },
+    { code: 'BIO 141', name: 'Foundations of Biology' },
+    { code: 'PHYS 121', name: 'Introductory Physics' }
+];
+
+const SKILLS: Record<string, string> = {
+    Languages: 'Python 3, C++17, Matlab, C, Lua, Bash, LaTeX, Rust',
+    'Libraries & Tools': 'PyTorch, pandas, NumPy, SWARM, HPC, Docker, Ansible, Raylib, Selenium, AlphaFold 2',
+    Concepts: 'MCMC, SNNs, CNNs, DBSCAN, t-SNE, PCA'
+};
+
+const PROJECTS: ProjectItem[] = [
+    {
+        name: 'portfolio.me',
+        link: 'https://github.com/arenvista/portfolio',
+        desc: 'React/Node personal portfolio hosted on AWS.'
+    },
+    {
+        name: 'Game of Life',
+        link: 'https://github.com/arenvista/game_of_life',
+        desc: "Conway's Game of Life in C++ using Raylib."
+    },
+    {
+        name: 'ChessC++',
+        link: 'https://github.com/arenvista/chess',
+        desc: 'Command-line chess engine in C++ utilizing Ncurses.'
+    },
+    {
+        name: 'TextEdit',
+        link: 'https://github.com/arenvista/textedit',
+        desc: 'Terminal-based text editor in C++ utilizing Ncurses.'
+    },
+    {
+        name: 'Math-o-nomicon',
+        link: 'https://github.com/arenvista/textedit',
+        desc: 'Terminal-based text editor in C++ utilizing Ncurses.'
+    },
+    {
+        name: 'SnapDaemon',
+        link: 'https://github.com/arenvista/textedit',
+        desc: 'Terminal-based text editor in C++ utilizing Ncurses.'
+    },
+    {
+        name: 'Mango Nana',
+        link: 'https://github.com/arenvista/textedit',
+        desc: 'Terminal-based text editor in C++ utilizing Ncurses.'
+    },
+    {
+        name: 'TinyOS',
+        link: 'https://github.com/arenvista/textedit',
+        desc: 'Terminal-based text editor in C++ utilizing Ncurses.'
+    },
+    {
+        name: 'Blood on the Clocktower',
+        link: 'https://github.com/arenvista/textedit',
+        desc: 'Terminal-based text editor in C++ utilizing Ncurses.'
+    },
+    {
+        name: 'Music Recommendation',
+        link: 'https://github.com/arenvista/textedit',
+        desc: 'Terminal-based text editor in C++ utilizing Ncurses.'
+    },
+    {
+        name: 'Autopayroll',
+        link: 'https://github.com/arenvista/textedit',
+        desc: 'Terminal-based text editor in C++ utilizing Ncurses.'
+    },
+];
+---
+
+<div class="content">
+    <header class="header">
+        <h1>Aren Vista</h1>
+        <div class="contact-info">
+            <a href={CONTACT.websiteUrl} target="_blank" rel="noreferrer">{CONTACT.websiteLabel}</a>
+            {' | '}
+            <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+            {' | '}
+            <a href={CONTACT.phoneUrl}>{CONTACT.phoneLabel}</a>
+        </div>
+    </header>
+
+    <section class="section">
+        <h2>Education</h2>
+        <div class="section-content">
+            {EDUCATION.map((edu) => (
+                <div class="flex-row">
+                    <div class="flex-col-main">{edu.degree}</div>
+                    <div class="flex-col-sub right-align">{edu.school}</div>
+                    <div class="flex-col-date right-align">{edu.year}</div>
+                </div>
+            ))}
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Experience</h2>
+        <div class="section-content">
+            {EXPERIENCE.map((job) => (
+                <article class="item-block">
+                    <div class="flex-row item-header">
+                        <span class="bold">
+                            {job.title} <span class="org-text">| {job.organization}</span>
+                        </span>
+                        <span>{job.date}</span>
+                    </div>
+                    <ul>
+                        {job.bullets.map((bullet) => (
+                            <li>{bullet}</li>
+                        ))}
+                    </ul>
+                </article>
+            ))}
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Conferences, Publications & Acknowledgements</h2>
+        <div class="section-content">
+            {PUBLICATIONS.map((entry) => (
+                <div class="citation">
+                    <strong>{entry.type}:</strong> {entry.authors} ({entry.year}). {entry.title} <em>{entry.source}</em>, {entry.detail}.
+                </div>
+            ))}
+            <div class="citation">
+                <strong>Conferences:</strong> {CONFERENCES.join(', ')}.
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Teaching</h2>
+        <div class="section-content">
+            {TEACHING_ROLES.map((role) => (
+                <div class="flex-row item-header" style="margin-top: 4px;">
+                    <span class="bold">
+                        {role.title} <span class="org-text">| {role.organization}</span>
+                    </span>
+                    <span>{role.date}</span>
+                </div>
+            ))}
+
+            <div style="margin-top: 4px;">
+                <div class="flex-row item-header">
+                    <span class="bold">
+                        {TUTORING.title} <span class="org-text">| {TUTORING.organization}</span>
+                    </span>
+                    <span>{TUTORING.date}</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px 16px; margin-top: 6px; font-size: 0.9em;">
+                    {TUTORING_COURSES.map((course) => (
+                        <div>
+                            {course.code} {course.name}
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Skills</h2>
+        <div class="section-content">
+            <div class="skills-compact">
+                {Object.entries(SKILLS).map(([category, skills]) => (
+                    <div>
+                        <strong>{category}:</strong> {skills}
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Projects</h2>
+        <div class="section-content">
+            <div class="projects-list">
+                {PROJECTS.map((proj) => (
+                    <div class="project-row">
+                        <div class="project-name">
+                            <a href={proj.link} target="_blank" rel="noreferrer">{proj.name}</a>
+                        </div>
+                        <div class="project-desc">{proj.desc}</div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    </section>
+</div>
