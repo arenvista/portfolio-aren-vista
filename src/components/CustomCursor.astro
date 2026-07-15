@@ -1,0 +1,62 @@
+<script>
+  import { initCustomCursor } from '@/scripts/cursor';
+  initCustomCursor();
+</script>
+
+<style is:global>
+  /* Only hide the system cursor once JS confirms a non-touch pointer and
+     mounts the custom one — avoids a cursor-less flash / broken state if
+     JS fails or the visitor is on touch. */
+  html.cc-active,
+  html.cc-active a,
+  html.cc-active button,
+  html.cc-active [data-cursor-hover] {
+    cursor: none !important;
+  }
+
+  .cc-dot {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 6px;
+    margin: -3px 0 0 -3px;
+    border-radius: 50%;
+    background: var(--accent-primary);
+    pointer-events: none;
+    z-index: 200;
+    transition: transform 0.05s linear;
+  }
+
+  .cc-dot--hover {
+    background: var(--accent-teal);
+  }
+
+  .cc-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 34px;
+    height: 34px;
+    margin: -17px 0 0 -17px;
+    border-radius: 50%;
+    border: 1px solid var(--fg-faint);
+    pointer-events: none;
+    z-index: 199;
+    transition: width 0.2s ease, height 0.2s ease, margin 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+  }
+
+  .cc-ring--hover {
+    width: 54px;
+    height: 54px;
+    margin: -27px 0 0 -27px;
+    border-color: var(--accent-teal);
+  }
+
+  @media (hover: none), (pointer: coarse) {
+    .cc-dot,
+    .cc-ring {
+      display: none;
+    }
+  }
+</style>

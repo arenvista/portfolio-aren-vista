@@ -1,5 +1,7 @@
 ---
 import '@/styles/global.css';
+import CustomCursor from '@/components/CustomCursor.astro';
+import CommandPalette from '@/components/CommandPalette.astro';
 
 interface Props {
   title: string;
@@ -33,6 +35,8 @@ const { title, description = 'Software engineer building considered interfaces a
     <title>{title}</title>
   </head>
   <body>
+    <CustomCursor />
     <slot />
+    <CommandPalette />
   </body>
 </html>
