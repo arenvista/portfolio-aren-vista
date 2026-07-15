@@ -110,7 +110,7 @@
 .projects-list {
     display: flex;
     flex-direction: column;
-    gap: 5px; /* Subtle spacing between project rows */
+    gap: 10px; /* Subtle spacing between project rows */
 }
 
 .project-row {
@@ -133,7 +133,13 @@
 }
 
 .project-desc {
-    flex: 1;
+    flex: 2;
     font-weight: 300;
+    color: #444;
+}
+
+.project-link {
+    flex: 1;
+    font-weight: 10;
     color: #444;
 }

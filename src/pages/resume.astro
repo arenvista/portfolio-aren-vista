@@ -84,9 +84,9 @@ const EXPERIENCE: ExperienceItem[] = [
         date: 'Dec 2025 - Present',
         organization: 'Bedrich Sousedik: UMBC',
         bullets: [
-            'Conduct research on optimized betting strategies using Markov Chain Monte Carlo (MCMC) methods.',
-            'Develop probabilistic models to evaluate risk, expected return, and long-term strategy performance.',
-            'Analyze simulation results to identify efficient and statistically robust decision-making approaches.'
+            'Engineer optimized betting strategies by implementing Markov Chain Monte Carlo (MCMC) simulations to model complex probability distributions.',
+            'Develop predictive probabilistic models to quantify financial risk, forecast expected returns, and validate long-term strategy viability.',
+            'Analyze large-scale simulation outputs to extract statistically robust patterns, guiding highly efficient decision-making frameworks.'
         ]
     },
     {
@@ -94,38 +94,39 @@ const EXPERIENCE: ExperienceItem[] = [
         date: 'Dec 2025 - Present',
         organization: 'Riadul Islam: UMBC',
         bullets: [
-            'Develop Spiking Neural Networks (SNNs) for the classification of temporal data.',
-            'Design Convolutional Neural Networks (CNNs) for image classification tasks.',
-            'Evaluate architectures and performance to improve accuracy and computational efficiency.'
+            'Architect and train Spiking Neural Networks (SNNs) to classify complex temporal datasets with high precision.',
+            'Design and deploy Convolutional Neural Networks (CNNs) to automate sophisticated image classification pipelines.',
+            'Benchmark network architectures and optimize hyperparameters to maximize inference accuracy and computational efficiency.'
         ]
     },
     {
-        title: 'Project Lead - Computational Biologist',
+        title: 'Project Lead: Computational Biologist',
         date: 'Jun 2021 - Jun 2023',
         organization: 'National Institutes of Health',
         bullets: [
-            'Established a Git-based version control system to coordinate software development across laboratories.',
-            'Applied K-Means and DBSCAN to cluster multivariate data for anomaly detection and disease pathology.',
-            'Built automated HPC and SWARM workflows and a CLI tool to accelerate 3D amino acid structure generation.'
+            'Spearheaded anomaly detection and disease pathology classification by clustering highly dimensional (10K-variate) datasets.',
+            'Engineered automated High-Performance Computing (HPC) workflows to rapidly accelerate 3D protein structure prediction and modeling.',
+            'Developed a custom sequence alignment algorithm to accurately categorize over 1,000 distinct 20KB DNA segments.'
         ]
     },
     {
-        title: 'Undergraduate Researcher - Organic Chemistry',
+        title: 'Undergraduate Researcher: Organic Chemistry',
         date: 'Jun 2017 - Jun 2020',
         organization: 'Seley Radtke Lab: UMBC',
         bullets: [
-            'Curated a comprehensive database of approved nucleoside analogues using Python, BS4, and Selenium.',
-            'Designed a synthetic pathway for N-glycosylated imidazole 4-boronic acids, increasing yields by 40%.',
-            'Synthesized fleximer nucleoside analogues targeting viral replication complexes in SARS-CoV and Ebola.'
+            'Designed and optimized a novel synthetic pathway for N-glycosylated imidazole 4-boronic acids, successfully increasing overall yields by 40%.',
+            'Synthesized highly targeted fleximer nucleoside analogues designed to inhibit viral replication complexes in SARS-CoV and Ebola.',
+            'Built an automated web-scraping pipeline using Python, BeautifulSoup4, and Selenium to curate a comprehensive database of approved nucleoside analogues.'
         ]
     },
     {
-        title: 'Undergraduate Researcher - Molecular Biology',
+        title: 'Undergraduate Researcher: Molecular Biology',
         date: 'Jun 2017 - Jun 2020',
-        organization: 'Vasta Lab - IMET',
+        organization: 'Vasta Lab: IMET',
         bullets: [
-            'Developed a lactose-conjugated Sepharose synthesis scheme that reduced reagent costs fivefold.',
-            'Optimized cloning, protein purification, and protein modification workflows to improve reliability.'
+            'Innovated a lactose-conjugated Sepharose synthesis scheme, dramatically driving down experimental reagent costs by 80% (fivefold reduction).',
+            'Streamlined protein purification and modification workflows, generating primary data that contributed directly to a research publication.',
+            'Formulated rigorous calibration curves for critical laboratory equipment, enhancing overall instrument measurement accuracy by 76%.'
         ]
     }
 ];
@@ -209,7 +210,7 @@ const PROJECTS: ProjectItem[] = [
     {
         name: 'ChessC++',
         link: 'https://github.com/arenvista/chess',
-        desc: 'Command-line chess engine in C++ utilizing Ncurses.'
+        desc: 'Command-line chess engine in C++, first exposure to programing'
     },
     {
         name: 'TextEdit',
@@ -219,37 +220,37 @@ const PROJECTS: ProjectItem[] = [
     {
         name: 'Math-o-nomicon',
         link: 'https://github.com/arenvista/textedit',
-        desc: 'Terminal-based text editor in C++ utilizing Ncurses.'
+        desc: 'Compendium of material written in latex covering topics from Numerical Linear Algebra to Real Analysis.'
     },
     {
         name: 'SnapDaemon',
         link: 'https://github.com/arenvista/textedit',
-        desc: 'Terminal-based text editor in C++ utilizing Ncurses.'
+        desc: 'Software based implementation of Wooting Keyboards \'SnapTap\' feature.'
     },
     {
         name: 'Mango Nana',
         link: 'https://github.com/arenvista/textedit',
-        desc: 'Terminal-based text editor in C++ utilizing Ncurses.'
+        desc: 'Website selling figurines and sculptures applying: Astro, TSX, and Stripe'
     },
     {
         name: 'TinyOS',
         link: 'https://github.com/arenvista/textedit',
-        desc: 'Terminal-based text editor in C++ utilizing Ncurses.'
+        desc: 'Personal tiny OS project written in ASM and C++, currently WIP'
     },
     {
         name: 'Blood on the Clocktower',
         link: 'https://github.com/arenvista/textedit',
-        desc: 'Terminal-based text editor in C++ utilizing Ncurses.'
+        desc: 'Discord Bot implementation to help run the popular board game \'Blood on the Clocktower\' '
     },
     {
         name: 'Music Recommendation',
         link: 'https://github.com/arenvista/textedit',
-        desc: 'Terminal-based text editor in C++ utilizing Ncurses.'
+        desc: 'A music recommendation pipeline using autoencoding and manifold space analysis, WIP'
     },
     {
         name: 'Autopayroll',
         link: 'https://github.com/arenvista/textedit',
-        desc: 'Terminal-based text editor in C++ utilizing Ncurses.'
+        desc: 'Automated system to enter timesheets for my coworkers'
     },
 ];
 ---
@@ -270,11 +271,11 @@ const PROJECTS: ProjectItem[] = [
         <h2>Education</h2>
         <div class="section-content">
             {EDUCATION.map((edu) => (
-                <div class="flex-row">
-                    <div class="flex-col-main">{edu.degree}</div>
-                    <div class="flex-col-sub right-align">{edu.school}</div>
-                    <div class="flex-col-date right-align">{edu.year}</div>
-                </div>
+            <div class="flex-row">
+                <div class="flex-col-main">{edu.degree}</div>
+                <div class="flex-col-sub right-align">{edu.school}</div>
+                <div class="flex-col-date right-align">{edu.year}</div>
+            </div>
             ))}
         </div>
     </section>
@@ -283,19 +284,19 @@ const PROJECTS: ProjectItem[] = [
         <h2>Experience</h2>
         <div class="section-content">
             {EXPERIENCE.map((job) => (
-                <article class="item-block">
-                    <div class="flex-row item-header">
-                        <span class="bold">
-                            {job.title} <span class="org-text">| {job.organization}</span>
-                        </span>
-                        <span>{job.date}</span>
-                    </div>
-                    <ul>
-                        {job.bullets.map((bullet) => (
-                            <li>{bullet}</li>
-                        ))}
-                    </ul>
-                </article>
+            <article class="item-block">
+                <div class="flex-row item-header">
+                    <span class="bold">
+                        {job.title} <span class="org-text">| {job.organization}</span>
+                    </span>
+                    <span>{job.date}</span>
+                </div>
+                <ul>
+                    {job.bullets.map((bullet) => (
+                    <li>{bullet}</li>
+                    ))}
+                </ul>
+            </article>
             ))}
         </div>
     </section>
@@ -304,9 +305,9 @@ const PROJECTS: ProjectItem[] = [
         <h2>Conferences, Publications & Acknowledgements</h2>
         <div class="section-content">
             {PUBLICATIONS.map((entry) => (
-                <div class="citation">
-                    <strong>{entry.type}:</strong> {entry.authors} ({entry.year}). {entry.title} <em>{entry.source}</em>, {entry.detail}.
-                </div>
+            <div class="citation">
+                <strong>{entry.type}:</strong> {entry.authors} ({entry.year}). {entry.title} <em>{entry.source}</em>, {entry.detail}.
+            </div>
             ))}
             <div class="citation">
                 <strong>Conferences:</strong> {CONFERENCES.join(', ')}.
@@ -318,12 +319,12 @@ const PROJECTS: ProjectItem[] = [
         <h2>Teaching</h2>
         <div class="section-content">
             {TEACHING_ROLES.map((role) => (
-                <div class="flex-row item-header" style="margin-top: 4px;">
-                    <span class="bold">
-                        {role.title} <span class="org-text">| {role.organization}</span>
-                    </span>
-                    <span>{role.date}</span>
-                </div>
+            <div class="flex-row item-header" style="margin-top: 4px;">
+                <span class="bold">
+                    {role.title} <span class="org-text">| {role.organization}</span>
+                </span>
+                <span>{role.date}</span>
+            </div>
             ))}
 
             <div style="margin-top: 4px;">
@@ -334,13 +335,13 @@ const PROJECTS: ProjectItem[] = [
                     <span>{TUTORING.date}</span>
                 </div>
 
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px 16px; margin-top: 6px; font-size: 0.9em;">
-                    {TUTORING_COURSES.map((course) => (
-                        <div>
-                            {course.code} {course.name}
-                        </div>
-                    ))}
-                </div>
+                <!-- <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px 16px; margin-top: 6px; font-size: 0.9em;"> -->
+                <!--     {TUTORING_COURSES.map((course) => ( -->
+                <!--         <div> -->
+                <!--             {course.code} {course.name} -->
+                <!--         </div> -->
+                <!--     ))} -->
+                <!-- </div> -->
             </div>
         </div>
     </section>
@@ -350,9 +351,9 @@ const PROJECTS: ProjectItem[] = [
         <div class="section-content">
             <div class="skills-compact">
                 {Object.entries(SKILLS).map(([category, skills]) => (
-                    <div>
-                        <strong>{category}:</strong> {skills}
-                    </div>
+                <div>
+                    <strong>{category}:</strong> {skills}
+                </div>
                 ))}
             </div>
         </div>
@@ -363,12 +364,13 @@ const PROJECTS: ProjectItem[] = [
         <div class="section-content">
             <div class="projects-list">
                 {PROJECTS.map((proj) => (
-                    <div class="project-row">
-                        <div class="project-name">
-                            <a href={proj.link} target="_blank" rel="noreferrer">{proj.name}</a>
-                        </div>
-                        <div class="project-desc">{proj.desc}</div>
+                <div class="project-row">
+                    <div class="project-name">
+                        <a href={proj.link} target="_blank" rel="noreferrer">{proj.name}</a>
                     </div>
+                    <div class="project-desc">{proj.desc}</div>
+                    <div class="project-link">{proj.link}</div>
+                </div>
                 ))}
             </div>
         </div>
