@@ -100,13 +100,13 @@ export const projects: Project[] = [
     repo: 'https://github.com/arenvista',
   },
   {
-    slug: 'music-recommendation',
-    title: 'Music Recommendation',
-    summary: 'Project — update this description with what it actually does.',
-    year: '2022',
+    slug: 'audio-recommendation',
+    title: 'Audio Recommendation',
+    summary: 'A music recommender using aligned audio and lyric embeddings to bypass metadata and collaborative filtering.',
+    year: '2025',
     tags: ['Python'],
     href: '#',
-    repo: 'https://github.com/arenvista',
+    repo: 'https://github.com/arenvista/AudioRecomendation',
   },
   {
     slug: 'autopayroll',
