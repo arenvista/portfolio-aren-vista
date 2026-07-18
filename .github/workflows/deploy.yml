@@ -1,0 +1,67 @@
+name: Deploy
+
+# Build on every push to main, then rsync dist/ to the EC2 box.
+# workflow_dispatch lets you also trigger a deploy by hand from the
+# Actions tab (useful for re-deploying without a code change).
+on:
+    push:
+        branches: [main]
+    workflow_dispatch:
+
+# If you push twice quickly, cancel the older run rather than racing
+# two rsyncs at the same destination.
+concurrency:
+    group: deploy-production
+    cancel-in-progress: true
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Set up Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: npm
+
+            # npm ci needs package-lock.json committed. If you haven't yet:
+            #   npm install && git add package-lock.json && git commit
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Build
+              run: npm run build
+
+            # Fail loudly here rather than rsyncing an empty directory over
+            # a working site.
+            - name: Verify build output
+              run: test -f dist/index.html
+
+            - name: Configure SSH
+              env:
+                  SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
+                  HOST: ${{ secrets.EC2_HOST }}
+              run: |
+                  mkdir -p ~/.ssh
+                  echo "$SSH_KEY" > ~/.ssh/deploy_key
+                  chmod 600 ~/.ssh/deploy_key
+                  # Pin the host key so we're not blindly trusting whatever answers.
+                  ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts
+
+            - name: Deploy to EC2
+              env:
+                  HOST: ${{ secrets.EC2_HOST }}
+                  USER: ${{ secrets.EC2_USER }}
+                  TARGET: ${{ secrets.EC2_TARGET_DIR }}
+              run: |
+                  rsync -avz --delete \
+                    -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes" \
+                    dist/ "$USER@$HOST:$TARGET"
+
+            - name: Clean up key
+              if: always()
+              run: rm -f ~/.ssh/deploy_key
