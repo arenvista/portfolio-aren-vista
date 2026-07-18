@@ -11,6 +11,12 @@ const grouped = skills.reduce<Record<string, string[]>>((acc, skill) => {
   (acc[skill.category] ??= []).push(skill.label);
   return acc;
 }, {});
+
+const [firstParagraph = '', ...restParagraphs] = site.bio;
+const firstSpaceIndex = firstParagraph.indexOf(' ');
+const splitAt = firstSpaceIndex === -1 ? firstParagraph.length : firstSpaceIndex;
+const leadWord = firstParagraph.slice(0, splitAt);
+const leadRest = firstParagraph.slice(splitAt);
 ---
 
 <section class="about section" id="about">
@@ -20,14 +26,17 @@ const grouped = skills.reduce<Record<string, string[]>>((acc, skill) => {
       <h2 class="section-title section-title--with-eyebrow">A little about my work</h2>
       <a href="/resume" class="about__resume-link" data-cursor-hover>View full resume ↗</a>
     </div>
-
     <div class="about__body">
       <div data-reveal>
-        {site.bio.map((paragraph) => (
+        {leadWord && (
+          <p class="about__lede-p">
+            <span class="about__lede-word">{leadWord}</span>{leadRest}
+          </p>
+        )}
+        {restParagraphs.map((paragraph) => (
           <p>{paragraph}</p>
         ))}
       </div>
-
       <div class="about__skills-block" data-reveal style="--reveal-delay: 0.08s;">
         {Object.entries(grouped).map(([category, labels]) => (
           <div class="about__skills-group">
@@ -54,19 +63,16 @@ const grouped = skills.reduce<Record<string, string[]>>((acc, skill) => {
     background: var(--bg-surface);
     border-block: 1px solid var(--line);
   }
-
   .about__grid {
     display: grid;
     grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr);
     gap: clamp(2rem, 6vw, 5rem);
   }
-
   .about__intro {
     position: sticky;
     top: calc(var(--header-h) + 1.5rem);
     align-self: start;
   }
-
   .about__resume-link {
     display: inline-block;
     margin-top: 1.25rem;
@@ -77,38 +83,31 @@ const grouped = skills.reduce<Record<string, string[]>>((acc, skill) => {
     border-bottom: 1px solid transparent;
     transition: border-color 0.2s ease;
   }
-
   .about__resume-link:hover {
     border-color: var(--teal);
   }
-
   .about__body p {
     color: var(--fg-muted);
     font-size: 1.05rem;
     max-width: 62ch;
   }
-
   .about__body p + p {
     margin-top: 1.25rem;
   }
-
-  .about__body p:first-child::first-letter {
+  .about__lede-word {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 3.1em;
-    float: left;
-    line-height: 0.82;
-    padding-right: 0.12em;
+    font-size: 1.6em;
+    line-height: 1;
     color: var(--teal);
+    letter-spacing: -0.01em;
   }
-
   .about__skills-block {
     margin-top: 2.5rem;
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
   }
-
   .about__skills-label {
     display: block;
     font-family: var(--font-mono);
@@ -118,18 +117,15 @@ const grouped = skills.reduce<Record<string, string[]>>((acc, skill) => {
     color: var(--slate);
     margin-bottom: 0.6rem;
   }
-
   .about__skills {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
   }
-
   @media (max-width: 800px) {
     .about__grid {
       grid-template-columns: 1fr;
     }
-
     .about__intro {
       position: static;
     }

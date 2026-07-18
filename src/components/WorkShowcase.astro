@@ -188,7 +188,40 @@ const pad = (n: number) => String(n).padStart(2, '0');
     text-decoration: none;
     color: var(--paper);
     visibility: hidden;
-    will-change: clip-path;
+    will-change: clip-path, transform;
+    transform-origin: center;
+  }
+
+  /* Recede dim — covers the outgoing plate as the next frame slides over. */
+  .show-frame::before {
+    content: '';
+    position: absolute;
+    inset: clamp(0.75rem, 2vw, 1.5rem);
+    border-radius: var(--radius-lg);
+    background: var(--ink);
+    opacity: var(--dim, 0);
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  /* Feathered leading edge that rides the wipe line on the incoming frame. */
+  .show-frame::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: var(--wipe, 0%);
+    height: clamp(70px, 14vh, 150px);
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--apricot) 80%, transparent) 0 2px,
+      rgba(13, 23, 27, 0.35) 2px,
+      transparent 100%
+    );
+    opacity: var(--edge, 0);
+    z-index: 1;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
   }
 
   .show-frame:first-child {
@@ -226,6 +259,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
 
   .show-frame__meta {
     position: absolute;
+    z-index: 2;
     top: clamp(1.75rem, 4vw, 3rem);
     left: clamp(1.75rem, 4vw, 3rem);
     right: clamp(1.75rem, 4vw, 3rem);
@@ -262,6 +296,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
 
   .show-frame__foot {
     position: absolute;
+    z-index: 2;
     left: clamp(1.75rem, 4vw, 3rem);
     right: clamp(1.75rem, 4vw, 3rem);
     bottom: clamp(1.75rem, 4vw, 3rem);
