@@ -1,0 +1,79 @@
+---
+import CaseStudy from '@/layouts/CaseStudy.astro';
+
+// NOTE: No README — written from the resume line ("A Selenium tool automating
+// UMBC student timesheets auto-filling PeopleSoft"). Worth confirming before
+// this goes public: that you're comfortable describing credential handling, and
+// that nothing here reads as advice to falsify hours.
+---
+
+<CaseStudy
+	title="ASCAutoPayroll — case study"
+	description="A Selenium tool that fills UMBC student timesheets in PeopleSoft from a schedule, turning a weekly form-filling ritual into one command."
+	eyebrow="Case study — 2025"
+	heading="ASCAutoPayroll"
+	lede="Twelve identical form fields, every week, in an interface that predates the students using it. The schedule was already known — the typing was the only variable."
+	meta={[
+		{ label: 'Stack', value: 'Python · Selenium' },
+		{ label: 'Type', value: 'Browser automation' },
+		{ label: 'Source', value: 'github.com/arenvista/ASCAutoPayroll', href: 'https://github.com/arenvista/ASCAutoPayroll' }
+	]}
+>
+	<section class="cs__section">
+		<h2>The problem</h2>
+		<p>
+			Student employees submit hours through PeopleSoft: log in, navigate several frames deep,
+			enter in and out times for each day, save, submit. The shifts are usually the same every
+			week, which makes the whole exercise a transcription job — and one with real
+			consequences, since a missed submission means a missed paycheck.
+		</p>
+	</section>
+
+	<section class="cs__section">
+		<h2>The approach</h2>
+		<p>
+			Selenium drives a real browser session, because PeopleSoft has no usable API and its
+			interface is built from nested frames and generated element IDs — the kind of page that
+			defeats a plain HTTP client but is perfectly navigable if you're pretending to be a
+			person.
+		</p>
+		<p>
+			A schedule file describes the recurring shifts. The tool logs in, walks to the timesheet
+			for the current pay period, fills each row from that schedule, and stops before
+			submission so the hours can be checked by an actual human first.
+		</p>
+	</section>
+
+	<section class="cs__section">
+		<h2>Working against a hostile page</h2>
+		<ul>
+			<li>
+				Generated IDs change between renders, so elements are located by structure and label
+				rather than by whatever ID the page happened to emit.
+			</li>
+			<li>
+				Every action waits on a condition instead of a timer — PeopleSoft's partial page
+				refreshes are unpredictable, and fixed sleeps are how these tools rot.
+			</li>
+			<li>
+				Credentials come from the environment, never the repository, and the session is
+				torn down when the run ends.
+			</li>
+			<li>
+				A dry run fills the form and stops, so a broken selector shows up as a wrong-looking
+				page rather than a wrong submission.
+			</li>
+		</ul>
+	</section>
+
+	<section class="cs__section">
+		<h2>What I took away</h2>
+		<p>
+			The part I'd defend is the stop. It would have been trivial to click submit at the end
+			of the run, and marginally more convenient — but a tool that files payroll on your
+			behalf is one bad selector away from filing something wrong, silently, on a document
+			you're accountable for. Automating the tedium and leaving the confirmation is the whole
+			design.
+		</p>
+	</section>
+</CaseStudy>

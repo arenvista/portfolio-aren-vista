@@ -5,7 +5,7 @@ export interface Project {
     year: string;
     tags: string[];
     /** Where the frame / title link goes: case study, live site, or repo. */
-    href: string;
+    href: "/projects/";
     repo?: string;
     featured?: boolean;
     /** Appears in the scroll-driven work showcase. */
@@ -32,7 +32,7 @@ export const projects: Project[] = [
             "Conway's Game of Life implemented in C++ using Raylib — cellular automata at 60fps.",
         year: "2025",
         tags: ["C++", "Raylib"],
-        href: "https://github.com/arenvista/game_of_life",
+        href: "/projects/game-of-life",
         repo: "https://github.com/arenvista/game_of_life",
         featured: true,
         showcase: true,
@@ -45,7 +45,7 @@ export const projects: Project[] = [
             "A music recommender using aligned audio and lyric embeddings to bypass metadata and collaborative filtering.",
         year: "2025",
         tags: ["Python", "PyTorch"],
-        href: "https://github.com/arenvista/AudioRecomendation",
+        href: "/projects/audio-recommendation",
         repo: "https://github.com/arenvista/AudioRecomendation",
         featured: true,
         showcase: true,
@@ -70,7 +70,7 @@ export const projects: Project[] = [
             "A tiny operating system written in x86 assembly and C++ — bootloader to shell. Work in progress.",
         year: "2023",
         tags: ["ASM", "C++"],
-        href: "https://github.com/arenvista",
+        href: "/projects/tinyos",
         repo: "https://github.com/arenvista",
         showcase: true,
         preview: "boot",
@@ -82,7 +82,7 @@ export const projects: Project[] = [
             "Command-line chess engine in C++ using Ncurses — my first real exposure to programming.",
         year: "2025",
         tags: ["C++", "Ncurses"],
-        href: "https://github.com/arenvista/chess",
+        href: "/projects/chess-cpp",
         repo: "https://github.com/arenvista/chess",
         showcase: true,
         preview: "chess",
@@ -94,7 +94,7 @@ export const projects: Project[] = [
             "A LaTeX compendium covering topics from Numerical Linear Algebra to Real Analysis.",
         year: "2024",
         tags: ["LaTeX"],
-        href: "https://github.com/arenvista",
+        href: "/projects/mathonomicon",
         repo: "https://github.com/arenvista",
         showcase: true,
         preview: "math",
@@ -106,7 +106,7 @@ export const projects: Project[] = [
             "Discord bot that helps run the board game 'Blood on the Clocktower' — roles, nominations, night order.",
         year: "2023",
         tags: ["Python", "Discord"],
-        href: "https://github.com/arenvista/BotCT",
+        href: "/projects/botct",
         repo: "https://github.com/arenvista/BotCT",
         preview: "clock",
     },
@@ -116,7 +116,7 @@ export const projects: Project[] = [
         summary: "Terminal-based text editor in C++ using Ncurses.",
         year: "2024",
         tags: ["C++", "Ncurses"],
-        href: "https://github.com/arenvista/textedit",
+        href: "/projects/textedit",
         repo: "https://github.com/arenvista/textedit",
         preview: "edit",
     },
@@ -127,7 +127,7 @@ export const projects: Project[] = [
             "Storefront selling figurines and sculptures — Astro, TSX, and Stripe.",
         year: "2023",
         tags: ["Astro", "TypeScript", "Stripe"],
-        href: "https://github.com/arenvista",
+        href: "/projects/mangonana",
         repo: "https://github.com/arenvista",
         preview: "browser",
     },
@@ -138,7 +138,7 @@ export const projects: Project[] = [
             "This site — Astro + TypeScript with live canvas work previews, hosted on AWS.",
         year: "2026",
         tags: ["Astro", "TypeScript", "AWS"],
-        href: "https://portfolio.arenvista.me",
+        href: "/projects/",
         repo: "https://github.com/arenvista/portfolio",
         featured: true,
         preview: "browser",
@@ -150,7 +150,7 @@ export const projects: Project[] = [
             "A Selenium tool automating UMBC student timesheets — auto-filling PeopleSoft.",
         year: "2022",
         tags: ["Python", "Selenium"],
-        href: "https://github.com/arenvista/ASCAutoPayroll",
+        href: "/projects/ascautopayroll",
         repo: "https://github.com/arenvista/ASCAutoPayroll",
         preview: "form",
     },

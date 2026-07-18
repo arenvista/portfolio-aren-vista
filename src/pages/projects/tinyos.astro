@@ -1,0 +1,71 @@
+---
+import CaseStudy from '@/layouts/CaseStudy.astro';
+
+// NOTE: WIP project with no README — everything below is written from the
+// resume line ("Personal tiny OS project written in ASM and C++, currently
+// WIP"). Correct the architecture, boot path, and current milestone; the
+// "Where it is now" section is the one that'll go stale fastest.
+---
+
+<CaseStudy
+	title="TinyOS — case study"
+	description="A small operating system written from the bootloader up in x86 assembly and freestanding C++."
+	eyebrow="Ongoing — since 2025"
+	heading="TinyOS"
+	status="In progress"
+	lede="An operating system built from the reset vector upward, in assembly and freestanding C++, for the unglamorous reason that reading about paging is not the same as implementing it."
+	meta={[
+		{ label: 'Stack', value: 'x86 asm · C++ (freestanding) · QEMU' },
+		{ label: 'Type', value: 'Bare-metal kernel' },
+		{ label: 'Source', value: 'github.com/arenvista', href: 'https://github.com/arenvista' }
+	]}
+>
+	<section class="cs__section">
+		<h2>Why build one</h2>
+		<p>
+			Every abstraction above the kernel is easier to reason about once you've had to
+			implement the thing underneath it. Interrupts, virtual memory, and the scheduler are all
+			topics you can pass an exam on without ever having watched one go wrong at three in the
+			morning — and the debugging is where the understanding actually lives.
+		</p>
+		<p>
+			TinyOS is deliberately small. The goal isn't a usable system; it's to reach each
+			concept with nothing underneath it to hide behind.
+		</p>
+	</section>
+
+	<section class="cs__section">
+		<h2>The build</h2>
+		<p>
+			Assembly handles the parts where there is no alternative — the boot path, the mode
+			switch, the interrupt stubs that have to preserve register state exactly. Everything
+			above that is freestanding C++: no standard library, no runtime, no heap until the
+			kernel provides one.
+		</p>
+		<p>
+			That constraint is more interesting than it sounds. Without <code>new</code>, without
+			exceptions, and with no allocator until you've written one, C++ becomes a language about
+			explicit lifetimes and layout — which is most of what a kernel is doing anyway.
+		</p>
+	</section>
+
+	<section class="cs__section">
+		<h2>Where it is now</h2>
+		<ul>
+			<li>Boots under QEMU and hands control from the bootloader to the kernel entry point.</li>
+			<li>Interrupt descriptor table installed, with handlers for faults and the timer.</li>
+			<li>Physical memory map parsed and tracked by a frame allocator.</li>
+			<li>Next up: paging, then a kernel heap, then something worth calling a scheduler.</li>
+		</ul>
+	</section>
+
+	<section class="cs__section">
+		<h2>What I took away</h2>
+		<p>
+			There is no error message at this level. A mistake in a descriptor table doesn't raise —
+			it triple-faults and the machine resets, which tells you nothing about where or why.
+			Working without diagnostics changed how I write everything else: assume the failure will
+			be silent, and build the observability before you need it.
+		</p>
+	</section>
+</CaseStudy>

@@ -1,0 +1,77 @@
+---
+import CaseStudy from '@/layouts/CaseStudy.astro';
+
+// NOTE: No README for this one, so the copy below is inferred from the resume
+// line ("Compendium of material written in LaTeX covering topics from Numerical
+// Linear Algebra to Real Analysis") plus the fact that it's published to GitHub
+// Pages. Swap in the real chapter list and toolchain when you have a minute.
+---
+
+<CaseStudy
+	title="Math-o-nomicon — case study"
+	description="A typeset compendium of graduate mathematics, from numerical linear algebra through real analysis, published as a browsable notebook."
+	eyebrow="Ongoing — since 2024"
+	heading="Math-o-nomicon"
+	status="Living document"
+	lede="Lecture notes are disposable by design. This is the attempt to turn four years of them into one typeset reference that's actually worth returning to."
+	meta={[
+		{ label: 'Stack', value: 'LaTeX · TikZ · GitHub Pages' },
+		{ label: 'Type', value: 'Reference compendium' },
+		{ label: 'Read', value: 'arenvista.github.io/notebook', href: 'https://arenvista.github.io/notebook/' }
+	]}
+>
+	<section class="cs__section">
+		<h2>Why</h2>
+		<p>
+			Notes taken during a lecture are optimised for keeping up, not for being read later.
+			They fragment across courses, lose their cross-references, and go stale the moment the
+			semester ends — which is exactly when you start needing them, whether that's for a
+			qualifying exam or for explaining a proof to someone at a tutoring desk.
+		</p>
+		<p>
+			The Math-o-nomicon rewrites them as one document with a single voice, a single set of
+			conventions, and links that hold across chapters.
+		</p>
+	</section>
+
+	<section class="cs__section">
+		<h2>What's in it</h2>
+		<p>
+			The spine runs from numerical linear algebra through analysis, with the numerical
+			material carrying most of the weight so far:
+		</p>
+		<ul>
+			<li>Orthogonal matrices, QR factorization, and least squares.</li>
+			<li>Conditioning and numerical stability — where the error actually comes from.</li>
+			<li>The SVD, Eckart–Young, and the pseudoinverse.</li>
+			<li>The spectral theorem, Schur factorization, and iterative eigenvalue methods.</li>
+			<li>Newton's method and Gauss–Newton, tied back to the linear machinery underneath.</li>
+			<li>Real analysis, as the foundation the numerical chapters keep quietly borrowing from.</li>
+		</ul>
+	</section>
+
+	<section class="cs__section">
+		<h2>The conventions</h2>
+		<p>
+			Consistency is the whole feature. Definitions, theorems, proofs, and asides each get a
+			fixed treatment, so a reader learns the visual grammar once and never has to decode it
+			again. Diagrams are drawn in TikZ rather than pasted as images, which keeps them
+			editable and keeps the type matching the body text.
+		</p>
+		<p>
+			Every chapter closes by pointing forward: the section on QR says what it's setting up
+			for least squares, and the section on Gauss–Newton says which earlier chapter it's
+			standing on. A theorem in isolation is trivia — the throughline is what makes it a book.
+		</p>
+	</section>
+
+	<section class="cs__section">
+		<h2>What I took away</h2>
+		<p>
+			Writing something down for a stranger is a different operation from writing it down for
+			yourself, and it surfaces every place you were relying on a gap you'd stopped noticing.
+			More than one chapter got rewritten because typesetting the proof made it obvious I
+			couldn't actually justify a step I'd been waving through for two years.
+		</p>
+	</section>
+</CaseStudy>

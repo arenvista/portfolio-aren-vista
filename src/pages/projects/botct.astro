@@ -1,0 +1,82 @@
+---
+import CaseStudy from '@/layouts/CaseStudy.astro';
+
+// NOTE: No README — copy written from the resume line ("Discord Bot
+// implementation to help run the popular board game 'Blood on the Clocktower'").
+// Fix the specifics: which scripts are supported, whether it handles the grimoire
+// or just the night order, and how many games it's actually run.
+---
+
+<CaseStudy
+	title="Blood on the Clocktower — case study"
+	description="A Discord bot that handles the bookkeeping of running Blood on the Clocktower, so the Storyteller can concentrate on the table."
+	eyebrow="Case study — 2025"
+	heading="Blood on the Clocktower"
+	lede="A social deduction game where one player runs everything, in private, without ever being wrong. The bot takes the bookkeeping so the Storyteller can keep the table."
+	meta={[
+		{ label: 'Stack', value: 'Python · discord.py' },
+		{ label: 'Type', value: 'Discord bot' },
+		{ label: 'Source', value: 'github.com/arenvista/BotCT', href: 'https://github.com/arenvista/BotCT' }
+	]}
+>
+	<section class="cs__section">
+		<h2>The problem</h2>
+		<p>
+			Blood on the Clocktower puts one player — the Storyteller — in charge of hidden state
+			for everyone else. They track who holds which role, who has been poisoned or drunk (and
+			therefore must be fed false information without knowing they're being lied to), what
+			each ability does tonight, and in what order it all resolves.
+		</p>
+		<p>
+			In person, that's a physical grimoire and a stack of tokens. Over Discord, it's a
+			Storyteller frantically switching between DMs, and the game slows to whatever speed they
+			can context-switch at.
+		</p>
+	</section>
+
+	<section class="cs__section">
+		<h2>What the bot does</h2>
+		<ul>
+			<li>
+				Deals roles privately at setup and holds the grimoire, so nobody has to trust a
+				shuffled DM history.
+			</li>
+			<li>
+				Walks the night phase in the correct wake order, prompting the Storyteller for each
+				ability in turn instead of leaving them to remember it.
+			</li>
+			<li>
+				Tracks poisoned and drunk states, and flags when the information a player is owed
+				should be false.
+			</li>
+			<li>
+				Runs day-phase nominations and votes with a clean tally, and manages who is still
+				alive and who has a ghost vote left.
+			</li>
+		</ul>
+	</section>
+
+	<section class="cs__section">
+		<h2>The design constraint</h2>
+		<p>
+			The bot is not the referee. Blood on the Clocktower is deliberately underspecified —
+			the Storyteller is meant to make judgement calls that bend the game toward a better
+			story, and a bot that enforced rules strictly would remove the thing that makes it good.
+		</p>
+		<p>
+			So every ruling stays with the human. The bot only ever surfaces state and asks; it
+			never decides. That line turned out to be the most important design decision in the
+			project, and the one that most often had to be defended against a convenient shortcut.
+		</p>
+	</section>
+
+	<section class="cs__section">
+		<h2>What I took away</h2>
+		<p>
+			Automating a role means deciding which parts of it were the work and which were the
+			point. Tracking sixteen simultaneous states is work. Choosing which lie to tell a
+			poisoned Fortune Teller is the point — and building the tool made that distinction sharp
+			in a way that playing never had.
+		</p>
+	</section>
+</CaseStudy>

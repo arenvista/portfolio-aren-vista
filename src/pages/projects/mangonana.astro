@@ -1,0 +1,78 @@
+---
+import CaseStudy from '@/layouts/CaseStudy.astro';
+
+// NOTE: No README for this one — copy is inferred from the resume line
+// ("Website selling figurines and sculptures applying: Astro, TSX, and Stripe").
+// Replace the specifics (who it's for, catalogue size, fulfilment details) with
+// the real ones, and add a live URL to `meta` if it's deployed.
+---
+
+<CaseStudy
+	title="Mango Nana — case study"
+	description="A storefront for handmade figurines and sculptures, built on Astro with a TSX cart and Stripe Checkout."
+	eyebrow="Case study — 2025"
+	heading="Mango Nana"
+	lede="A shop for handmade figurines, where every piece is one of one — which turns out to be the constraint the whole build is organised around."
+	meta={[
+		{ label: 'Stack', value: 'Astro · TSX islands · Stripe' },
+		{ label: 'Type', value: 'E-commerce storefront' },
+		{ label: 'Source', value: 'github.com/arenvista/mangonana', href: 'https://github.com/arenvista/mangonana' }
+	]}
+>
+	<section class="cs__section">
+		<h2>The problem</h2>
+		<p>
+			Off-the-shelf storefronts assume inventory: many identical units of a SKU, restocked on
+			a schedule. Handmade sculpture is the opposite — each piece exists once, sells once, and
+			is never made again. The listing isn't a product page so much as a photograph with a
+			price on it.
+		</p>
+		<p>
+			So the build had to be fast and mostly static, because the catalogue is images, while
+			still handling real money and a stock count that only ever goes to zero.
+		</p>
+	</section>
+
+	<section class="cs__section">
+		<h2>The approach</h2>
+		<p>
+			Astro was the right shape for this. The catalogue is prerendered to static HTML, so
+			browsing ships almost no JavaScript and the photography loads immediately on a phone.
+			Only the pieces that genuinely need state — the cart and the checkout handoff — are TSX
+			islands that hydrate on demand.
+		</p>
+		<p>
+			Payment is handed to Stripe Checkout rather than rebuilt in-house. Card details never
+			touch the site, which removes an entire category of problem that a small shop has no
+			business owning.
+		</p>
+	</section>
+
+	<section class="cs__section">
+		<h2>Details worth keeping</h2>
+		<ul>
+			<li>
+				Sold pieces stay published rather than 404ing — the archive is part of the pitch for
+				the next commission.
+			</li>
+			<li>
+				Photography is the interface, so images are responsive and dimensioned up front to
+				keep layout from shifting as they arrive.
+			</li>
+			<li>
+				Cart state survives a reload, because deciding on a one-of-one piece takes more than
+				one session.
+			</li>
+		</ul>
+	</section>
+
+	<section class="cs__section">
+		<h2>What I took away</h2>
+		<p>
+			Most of the work in a small storefront isn't the transaction — it's everything around a
+			single irreversible moment. Getting an item out of stock the instant it sells, and
+			making that legible to whoever was looking at it a second ago, mattered more than any
+			feature on the roadmap.
+		</p>
+	</section>
+</CaseStudy>

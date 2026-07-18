@@ -1,0 +1,242 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+
+export interface MetaEntry {
+	label: string;
+	value: string;
+	href?: string;
+}
+
+interface Props {
+	/** <title> / meta description for the document head */
+	title: string;
+	description: string;
+	/** Eyebrow above the h1, e.g. "Case study — 2025" */
+	eyebrow: string;
+	/** The big display title */
+	heading: string;
+	/** One-paragraph opener under the title */
+	lede: string;
+	/** The Stack / Type / Source definition list */
+	meta?: MetaEntry[];
+	/** Optional pill next to the title, e.g. "In progress" */
+	status?: string;
+}
+
+const { title, description, eyebrow, heading, lede, meta = [], status } = Astro.props;
+---
+
+<Layout title={title} description={description}>
+	<Header />
+	<main>
+		<article class="cs section">
+			<div class="wrap cs__wrap">
+				<a class="cs__back" href="/#work" data-cursor-hover>← Back to work</a>
+
+				<header class="cs__head">
+					<span class="eyebrow">{eyebrow}</span>
+					<h1 class="cs__title">
+						{heading}
+						{status && <span class="cs__status">{status}</span>}
+					</h1>
+					<p class="cs__lede">{lede}</p>
+
+					{meta.length > 0 && (
+						<dl class="cs__meta">
+							{meta.map((entry) => (
+								<div>
+									<dt>{entry.label}</dt>
+									<dd>
+										{entry.href ? (
+											<a
+												href={entry.href}
+												target="_blank"
+												rel="noopener noreferrer"
+												data-cursor-hover
+											>
+												{entry.value} ↗
+											</a>
+										) : (
+											entry.value
+										)}
+									</dd>
+								</div>
+							))}
+						</dl>
+					)}
+				</header>
+
+				<slot />
+			</div>
+		</article>
+	</main>
+	<Footer />
+</Layout>
+
+<style>
+	.cs__wrap {
+		max-width: 46rem;
+	}
+
+	.cs__back {
+		font-family: var(--font-mono);
+		font-size: 0.85rem;
+		color: var(--teal);
+		text-decoration: none;
+	}
+
+	.cs__head {
+		margin-top: 2rem;
+	}
+
+	.cs__title {
+		margin-top: 0.75rem;
+		font-size: clamp(2.6rem, 8vw, 4.5rem);
+		text-transform: uppercase;
+		letter-spacing: -0.02em;
+	}
+
+	.cs__status {
+		display: inline-block;
+		vertical-align: middle;
+		margin-left: 0.75rem;
+		transform: translateY(-0.35em);
+		font-family: var(--font-mono);
+		font-size: 0.7rem;
+		font-weight: 500;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		padding: 0.4em 0.9em;
+		border: 1px solid var(--line);
+		border-radius: 999px;
+		color: var(--fg-faint);
+	}
+
+	.cs__lede {
+		margin-top: 1.25rem;
+		font-size: 1.15rem;
+		color: var(--fg-muted);
+		max-width: 55ch;
+	}
+
+	.cs__meta {
+		margin: 2.5rem 0 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 2.5rem;
+		padding-block: 1.5rem;
+		border-block: 1px solid var(--line);
+	}
+
+	.cs__meta dt {
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--fg-faint);
+	}
+
+	.cs__meta dd {
+		margin: 0.35rem 0 0;
+		font-size: 0.95rem;
+		color: var(--fg-primary);
+	}
+
+	.cs__meta a {
+		color: var(--teal);
+		text-decoration: none;
+	}
+
+	/* ---- Slotted content ------------------------------------------------ */
+	/* Pages pass in <section class="cs__section"> blocks, so these need
+	   :global() to survive Astro's scoped-style compilation. */
+	.cs__wrap :global(.cs__section) {
+		margin-top: 3rem;
+	}
+
+	.cs__wrap :global(.cs__section h2) {
+		font-size: 1.35rem;
+		margin-bottom: 1rem;
+	}
+
+	.cs__wrap :global(.cs__section p) {
+		color: var(--fg-muted);
+		line-height: 1.75;
+	}
+
+	.cs__wrap :global(.cs__section p + p) {
+		margin-top: 1.25rem;
+	}
+
+	.cs__wrap :global(.cs__section code) {
+		font-family: var(--font-mono);
+		background: var(--paper-deep);
+		padding: 0.15em 0.4em;
+		border-radius: 4px;
+		font-size: 0.9em;
+	}
+
+	.cs__wrap :global(.cs__section ul) {
+		margin-top: 1.25rem;
+		display: grid;
+		gap: 0.75rem;
+	}
+
+	.cs__wrap :global(.cs__section li) {
+		position: relative;
+		padding-left: 1.4rem;
+		color: var(--fg-muted);
+		line-height: 1.7;
+	}
+
+	.cs__wrap :global(.cs__section li::before) {
+		content: '—';
+		position: absolute;
+		left: 0;
+		color: var(--teal);
+	}
+
+	/* Ordered steps — used where the content really is a sequence. */
+	.cs__wrap :global(.cs__steps) {
+		counter-reset: step;
+		list-style: none;
+	}
+
+	.cs__wrap :global(.cs__steps li) {
+		counter-increment: step;
+		padding-left: 2.6rem;
+	}
+
+	.cs__wrap :global(.cs__steps li::before) {
+		content: counter(step, decimal-leading-zero);
+		font-family: var(--font-mono);
+		font-size: 0.8rem;
+		color: var(--teal);
+	}
+
+	.cs__wrap :global(.cs__section strong) {
+		color: var(--fg-primary);
+		font-weight: 600;
+	}
+
+	.cs__wrap :global(.cs__pre) {
+		margin-top: 1.5rem;
+		padding: 1.25rem 1.4rem;
+		border: 1px solid var(--line);
+		border-radius: var(--radius-lg, 12px);
+		background: var(--paper-deep);
+		overflow-x: auto;
+		font-family: var(--font-mono);
+		font-size: 0.85rem;
+		line-height: 1.7;
+		color: var(--fg-muted);
+	}
+
+	.cs__wrap :global(.cs__pre code) {
+		background: none;
+		padding: 0;
+		font-size: inherit;
+	}
+</style>

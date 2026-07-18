@@ -1,171 +1,95 @@
 ---
-import Layout from '@/layouts/Layout.astro';
-import Header from '@/components/Header.astro';
-import Footer from '@/components/Footer.astro';
+import CaseStudy from '@/layouts/CaseStudy.astro';
 
-// NOTE: This replaces src/pages/projects/snapdaemon.astro, which was an
-// empty file rendering a blank page. The copy below is written from your
-// resume's one-liner ("Software based implementation of Wooting Keyboards'
-// SnapTap feature") — flesh it out with the real implementation details
-// when you have a minute.
+// Rewritten against the SnapKey README — the earlier version was written from
+// the resume one-liner and got the transport wrong (it's an evdev grab + uinput
+// virtual device, not a passive shim).
 ---
 
-<Layout
-  title="SnapDaemon — case study"
-  description="A software implementation of Wooting's SnapTap: last-input-wins key resolution as a background daemon."
+<CaseStudy
+	title="SnapDaemon — case study"
+	description="A Linux daemon bringing hardware SOCD resolution to any keyboard, via an evdev grab and a virtual uinput device."
+	eyebrow="Case study — 2024"
+	heading="SnapDaemon"
+	lede="Wooting's Snap Tap resolves counter-strafe conflicts in keyboard firmware. SnapDaemon does the same thing in software, on any keyboard Linux can see."
+	meta={[
+		{ label: 'Stack', value: 'C++17 · evdev · uinput' },
+		{ label: 'Type', value: 'System daemon' },
+		{ label: 'Source', value: 'github.com/arenvista/snapdaemon', href: 'https://github.com/arenvista/snapdaemon' }
+	]}
 >
-  <Header />
-  <main>
-    <article class="cs section">
-      <div class="wrap cs__wrap">
-        <a class="cs__back" href="/#work" data-cursor-hover>← Back to work</a>
+	<section class="cs__section">
+		<h2>The problem</h2>
+		<p>
+			Hold <code>A</code> and <code>D</code> at the same time and a normal keyboard reports
+			both. The game resolves that however it likes — usually as no movement at all, which is
+			exactly the dead zone counter-strafing is trying to avoid. Wooting solved it in firmware
+			with Snap Tap: last key pressed wins, and releasing it hands control back to whichever
+			opposing key is still held.
+		</p>
+		<p>
+			That fix costs a specific keyboard. SnapDaemon moves the same resolution down into the
+			Linux input subsystem, where it works with anything the kernel enumerates.
+		</p>
+	</section>
 
-        <header class="cs__head">
-          <span class="eyebrow">Case study — 2024</span>
-          <h1 class="cs__title">SnapDaemon</h1>
-          <p class="cs__lede">
-            A software implementation of Wooting keyboards' SnapTap feature — last-input-wins
-            key resolution, running as a background daemon on any keyboard.
-          </p>
+	<section class="cs__section">
+		<h2>How it works</h2>
+		<p>
+			The daemon takes an exclusive grab on the physical device at
+			<code>/dev/input/eventX</code>, then creates a virtual keyboard through
+			<code>uinput</code>. Everything the OS reads comes from the virtual device, which puts
+			SnapDaemon in the only position where it can rewrite state rather than react to it.
+		</p>
+		<ol class="cs__steps">
+			<li>Grab the real keyboard so no other process sees its raw events.</li>
+			<li>Pass every ungrouped key straight through to the virtual device, untouched.</li>
+			<li>
+				For keys inside a configured group, track press order and emit only the most recent
+				one — releasing it immediately re-emits the still-held opposite.
+			</li>
+		</ol>
+		<p>
+			Groups live in a plain <code>config.cfg</code> keyed by Linux keycodes, so the pairs
+			aren't hardcoded to WASD:
+		</p>
+		<pre class="cs__pre"><code>{`[Group]
+key=30  # KEY_A
+key=32  # KEY_D
 
-          <dl class="cs__meta">
-            <div>
-              <dt>Stack</dt>
-              <dd>C++ · Linux input events</dd>
-            </div>
-            <div>
-              <dt>Type</dt>
-              <dd>System daemon</dd>
-            </div>
-            <div>
-              <dt>Source</dt>
-              <dd><a href="https://github.com/arenvista" target="_blank" rel="noopener noreferrer" data-cursor-hover>github.com/arenvista ↗</a></dd>
-            </div>
-          </dl>
-        </header>
+[Group]
+key=17  # KEY_W
+key=31  # KEY_S`}</code></pre>
+	</section>
 
-        <section class="cs__section">
-          <h2>The problem</h2>
-          <p>
-            Wooting's SnapTap (a form of SOCD handling) resolves the classic counter-strafe
-            conflict: when both <code>A</code> and <code>D</code> are held, the keyboard reports
-            only the most recently pressed key instead of both or neither. On Wooting hardware
-            it's a firmware feature — SnapDaemon brings the same behavior to ordinary keyboards
-            in software.
-          </p>
-        </section>
+	<section class="cs__section">
+		<h2>Running it</h2>
+		<p>
+			It's a daemon, so the controls are signals. That turned out to be the right interface —
+			rebinding mid-session shouldn't mean dropping the grab and re-acquiring the device.
+		</p>
+		<ul>
+			<li><strong>SIGHUP</strong> — reload <code>config.cfg</code> without restarting.</li>
+			<li><strong>SIGUSR1</strong> — toggle the lock, passing all keys through unmodified.</li>
+			<li><strong>SIGINT</strong> — ungrab the keyboard, destroy the virtual device, exit clean.</li>
+		</ul>
+		<p>
+			A PID file at <code>/var/run/snapkey.pid</code> guards against a second instance, which
+			matters more than it sounds: two daemons grabbing and re-emitting the same events will
+			happily feed each other forever.
+		</p>
+	</section>
 
-        <section class="cs__section">
-          <h2>The approach</h2>
-          <p>
-            The daemon sits between the physical device and the applications reading from it.
-            It watches raw key events for the configured opposing pairs, tracks press order, and
-            rewrites the emitted state so the last pressed key always wins — releasing it hands
-            control straight back to the still-held opposite key, with no gap where both or
-            neither register.
-          </p>
-          <p>
-            Because it operates at the input-event level rather than inside any one game, the
-            behavior is universal and the pairs are configurable.
-          </p>
-        </section>
-
-        <section class="cs__section">
-          <h2>What I took away</h2>
-          <p>
-            Input handling is a timing problem before it's a logic problem. Getting the
-            resolution to feel instant meant treating every event as state to reconcile, not a
-            message to forward — the same shift in thinking that shows up in the interfaces I
-            build now.
-          </p>
-        </section>
-      </div>
-    </article>
-  </main>
-  <Footer />
-</Layout>
-
-<style>
-  .cs__wrap {
-    max-width: 46rem;
-  }
-
-  .cs__back {
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    color: var(--teal);
-    text-decoration: none;
-  }
-
-  .cs__head {
-    margin-top: 2rem;
-  }
-
-  .cs__title {
-    margin-top: 0.75rem;
-    font-size: clamp(2.6rem, 8vw, 4.5rem);
-    text-transform: uppercase;
-    letter-spacing: -0.02em;
-  }
-
-  .cs__lede {
-    margin-top: 1.25rem;
-    font-size: 1.15rem;
-    color: var(--fg-muted);
-    max-width: 55ch;
-  }
-
-  .cs__meta {
-    margin: 2.5rem 0 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2.5rem;
-    padding-block: 1.5rem;
-    border-block: 1px solid var(--line);
-  }
-
-  .cs__meta dt {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--fg-faint);
-  }
-
-  .cs__meta dd {
-    margin: 0.35rem 0 0;
-    font-size: 0.95rem;
-    color: var(--fg-primary);
-  }
-
-  .cs__meta a {
-    color: var(--teal);
-    text-decoration: none;
-  }
-
-  .cs__section {
-    margin-top: 3rem;
-  }
-
-  .cs__section h2 {
-    font-size: 1.35rem;
-    margin-bottom: 1rem;
-  }
-
-  .cs__section p {
-    color: var(--fg-muted);
-    line-height: 1.75;
-  }
-
-  .cs__section p + p {
-    margin-top: 1.25rem;
-  }
-
-  .cs__section code {
-    font-family: var(--font-mono);
-    background: var(--paper-deep);
-    padding: 0.15em 0.4em;
-    border-radius: 4px;
-    font-size: 0.9em;
-  }
-</style>
+	<section class="cs__section">
+		<h2>What I took away</h2>
+		<p>
+			Input handling is a timing problem before it's a logic problem. Getting the resolution to
+			feel instant meant treating every event as state to reconcile, not a message to forward.
+		</p>
+		<p>
+			It also forced a real answer to the failure question. When a process holds an exclusive
+			grab on the only keyboard attached, a crash between grab and virtual-device creation
+			leaves the machine unusable — so teardown had to be designed before the feature was.
+		</p>
+	</section>
+</CaseStudy>

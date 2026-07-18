@@ -1,0 +1,112 @@
+---
+import CaseStudy from '@/layouts/CaseStudy.astro';
+
+// Written from the project README and the CVPR-format writeup in tex/.
+// If the paper gets a public link (arXiv, PDF on the site), add it to `meta`
+// as a fourth entry.
+---
+
+<CaseStudy
+	title="Audio Recommendation — case study"
+	description="A music recommender that learns from what a track sounds like and says, aligning audio and lyric embeddings instead of relying on metadata or collaborative filtering."
+	eyebrow="Case study — 2025"
+	heading="Audio Recommendation"
+	lede="Most recommenders learn from what other people played next. This one only listens — aligning audio and lyric embeddings so similarity comes from the track itself."
+	meta={[
+		{ label: 'Stack', value: 'Python · PyTorch · transformers · librosa' },
+		{ label: 'Type', value: 'Research project · CVPR format' },
+		{ label: 'With', value: 'Hailey Davio, UMBC' },
+		{ label: 'Source', value: 'github.com/arenvista/AudioRecomendation', href: 'https://github.com/arenvista/AudioRecomendation' }
+	]}
+>
+	<section class="cs__section">
+		<h2>The problem</h2>
+		<p>
+			Collaborative filtering recommends what people like you played next, which works well
+			until a track has no audience yet — and works badly for anyone whose taste doesn't sit
+			neatly inside an existing cluster. Genre tags have the opposite failure: they're stable,
+			but far too coarse to separate two records that share a label and nothing else.
+		</p>
+		<p>
+			Both are proxies. The question was whether the signal could come from the recording
+			itself instead — its texture and its words — with no metadata and no other listeners in
+			the loop.
+		</p>
+	</section>
+
+	<section class="cs__section">
+		<h2>The pipeline</h2>
+		<ol class="cs__steps">
+			<li>
+				<strong>Spectrograms.</strong> MP3s are loaded with <code>librosa</code> and rendered
+				as log-frequency spectrograms — audio as an image, which is what lets a vision-style
+				transformer read it.
+			</li>
+			<li>
+				<strong>Audio embedding.</strong> A pretrained Audio Spectrogram Transformer
+				(<code>MIT/ast-finetuned-audioset-10-10-0.4593</code>) encodes each spectrogram into
+				768 dimensions.
+			</li>
+			<li>
+				<strong>Alignment.</strong> For tracks with lyrics, a CLIP text encoder produces a
+				512-dim lyric embedding. The AST vector is projected down to 512 and pulled toward
+				its lyric pair with a symmetric InfoNCE loss (learned temperature, AdamW).
+			</li>
+			<li>
+				<strong>Reduction.</strong> The aligned space is reduced to three principal
+				components, which is small enough to plot and inspect by eye.
+			</li>
+			<li>
+				<strong>Recommendation.</strong> A user profile is a handful of songs; a
+				recommendation is a nearest neighbour by Euclidean distance in that PCA space.
+			</li>
+		</ol>
+		<p>
+			Training used the FMA large subset — 106,574 tracks across 16,341 artists and 161 genres
+			— with each track trimmed to thirty seconds.
+		</p>
+	</section>
+
+	<section class="cs__section">
+		<h2>Evaluating without users</h2>
+		<p>
+			There's no clean way to pull real listening histories off a streaming platform, so
+			there was no ground truth to score against. Evaluation fell back to cluster geometry:
+			build small hand-curated libraries, then compare intra-cluster distance (how tight one
+			person's taste sits) against inter-cluster distance (how far two people's tastes sit
+			apart). If the embedding carries taste at all, the first should be reliably smaller than
+			the second.
+		</p>
+		<p>
+			It's a sanity check rather than a benchmark, and the writeup is explicit about that.
+		</p>
+	</section>
+
+	<section class="cs__section">
+		<h2>Where it breaks</h2>
+		<ul>
+			<li>
+				Lyrical sentiment and musical tone disagree constantly — an upbeat arrangement over
+				bleak words gives the contrastive objective two honest but opposing targets.
+			</li>
+			<li>
+				Instrumental tracks have no text side by definition, and no centralised lyrics
+				dataset covered the full corpus anyway.
+			</li>
+			<li>
+				FFmpeg's codec library wasn't present on the HPC partition used for training and had
+				to be built by hand and put on <code>PATH</code> before anything would decode.
+			</li>
+		</ul>
+	</section>
+
+	<section class="cs__section">
+		<h2>What I took away</h2>
+		<p>
+			The interesting failure wasn't technical. Aligning two modalities assumes they're
+			describing the same thing, and music is the case where that assumption is weakest —
+			the gap between what a song sounds like and what it says is often the point of the song.
+			A stronger version of this would model that disagreement rather than train it away.
+		</p>
+	</section>
+</CaseStudy>
