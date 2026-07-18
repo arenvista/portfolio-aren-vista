@@ -1,5 +1,5 @@
 ---
-import '../styles/resume.css'; // Adjust this path depending on where your CSS is stored
+import '../styles/resume.css';
 
 // ==========================================
 // TYPE DEFINITIONS
@@ -197,24 +197,9 @@ const SKILLS: Record<string, string> = {
 };
 
 const PROJECTS: ProjectItem[] = [
-    //     {
-    //     name: 'Game of Life',
-    //     link: 'https://github.com/arenvista/game_of_life',
-    //     desc: "Conway's Game of Life in C++ using Raylib."
-    // },
-    // {
-    //     name: 'ChessC++',
-    //     link: 'https://github.com/arenvista/chess',
-    //     desc: 'Command-line chess engine in C++, first exposure to programing'
-    // },
-    // {
-    //     name: 'TextEdit',
-    //     link: 'https://github.com/arenvista/textedit',
-    //     desc: 'Terminal-based text editor in C++ utilizing Ncurses.'
-    // },
     {
         name: 'Math-o-nomicon',
-        link: 'https://github.com/arenvista/textedit',
+        link: 'https://github.com/arenvista',
         desc: 'Compendium of material written in latex covering topics from Numerical Linear Algebra to Real Analysis.'
     },
     {
@@ -224,12 +209,12 @@ const PROJECTS: ProjectItem[] = [
     },
     {
         name: 'Mango Nana',
-        link: 'https://github.com/arenvista/textedit',
+        link: 'https://github.com/arenvista',
         desc: 'Website selling figurines and sculptures applying: Astro, TSX, and Stripe'
     },
     {
         name: 'TinyOS',
-        link: 'https://github.com/arenvista/textedit',
+        link: 'https://github.com/arenvista',
         desc: 'Personal tiny OS project written in ASM and C++, currently WIP'
     },
     {
@@ -297,7 +282,7 @@ const PROJECTS: ProjectItem[] = [
     </section>
 
     <section class="section">
-        <h2>Conferences, Publications & Acknowledgements</h2>
+        <h2>Conferences, Publications &amp; Acknowledgements</h2>
         <div class="section-content">
             {PUBLICATIONS.map((entry) => (
             <div class="citation">
@@ -329,14 +314,6 @@ const PROJECTS: ProjectItem[] = [
                     </span>
                     <span>{TUTORING.date}</span>
                 </div>
-
-                <!-- <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px 16px; margin-top: 6px; font-size: 0.9em;"> -->
-                <!--     {TUTORING_COURSES.map((course) => ( -->
-                <!--         <div> -->
-                <!--             {course.code} {course.name} -->
-                <!--         </div> -->
-                <!--     ))} -->
-                <!-- </div> -->
             </div>
         </div>
     </section>

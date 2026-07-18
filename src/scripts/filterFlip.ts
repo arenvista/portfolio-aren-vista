@@ -1,14 +1,18 @@
 /**
  * filterFlip.ts — tag-based filtering with FLIP animation.
  *
- * Expects a container of cards, each with [data-tags] (space-separated,
+ * Expects a container of items, each with [data-tags] (space-separated,
  * lowercase) and a set of filter buttons with [data-filter] (a tag, or
- * "all"). On filter change, cards that no longer match fade out and are
- * hidden; the remaining cards animate from their previous position to
- * their new one (FLIP: First, Last, Invert, Play) so the re-flow reads as
- * a smooth rearrangement rather than a jump-cut.
+ * "all"). On filter change, items that no longer match are hidden; the
+ * remaining items animate from their previous position to their new one
+ * (FLIP: First, Last, Invert, Play) so the re-flow reads as a smooth
+ * rearrangement rather than a jump-cut.
  */
-export function initFilterFlip(gridSelector: string, filterBarSelector: string): () => void {
+export function initFilterFlip(
+  gridSelector: string,
+  filterBarSelector: string,
+  hiddenClass = 'is-filtered-out'
+): () => void {
   const grid = document.querySelector<HTMLElement>(gridSelector);
   const filterBar = document.querySelector<HTMLElement>(filterBarSelector);
   if (!grid || !filterBar) return () => {};
@@ -26,7 +30,7 @@ export function initFilterFlip(gridSelector: string, filterBarSelector: string):
     cards.forEach((card) => {
       const tags = (card.dataset.tags ?? '').split(' ');
       const match = tag === 'all' || tags.includes(tag);
-      card.classList.toggle('project-card--hidden', !match);
+      card.classList.toggle(hiddenClass, !match);
     });
 
     if (reduceMotion) return;
@@ -34,7 +38,7 @@ export function initFilterFlip(gridSelector: string, filterBarSelector: string):
     // LAST: new positions, then INVERT + PLAY.
     requestAnimationFrame(() => {
       cards.forEach((card) => {
-        if (card.classList.contains('project-card--hidden')) return;
+        if (card.classList.contains(hiddenClass)) return;
         const firstRect = first.get(card);
         const lastRect = card.getBoundingClientRect();
         if (!firstRect) return;

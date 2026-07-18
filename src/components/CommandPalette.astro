@@ -13,7 +13,7 @@ const navItems = nav.map((item) => ({
 const projectItems = projects.slice(0, 6).map((p) => ({
   label: p.title,
   sub: 'Project',
-  href: `#projects`,
+  href: p.href,
   keywords: `${p.title} ${p.tags.join(' ')}`,
 }));
 
@@ -77,9 +77,9 @@ const allItems = [...navItems, ...staticItems, ...projectItems];
     align-items: center;
     gap: 0.6rem;
     padding: 0.6rem 0.9rem;
-    background: color-mix(in srgb, var(--bg-raised) 88%, transparent);
+    background: color-mix(in srgb, var(--paper-raised) 90%, transparent);
     backdrop-filter: blur(10px);
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--line);
     border-radius: 999px;
     color: var(--fg-muted);
     font-family: var(--font-mono);
@@ -89,14 +89,14 @@ const allItems = [...navItems, ...staticItems, ...projectItems];
   }
 
   .cp-trigger:hover {
-    border-color: var(--accent-teal);
-    color: var(--accent-teal);
+    border-color: var(--teal);
+    color: var(--teal);
     transform: translateY(-2px);
   }
 
   .cp-trigger__kbd {
     padding: 0.15em 0.5em;
-    border: 1px solid var(--border-strong);
+    border: 1px solid var(--line-strong);
     border-radius: 5px;
     font-size: 0.75rem;
     color: var(--fg-faint);
@@ -120,7 +120,7 @@ const allItems = [...navItems, ...staticItems, ...projectItems];
     align-items: flex-start;
     justify-content: center;
     padding-top: min(14vh, 6rem);
-    background: color-mix(in srgb, var(--ctp-crust) 70%, transparent);
+    background: rgba(33, 53, 61, 0.55);
     backdrop-filter: blur(4px);
     opacity: 0;
     pointer-events: none;
@@ -134,10 +134,10 @@ const allItems = [...navItems, ...staticItems, ...projectItems];
 
   .cp-panel {
     width: min(34rem, 90vw);
-    background: var(--bg-raised);
-    border: 1px solid var(--border-strong);
+    background: var(--paper-raised);
+    border: 1px solid var(--line-strong);
     border-radius: var(--radius-lg);
-    box-shadow: 0 24px 60px -12px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 24px 60px -12px rgba(33, 53, 61, 0.45);
     overflow: hidden;
     transform: translateY(-8px) scale(0.98);
     transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
@@ -152,11 +152,11 @@ const allItems = [...navItems, ...staticItems, ...projectItems];
     align-items: center;
     gap: 0.75rem;
     padding: 1rem 1.25rem;
-    border-bottom: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--line);
   }
 
   .cp-input-icon {
-    color: var(--accent-teal);
+    color: var(--teal);
     font-family: var(--font-mono);
   }
 
@@ -176,7 +176,7 @@ const allItems = [...navItems, ...staticItems, ...projectItems];
 
   .cp-esc {
     padding: 0.15em 0.5em;
-    border: 1px solid var(--border-strong);
+    border: 1px solid var(--line-strong);
     border-radius: 5px;
     font-size: 0.7rem;
     color: var(--fg-faint);
@@ -213,10 +213,10 @@ const allItems = [...navItems, ...staticItems, ...projectItems];
   }
 
   .cp-item--active {
-    background: color-mix(in srgb, var(--accent-teal) 14%, transparent);
+    background: color-mix(in srgb, var(--coral) 30%, transparent);
   }
 
   .cp-item--active .cp-item__label {
-    color: var(--accent-teal);
+    color: var(--ink);
   }
 </style>

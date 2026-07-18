@@ -1,6 +1,10 @@
 # Portfolio
 
-An Astro + TypeScript portfolio site. Dark theme built on the [Catppuccin Frappé](https://catppuccin.com/palette/) palette, with an interactive hero: a cursor-chasing dot that distorts a layered wave field drawn on canvas.
+An Astro + TypeScript portfolio site in a warm coastal palette,
+with a wodniack.dev-style work showcase: as you scroll, each project takes
+over the viewport as a full-bleed frame playing **live canvas footage** — a
+real Conway simulation, a chess opening that plays itself, a TinyOS boot
+sequence — and clicking any frame opens the project.
 
 ## Getting started
 
@@ -15,24 +19,42 @@ npm run preview   # preview the production build
 
 ```
 src/
-  components/     Header, WaveHero, About, Projects, ProjectCard, Blog, Contact, Footer
-  content/blog/    Markdown blog posts (Astro content collection)
-  data/            site.ts (name, bio, skills, socials), projects.ts (project list)
-  layouts/         Layout.astro (head, fonts, meta)
-  scripts/wave.ts  Canvas engine for the hero wave field
-  styles/          global.css — Catppuccin Frappé design tokens + base styles
+  components/          Header, WaveHero, WorkShowcase, About, Experience,
+                       Recognition, Blog, Contact, Footer, Preloader,
+                       CustomCursor, CommandPalette
+  content/blog/        Markdown blog posts (Astro content collection)
+  data/                site.ts (name, bio, skills, socials, nav),
+                       projects.ts (project list + showcase flags),
+                       recognition.ts
+  layouts/             Layout.astro (head, fonts, meta)
+  scripts/
+    showcase.ts        Pinned-scroll logic for the work frames
+    previews.ts        The live canvas scenes (one per project)
+    wave.ts            Hero contour-wave engine
+    ...                cursor, reveal, marquee helpers, etc.
+  styles/global.css    Design tokens + base styles
 ```
 
 ## Customizing
 
-- **Your info, bio, skills, socials** → `src/data/site.ts`
+- **Your info, bio, skills, socials, nav** → `src/data/site.ts`
 - **Projects** → `src/data/projects.ts`
-- **Blog posts** → add a new `.md` file to `src/content/blog/` with the existing frontmatter shape (`title`, `excerpt`, `date`, `tags`, `draft`)
-- **Colors** → CSS variables at the top of `src/styles/global.css`. Swapping the `--ctp-*` values to another Catppuccin flavor (Latte, Macchiato, Mocha) restyles the whole site.
-- **Wave hero behavior** → tune `LAYERS`, `DISTORT_RADIUS`, `DISTORT_STRENGTH`, and `CHASE_EASE` in `src/scripts/wave.ts`.
+  - `showcase: true` puts a project in the scroll showcase
+  - `preview: '<scene>'` picks its live canvas scene
+    (`life`, `waveform`, `keys`, `boot`, `chess`, `math`, `clock`,
+    `browser`, `form`, `edit` — see `src/scripts/previews.ts`)
+  - `video: '/previews/<slug>.mp4'` — drop real footage into `public/`
+    and set this; the showcase will use the video instead of the canvas
+- **Blog posts** → add a `.md` file to `src/content/blog/`
+- **Colors** → the palette variables at the top of `src/styles/global.css`
+  (`--apricot`, `--coral`, `--steel`, `--rose`, `--teal`, `--slate`,
+  `--deep-sea`). The hero canvas and all previews read them at runtime, so
+  changing the palette restyles the animations too.
 
 ## Notes
 
-- The hero canvas respects `prefers-reduced-motion`: it renders a single static frame instead of animating.
-- Fonts (Space Grotesk, Inter, JetBrains Mono) load from Google Fonts via `<link>` tags in `Layout.astro`. Swap for self-hosted fonts if you need to avoid the external request.
-- All project/blog/contact content is placeholder — replace before deploying.
+- Every animation (hero canvas, showcase, previews, marquees, preloader,
+  cursor) respects `prefers-reduced-motion`: static frames, discrete
+  transitions, no scroll hijacking.
+- Fonts (Bricolage Grotesque, Public Sans, IBM Plex Mono) load from Google
+  Fonts via `<link>` in `Layout.astro`.

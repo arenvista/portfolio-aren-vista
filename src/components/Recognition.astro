@@ -3,7 +3,6 @@ import { publications, conferences, teaching } from '@/data/recognition';
 
 // Stat rotator entries — all derived from real data already in recognition.ts
 // plus the one hardcoded "Students Tutored" figure from the original design.
-// Nothing here is invented beyond what already existed on the site.
 const statEntries = [
   { value: 102, label: 'Students Tutored' },
   { value: publications.length, label: 'Publications & Acknowledgements' },
@@ -11,10 +10,7 @@ const statEntries = [
   { value: teaching.length, label: 'Teaching Appointments' },
 ];
 
-// Sparkline: conferences by year, most recent first in the data, so reverse
-// for a left-to-right chronological read. Values are just 1 per conference
-// (no attendance-size data exists), so this reads as a simple timeline of
-// activity rather than implying magnitude.
+// Timeline dots: conferences in chronological order, left to right.
 const chronological = [...conferences].reverse();
 ---
 
@@ -109,7 +105,7 @@ const chronological = [...conferences].reverse();
 
 <style>
   .recognition {
-    background: var(--ctp-crust);
+    background: var(--paper);
     position: relative;
     overflow: hidden;
   }
@@ -121,10 +117,10 @@ const chronological = [...conferences].reverse();
     width: 60vmax;
     height: 60vmax;
     pointer-events: none;
-    opacity: 0.08;
+    opacity: 0.09;
     background: repeating-conic-gradient(
       from 0deg,
-      var(--accent-teal) 0deg 0.6deg,
+      var(--slate) 0deg 0.6deg,
       transparent 0.6deg 6deg
     );
   }
@@ -139,7 +135,7 @@ const chronological = [...conferences].reverse();
     right: -30vmax;
     background: repeating-conic-gradient(
       from 0deg,
-      var(--accent-mauve) 0deg 0.6deg,
+      var(--teal) 0deg 0.6deg,
       transparent 0.6deg 6deg
     );
   }
@@ -147,8 +143,8 @@ const chronological = [...conferences].reverse();
   .recognition__bar {
     position: relative;
     z-index: 1;
-    background: var(--ctp-mantle);
-    border-block: 1px solid var(--border-subtle);
+    background: var(--paper-deep);
+    border-block: 1px solid var(--line);
     padding-block: 0.6rem;
     text-align: center;
   }
@@ -158,7 +154,7 @@ const chronological = [...conferences].reverse();
     font-size: 0.75rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--accent-teal);
+    color: var(--slate);
   }
 
   .recognition__grid {
@@ -173,8 +169,8 @@ const chronological = [...conferences].reverse();
 
   .recognition__cell {
     position: relative;
-    border-right: 1px solid var(--border-subtle);
-    border-bottom: 1px solid var(--border-subtle);
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
     padding: clamp(1.5rem, 3vw, 2.25rem);
   }
 
@@ -198,7 +194,7 @@ const chronological = [...conferences].reverse();
     align-items: center;
     justify-content: center;
     text-align: center;
-    background: var(--ctp-mantle);
+    background: var(--paper-deep);
   }
 
   .recognition__stat-number {
@@ -206,7 +202,7 @@ const chronological = [...conferences].reverse();
     font-weight: 700;
     font-size: clamp(3.5rem, 8vw, 5.5rem);
     line-height: 1;
-    background: linear-gradient(135deg, var(--accent-mauve), var(--accent-blue));
+    background: linear-gradient(135deg, var(--teal), var(--coral));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -233,10 +229,16 @@ const chronological = [...conferences].reverse();
   }
 
   .recognition__stat-dot {
-    width: 5px;
-    height: 5px;
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
-    background: var(--border-strong);
+    background: var(--line-strong);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+
+  .recognition__stat-dot.is-active {
+    background: var(--teal);
+    transform: scale(1.35);
   }
 
   .recognition__citations {
@@ -256,7 +258,7 @@ const chronological = [...conferences].reverse();
   }
 
   .recognition__citations em {
-    color: var(--accent-sapphire, var(--accent-teal));
+    color: var(--teal);
     font-style: normal;
   }
 
@@ -291,7 +293,7 @@ const chronological = [...conferences].reverse();
     margin-top: 0.2rem;
     font-family: var(--font-mono);
     font-size: 0.8rem;
-    color: var(--accent-mauve);
+    color: var(--slate);
   }
 
   .recognition__year {
@@ -310,13 +312,13 @@ const chronological = [...conferences].reverse();
 
   .recognition__sparkline polyline {
     fill: none;
-    stroke: var(--accent-teal);
+    stroke: var(--slate);
     stroke-width: 1.5;
     vector-effect: non-scaling-stroke;
   }
 
   .recognition__sparkline-dot {
-    fill: var(--accent-primary);
+    fill: var(--teal);
   }
 
   @media (max-width: 800px) {

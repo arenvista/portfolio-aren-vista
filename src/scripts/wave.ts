@@ -1,14 +1,18 @@
 /**
  * wave.ts — hero background engine.
  *
- * Draws several layered wave ribbons made of a chain of points. Each point
- * oscillates on its own sine timeline; a "chaser" dot lerps toward the real
- * cursor position (or the last touch point) and physically pushes nearby
- * points away as it passes, so the wave visibly dents wherever the dot goes.
+ * Draws layered wave ribbons that read like contour lines on a survey map,
+ * in the site's earth palette (pulled live from CSS custom properties so a
+ * palette change restyles the canvas too). A "chaser" dot lerps toward the
+ * cursor and lifts nearby points as it passes; a loose particle field
+ * scatters away from it and drifts back home.
  *
- * A small particle field also orbits loosely near the chaser: on pointer
- * idle they drift in a soft cloud; on movement they scatter away from the
- * cursor and drift back once it settles.
+ * Fixes vs. the previous version:
+ * - Distortion is now gated on `pointerActive` only. The old condition
+ *   (`pointerActive || reduceMotion === false`) was effectively always true
+ *   on animated devices, running the distance math for a dot parked at
+ *   (-9999, -9999) on every point of every frame.
+ * - Colors are no longer hardcoded Catppuccin hexes.
  */
 
 interface WaveLayer {
@@ -40,19 +44,17 @@ interface Particle {
   driftPhase: number;
 }
 
-const LAYERS: Omit<WaveLayer, 'phase'>[] = [
-  { color: '#ca9ee6', baseline: 0.62, amplitude: 26, frequency: 0.012, speed: 0.55, lineWidth: 2, alpha: 0.55 }, // mauve
-  { color: '#8caaee', baseline: 0.72, amplitude: 34, frequency: 0.009, speed: 0.4, lineWidth: 2, alpha: 0.45 },  // blue
-  { color: '#81c8be', baseline: 0.82, amplitude: 20, frequency: 0.016, speed: 0.7, lineWidth: 1.5, alpha: 0.35 }, // teal
-];
+function cssVar(name: string, fallback: string): string {
+  const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  return v || fallback;
+}
 
 const POINT_SPACING = 8; // px between sample points along x
-const DISTORT_RADIUS = 140; // px, influence radius of the chaser dot
-const DISTORT_STRENGTH = 46; // max px displacement at the dot's center
+const DISTORT_RADIUS = 150; // px, influence radius of the chaser dot
+const DISTORT_STRENGTH = 48; // max px displacement at the dot's center
 const CHASE_EASE = 0.08; // 0..1, how quickly the dot catches the cursor
 
 const PARTICLE_COUNT = 34;
-const PARTICLE_COLORS = ['#ca9ee6', '#8caaee', '#81c8be', '#ef9f76'];
 const PARTICLE_SCATTER_RADIUS = 110;
 const PARTICLE_SCATTER_STRENGTH = 3.2;
 const PARTICLE_RETURN_EASE = 0.04;
@@ -64,11 +66,25 @@ export function initWaveField(canvas: HTMLCanvasElement): () => void {
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  const slate = cssVar('--slate', '#5484a4');
+  const steel = cssVar('--steel', '#acc0d3');
+  const teal = cssVar('--teal', '#09a1a1');
+  const rose = cssVar('--rose', '#d396a6');
+  const coral = cssVar('--coral', '#fa6e81');
+
+  const LAYERS: Omit<WaveLayer, 'phase'>[] = [
+    { color: slate, baseline: 0.6, amplitude: 26, frequency: 0.012, speed: 0.5, lineWidth: 2, alpha: 0.55 },
+    { color: teal, baseline: 0.7, amplitude: 34, frequency: 0.009, speed: 0.38, lineWidth: 2, alpha: 0.45 },
+    { color: rose, baseline: 0.79, amplitude: 22, frequency: 0.015, speed: 0.62, lineWidth: 1.75, alpha: 0.5 },
+    { color: steel, baseline: 0.87, amplitude: 16, frequency: 0.019, speed: 0.72, lineWidth: 1.5, alpha: 0.45 },
+  ];
+  const PARTICLE_COLORS = [slate, teal, rose, coral, steel];
+
   let width = 0;
   let height = 0;
   let dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-  let layers: WaveLayer[] = LAYERS.map((l) => ({ ...l, phase: Math.random() * Math.PI * 2 }));
+  const layers: WaveLayer[] = LAYERS.map((l) => ({ ...l, phase: Math.random() * Math.PI * 2 }));
   let pointsByLayer: Point[][] = [];
   let particles: Particle[] = [];
 
@@ -99,9 +115,6 @@ export function initWaveField(canvas: HTMLCanvasElement): () => void {
       return pts;
     });
 
-    // (Re)seed particles scattered across the upper portion of the hero,
-    // above the wave baselines, so they read as ambient dust rather than
-    // colliding visually with the ribbons.
     if (particles.length === 0) {
       particles = Array.from({ length: PARTICLE_COUNT }, () => {
         const homeX = Math.random() * width;
@@ -119,7 +132,6 @@ export function initWaveField(canvas: HTMLCanvasElement): () => void {
         };
       });
     } else {
-      // Re-clamp homes into the new bounds on resize.
       particles.forEach((p) => {
         p.homeX = Math.min(p.homeX, width);
         p.homeY = Math.min(p.homeY, height * 0.55);
@@ -154,19 +166,17 @@ export function initWaveField(canvas: HTMLCanvasElement): () => void {
   let rafId = 0;
 
   function drawLayer(layer: WaveLayer, points: Point[], t: number) {
-    // Update each point's base oscillation, then apply chaser-dot distortion.
     for (const p of points) {
       const wave = Math.sin(p.x * layer.frequency + t * layer.speed + layer.phase) * layer.amplitude;
       let y = layer.baseline * height + wave;
 
-      if (pointerActive || reduceMotion === false) {
+      if (pointerActive) {
         const dx = p.x - chaserX;
         const dy = y - chaserY;
         const dist = Math.sqrt(dx * dx + dy * dy);
         if (dist < DISTORT_RADIUS) {
           const falloff = 1 - dist / DISTORT_RADIUS;
           const push = Math.pow(falloff, 2) * DISTORT_STRENGTH;
-          // Lift the wave up and away from the dot; strength eases off with distance.
           y -= push;
         }
       }
@@ -194,7 +204,6 @@ export function initWaveField(canvas: HTMLCanvasElement): () => void {
 
   function drawParticles(t: number) {
     for (const p of particles) {
-      // Gentle idle drift around the home position (Lissajous-ish wander).
       const driftX = Math.sin(t * 0.6 + p.driftPhase) * PARTICLE_DRIFT_AMOUNT;
       const driftY = Math.cos(t * 0.5 + p.driftPhase) * PARTICLE_DRIFT_AMOUNT * 0.6;
       const homeX = p.homeX + driftX;
@@ -211,7 +220,6 @@ export function initWaveField(canvas: HTMLCanvasElement): () => void {
         }
       }
 
-      // Spring back toward home, damped by velocity decay.
       p.vx += (homeX - p.x) * PARTICLE_RETURN_EASE;
       p.vy += (homeY - p.y) * PARTICLE_RETURN_EASE;
       p.vx *= 0.9;
@@ -230,16 +238,16 @@ export function initWaveField(canvas: HTMLCanvasElement): () => void {
 
   function drawChaser() {
     if (!pointerActive) return;
-    const gradient = ctx!.createRadialGradient(chaserX, chaserY, 0, chaserX, chaserY, 10);
-    gradient.addColorStop(0, 'rgba(239, 159, 118, 0.9)'); // peach core
-    gradient.addColorStop(1, 'rgba(239, 159, 118, 0)');
+    const gradient = ctx!.createRadialGradient(chaserX, chaserY, 0, chaserX, chaserY, 11);
+    gradient.addColorStop(0, 'rgba(250, 110, 129, 0.9)'); // coral core
+    gradient.addColorStop(1, 'rgba(250, 110, 129, 0)');
     ctx!.beginPath();
     ctx!.fillStyle = gradient;
-    ctx!.arc(chaserX, chaserY, 10, 0, Math.PI * 2);
+    ctx!.arc(chaserX, chaserY, 11, 0, Math.PI * 2);
     ctx!.fill();
 
     ctx!.beginPath();
-    ctx!.fillStyle = '#ef9f76';
+    ctx!.fillStyle = coral;
     ctx!.arc(chaserX, chaserY, 3, 0, Math.PI * 2);
     ctx!.fill();
   }

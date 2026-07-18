@@ -23,16 +23,20 @@ const formatter = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeri
 ---
 
 <Layout title={post.data.title} description={post.data.excerpt}>
+  <div class="reading-progress" aria-hidden="true">
+    <div class="reading-progress__fill" data-progress-fill></div>
+  </div>
+
   <Header />
   <main>
-    <article class="section post">
+    <article class="section post" data-post-article>
       <div class="wrap post__wrap">
-        <a class="post__back" href="/blog">← All posts</a>
+        <a class="post__back" href="/blog" data-cursor-hover>← All posts</a>
 
         <time class="post__date" datetime={post.data.date.toISOString()}>
           {formatter.format(post.data.date)}
         </time>
-        <h1 class="post__title">{post.data.title}</h1>
+        <h1 class="post__title" data-text-reveal>{post.data.title}</h1>
 
         <ul class="post__tags">
           {post.data.tags.map((tag) => (
@@ -49,7 +53,31 @@ const formatter = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeri
   <Footer />
 </Layout>
 
+<script>
+  import { initReadingProgress } from '@/scripts/readingProgress';
+  import { initTextReveal } from '@/scripts/textReveal';
+
+  initTextReveal('[data-text-reveal]');
+  initReadingProgress('[data-post-article]', '[data-progress-fill]');
+</script>
+
 <style>
+  .reading-progress {
+    position: sticky;
+    top: 0;
+    z-index: 51;
+    height: 3px;
+    width: 100%;
+    background: transparent;
+  }
+
+  .reading-progress__fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--teal), var(--coral));
+    transition: width 0.1s linear;
+  }
+
   .post__wrap {
     max-width: 42rem;
   }
@@ -57,7 +85,7 @@ const formatter = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeri
   .post__back {
     font-family: var(--font-mono);
     font-size: 0.85rem;
-    color: var(--accent-teal);
+    color: var(--teal);
     text-decoration: none;
   }
 
@@ -73,6 +101,19 @@ const formatter = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeri
     margin-top: 0.75rem;
     font-size: clamp(1.8rem, 4vw, 2.5rem);
     color: var(--fg-primary);
+  }
+
+  .post__title :global(.tr-word) {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(0.4em);
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: calc(var(--tr-i) * 0.045s);
+  }
+
+  .post__title:global(.tr-done) :global(.tr-word) {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .post__tags {
@@ -100,12 +141,12 @@ const formatter = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeri
   }
 
   .post__content :global(a) {
-    color: var(--accent-blue);
+    color: var(--teal);
   }
 
   .post__content :global(code) {
     font-family: var(--font-mono);
-    background: var(--bg-surface);
+    background: var(--paper-deep);
     padding: 0.15em 0.4em;
     border-radius: 4px;
     font-size: 0.9em;

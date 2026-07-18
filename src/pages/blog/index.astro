@@ -22,7 +22,7 @@ const formatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numer
         <ul class="post-list">
           {posts.map((post) => (
             <li class="post-list__item">
-              <a href={`/blog/${post.slug}`} class="post-list__link">
+              <a href={`/blog/${post.slug}`} class="post-list__link" data-cursor-hover>
                 <time class="post-list__date" datetime={post.data.date.toISOString()}>
                   {formatter.format(post.data.date)}
                 </time>
@@ -51,11 +51,11 @@ const formatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numer
   }
 
   .post-list__item {
-    border-top: 1px solid var(--border-subtle);
+    border-top: 1px solid var(--line);
   }
 
   .post-list__item:last-child {
-    border-bottom: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--line);
   }
 
   .post-list__link {
@@ -63,6 +63,10 @@ const formatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numer
     padding-block: 2rem;
     text-decoration: none;
     color: inherit;
+  }
+
+  .post-list__link:hover .post-list__title {
+    color: var(--teal);
   }
 
   .post-list__date {
@@ -75,6 +79,7 @@ const formatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numer
     margin-top: 0.5rem;
     font-size: 1.4rem;
     color: var(--fg-primary);
+    transition: color 0.2s ease;
   }
 
   .post-list__excerpt {

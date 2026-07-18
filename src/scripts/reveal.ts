@@ -5,8 +5,16 @@
  * property, read by CSS) and gains the `is-in-view` class the first time it
  * crosses into the viewport, at which point CSS transitions it to rest.
  * Respects prefers-reduced-motion by revealing everything immediately.
+ *
+ * Fix: several components call this on the same page; the module-level
+ * guard prevents multiple observers stacking on the same elements.
  */
+let initialized = false;
+
 export function initScrollReveal(): void {
+  if (initialized) return;
+  initialized = true;
+
   const targets = document.querySelectorAll<HTMLElement>('[data-reveal]');
   if (targets.length === 0) return;
 

@@ -1,5 +1,5 @@
 ---
-import { site, experience, skills } from '@/data/site';
+import { site, skills } from '@/data/site';
 
 const categoryLabels: Record<string, string> = {
   language: 'Languages',
@@ -16,9 +16,9 @@ const grouped = skills.reduce<Record<string, string[]>>((acc, skill) => {
 <section class="about section" id="about">
   <div class="wrap about__grid">
     <div class="about__intro" data-reveal>
-      <span class="eyebrow">01 — About</span>
+      <span class="eyebrow">About</span>
       <h2 class="section-title section-title--with-eyebrow">A little about my work</h2>
-    <a href="/resume" class="project-card__link">View Full Resume</a>
+      <a href="/resume" class="about__resume-link" data-cursor-hover>View full resume ↗</a>
     </div>
 
     <div class="about__body">
@@ -42,6 +42,7 @@ const grouped = skills.reduce<Record<string, string[]>>((acc, skill) => {
       </div>
     </div>
   </div>
+</section>
 
 <script>
   import { initScrollReveal } from '@/scripts/reveal';
@@ -51,7 +52,7 @@ const grouped = skills.reduce<Record<string, string[]>>((acc, skill) => {
 <style>
   .about {
     background: var(--bg-surface);
-    border-block: 1px solid var(--border-subtle);
+    border-block: 1px solid var(--line);
   }
 
   .about__grid {
@@ -62,8 +63,23 @@ const grouped = skills.reduce<Record<string, string[]>>((acc, skill) => {
 
   .about__intro {
     position: sticky;
-    top: 6rem;
+    top: calc(var(--header-h) + 1.5rem);
     align-self: start;
+  }
+
+  .about__resume-link {
+    display: inline-block;
+    margin-top: 1.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    text-decoration: none;
+    color: var(--teal);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+
+  .about__resume-link:hover {
+    border-color: var(--teal);
   }
 
   .about__body p {
@@ -74,6 +90,16 @@ const grouped = skills.reduce<Record<string, string[]>>((acc, skill) => {
 
   .about__body p + p {
     margin-top: 1.25rem;
+  }
+
+  .about__body p:first-child::first-letter {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 3.1em;
+    float: left;
+    line-height: 0.82;
+    padding-right: 0.12em;
+    color: var(--teal);
   }
 
   .about__skills-block {
@@ -89,7 +115,7 @@ const grouped = skills.reduce<Record<string, string[]>>((acc, skill) => {
     font-size: 0.75rem;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--accent-teal);
+    color: var(--slate);
     margin-bottom: 0.6rem;
   }
 
@@ -97,76 +123,6 @@ const grouped = skills.reduce<Record<string, string[]>>((acc, skill) => {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-  }
-
-  .about__timeline {
-    margin-top: 3rem;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .about__timeline-item {
-    padding-block: 1.5rem;
-    border-top: 1px solid var(--border-subtle);
-  }
-
-  .about__timeline-item:last-child {
-    border-bottom: 1px solid var(--border-subtle);
-  }
-
-  .about__timeline-head {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 0.5rem 1.5rem;
-  }
-
-  .about__timeline-title {
-    font-family: var(--font-display);
-    font-weight: 600;
-    color: var(--fg-primary);
-    font-size: 1.05rem;
-  }
-
-  .about__timeline-date {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--fg-faint);
-    white-space: nowrap;
-  }
-
-  .about__timeline-org {
-    display: block;
-    margin-top: 0.3rem;
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    color: var(--accent-mauve);
-  }
-
-  .about__timeline-bullets {
-    margin-top: 0.85rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-  }
-
-  .about__timeline-bullets li {
-    position: relative;
-    padding-left: 1.1rem;
-    color: var(--fg-muted);
-    font-size: 0.92rem;
-    line-height: 1.6;
-  }
-
-  .about__timeline-bullets li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.55em;
-    width: 0.4rem;
-    height: 1px;
-    background: var(--accent-teal);
   }
 
   @media (max-width: 800px) {
@@ -177,13 +133,5 @@ const grouped = skills.reduce<Record<string, string[]>>((acc, skill) => {
     .about__intro {
       position: static;
     }
-  }
-
-  .project-card__link {
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    text-decoration: none;
-    color: var(--accent-blue);
-    transition: color 0.2s ease;
   }
 </style>

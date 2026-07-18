@@ -8,19 +8,53 @@ const year = new Date().getFullYear();
   <div class="wrap site-footer__inner">
     <p class="site-footer__copy">© {year} {site.name}</p>
 
+    <p class="site-footer__time">
+      Baltimore, MD — <span data-local-time>--:--:--</span>
+    </p>
+
     <ul class="site-footer__socials">
       {socials.map((social) => (
         <li>
-          <a href={social.href} target="_blank" rel="noopener noreferrer">{social.label}</a>
+          <a href={social.href} target="_blank" rel="noopener noreferrer" data-cursor-hover>{social.label}</a>
         </li>
       ))}
+      <li>
+        <button type="button" class="site-footer__top" data-back-to-top data-cursor-hover>Back to top ↑</button>
+      </li>
     </ul>
   </div>
 </footer>
 
+<script>
+  // Ticking local clock (Baltimore).
+  const timeEl = document.querySelector<HTMLElement>('[data-local-time]');
+  if (timeEl) {
+    const fmt = new Intl.DateTimeFormat('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true,
+      timeZone: 'America/New_York',
+    });
+    const tick = () => (timeEl.textContent = fmt.format(new Date()));
+    tick();
+    window.setInterval(tick, 1000);
+  }
+
+  const topBtn = document.querySelector<HTMLButtonElement>('[data-back-to-top]');
+  if (topBtn) {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    topBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    });
+  }
+</script>
+
 <style>
   .site-footer {
-    border-top: 1px solid var(--border-subtle);
+    background: var(--ink);
+    color: var(--paper);
+    border-top: 1px solid var(--line-on-ink);
   }
 
   .site-footer__inner {
@@ -32,21 +66,31 @@ const year = new Date().getFullYear();
     padding-block: 1.75rem;
     font-family: var(--font-mono);
     font-size: 0.8rem;
-    color: var(--fg-faint);
+    color: var(--steel);
+  }
+
+  .site-footer__time {
+    color: var(--slate);
   }
 
   .site-footer__socials {
     display: flex;
+    align-items: center;
     gap: 1.5rem;
   }
 
-  .site-footer__socials a {
+  .site-footer__socials a,
+  .site-footer__top {
     text-decoration: none;
-    color: var(--fg-faint);
+    color: var(--steel);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    padding: 0;
     transition: color 0.2s ease;
   }
 
-  .site-footer__socials a:hover {
-    color: var(--accent-teal);
+  .site-footer__socials a:hover,
+  .site-footer__top:hover {
+    color: var(--coral);
   }
 </style>

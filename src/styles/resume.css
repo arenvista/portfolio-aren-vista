@@ -91,6 +91,7 @@
 
 .content li {
     margin-bottom: 1px; /* Heavily compressed bullets */
+    list-style: disc;
 }
 
 /* Compact Text Sections */
@@ -140,6 +141,6 @@
 
 .project-link {
     flex: 1;
-    font-weight: 10;
+    font-weight: 300;
     color: #444;
 }

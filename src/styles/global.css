@@ -1,69 +1,55 @@
 /* ==========================================================================
-   Design tokens — Catppuccin Frappé
-   https://catppuccin.com/palette/
+   Design tokens — coastal palette (from the provided swatches)
+   The six swatch colors plus the printed #30525C dark are the brief;
+   everything else is derived.
    ========================================================================== */
 :root {
-  /* Surfaces */
-  --ctp-crust: #232634;
-  --ctp-mantle: #292c3c;
-  --ctp-base: #303446;
-  --ctp-surface0: #414559;
-  --ctp-surface1: #51576d;
-  --ctp-surface2: #626880;
-  --ctp-overlay0: #737994;
-  --ctp-overlay1: #838ba7;
-  --ctp-overlay2: #949cbb;
+  /* Palette (as provided) */
+  --apricot: #f6c992;
+  --coral: #fa6e81;
+  --steel: #acc0d3;
+  --rose: #d396a6;
+  --teal: #09a1a1;
+  --slate: #5484a4;
+  --deep-sea: #30525c;
 
-  /* Text */
-  --ctp-text: #c6d0f5;
-  --ctp-subtext1: #b5bfe2;
-  --ctp-subtext0: #a5adce;
+  /* Derived ground + ink (darkened deep-sea / lightened apricot) */
+  --ink: #21353d;
+  --ink-soft: #46626d;
+  --paper: #faf3e6;
+  --paper-deep: #f4e6cd;
+  --paper-raised: #fdf8ef;
 
-  /* Accents */
-  --ctp-rosewater: #f2d5cf;
-  --ctp-flamingo: #eebebe;
-  --ctp-pink: #f4b8e4;
-  --ctp-mauve: #ca9ee6;
-  --ctp-red: #e78284;
-  --ctp-maroon: #ea999c;
-  --ctp-peach: #ef9f76;
-  --ctp-yellow: #e5c890;
-  --ctp-green: #a6d189;
-  --ctp-teal: #81c8be;
-  --ctp-sky: #99d1db;
-  --ctp-sapphire: #85c1dc;
-  --ctp-blue: #8caaee;
-  --ctp-lavender: #babbf1;
+  --line: rgba(33, 53, 61, 0.16);
+  --line-strong: rgba(33, 53, 61, 0.32);
+  --line-on-ink: rgba(250, 243, 230, 0.16);
+  --line-on-ink-strong: rgba(250, 243, 230, 0.32);
 
-  /* Semantic tokens */
-  --bg-page: var(--ctp-crust);
-  --bg-surface: var(--ctp-mantle);
-  --bg-raised: var(--ctp-base);
-  --border-subtle: var(--ctp-surface0);
-  --border-strong: var(--ctp-surface1);
-
-  --fg-primary: var(--ctp-text);
-  --fg-muted: var(--ctp-subtext0);
-  --fg-faint: var(--ctp-overlay1);
-
-  --accent-primary: var(--ctp-peach);
-  --accent-mauve: var(--ctp-mauve);
-  --accent-blue: var(--ctp-blue);
-  --accent-teal: var(--ctp-teal);
+  /* Semantic aliases */
+  --bg-page: var(--paper);
+  --bg-surface: var(--paper-deep);
+  --bg-raised: var(--paper-raised);
+  --fg-primary: var(--ink);
+  --fg-muted: var(--ink-soft);
+  --fg-faint: var(--slate);
+  --accent-primary: var(--coral);
+  --accent-cool: var(--teal);
+  --accent-label: var(--slate);
 
   /* Type */
-  --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
-  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --font-display: 'Bricolage Grotesque', 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Public Sans', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 
   /* Layout */
-  --content-width: 72rem;
+  --content-width: 76rem;
   --gutter: clamp(1.25rem, 4vw, 3rem);
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 18px;
+  --header-h: 4.25rem;
 
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 /* ==========================================================================
@@ -77,6 +63,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* Anchored sections no longer hide under the sticky header. */
+  scroll-padding-top: calc(var(--header-h) + 0.75rem);
   -webkit-text-size-adjust: 100%;
 }
 
@@ -104,9 +92,27 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Paper grain over everything, very faint. */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+::selection {
+  background: var(--coral);
+  color: var(--ink);
+}
+
 img,
 svg,
-canvas {
+canvas,
+video {
   display: block;
   max-width: 100%;
 }
@@ -121,16 +127,17 @@ h3,
 h4 {
   font-family: var(--font-display);
   font-weight: 600;
-  line-height: 1.1;
+  line-height: 1.06;
   margin: 0;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 
 p {
   margin: 0;
 }
 
-ul {
+ul,
+ol {
   margin: 0;
   padding: 0;
   list-style: none;
@@ -146,7 +153,7 @@ button {
 
 /* Visible keyboard focus, everywhere */
 :focus-visible {
-  outline: 2px solid var(--accent-primary);
+  outline: 2px solid var(--teal);
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -173,27 +180,37 @@ button {
   margin-bottom: clamp(2rem, 5vw, 3.5rem);
 }
 
+/* Field-journal label: a small leaf tick + mono uppercase. */
 .eyebrow {
   font-family: var(--font-mono);
   font-size: 0.8rem;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--accent-teal);
+  color: var(--slate);
   display: inline-flex;
   align-items: center;
-  gap: 0.5em;
+  gap: 0.55em;
 }
 
 .eyebrow::before {
   content: '';
-  width: 0.5em;
-  height: 0.5em;
-  border-radius: 50%;
-  background: currentColor;
+  width: 0.7em;
+  height: 0.7em;
+  border-radius: 0 60% 0 60%; /* leaf */
+  background: var(--slate);
+  transform: rotate(-8deg);
+}
+
+.eyebrow--on-ink {
+  color: var(--steel);
+}
+
+.eyebrow--on-ink::before {
+  background: var(--coral);
 }
 
 .section-title {
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-size: clamp(1.8rem, 3.4vw, 2.6rem);
   color: var(--fg-primary);
 }
 
@@ -205,7 +222,7 @@ button {
   font-family: var(--font-mono);
   font-size: 0.85rem;
   color: var(--fg-faint);
-  max-width: 20ch;
+  max-width: 22ch;
   text-align: right;
 }
 
@@ -213,13 +230,14 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  padding: 0.75rem 1.35rem;
-  border-radius: var(--radius-md);
+  padding: 0.8rem 1.5rem;
+  border-radius: 999px;
   font-family: var(--font-mono);
   font-size: 0.9rem;
   font-weight: 500;
-  border: 1px solid var(--border-strong);
-  transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.15s ease;
+  text-decoration: none;
+  border: 1px solid var(--line-strong);
+  transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
   white-space: nowrap;
 }
 
@@ -228,14 +246,15 @@ button {
 }
 
 .btn--primary {
-  background: var(--accent-primary);
-  color: var(--ctp-crust);
-  border-color: var(--accent-primary);
+  background: var(--coral);
+  color: var(--ink);
+  border-color: var(--coral);
 }
 
 .btn--primary:hover {
-  background: var(--ctp-flamingo);
-  border-color: var(--ctp-flamingo);
+  background: var(--teal);
+  border-color: var(--teal);
+  color: var(--ink);
 }
 
 .btn--ghost {
@@ -244,17 +263,85 @@ button {
 }
 
 .btn--ghost:hover {
-  border-color: var(--accent-teal);
-  color: var(--accent-teal);
+  border-color: var(--slate);
+  color: var(--slate);
+}
+
+.btn--on-ink {
+  color: var(--paper);
+  border-color: var(--line-on-ink-strong);
+}
+
+.btn--on-ink:hover {
+  border-color: var(--apricot);
+  color: var(--apricot);
 }
 
 .tag {
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  padding: 0.3em 0.65em;
+  padding: 0.3em 0.7em;
   border-radius: 999px;
-  border: 1px solid var(--border-subtle);
+  border: 1px solid var(--line);
   color: var(--fg-muted);
+  background: var(--paper-raised);
+}
+
+.filter-btn {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  padding: 0.4em 0.95em;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--fg-muted);
+  background: transparent;
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
+.filter-btn:hover {
+  border-color: var(--slate);
+  color: var(--slate);
+}
+
+.filter-btn--active,
+.filter-btn--active:hover {
+  border-color: var(--coral);
+  color: var(--ink);
+  background: var(--coral);
+}
+
+/* ==========================================================================
+   Marquee — used for the hero roles band and the contact ghost text
+   ========================================================================== */
+.marquee {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee__track {
+  display: inline-flex;
+  align-items: center;
+  will-change: transform;
+  animation: marquee var(--marquee-speed, 30s) linear infinite;
+}
+
+.marquee__group {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--marquee-gap, 2.5rem);
+  padding-right: var(--marquee-gap, 2.5rem);
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track {
+    animation: none;
+  }
 }
 
 /* ==========================================================================

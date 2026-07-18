@@ -1,8 +1,10 @@
 ---
 import { site } from '@/data/site';
 
-// Fallback in case roles is not defined yet
-const rolesList = site.roles || [site.role];
+const rolesList = site.roles;
+const [firstName, ...rest] = site.name.split(' ');
+const lastName = rest.join(' ');
+const marqueeItems = [...site.roles, 'Baltimore, MD', 'UMBC'];
 ---
 
 <section class="hero" id="top">
@@ -17,23 +19,47 @@ const rolesList = site.roles || [site.role];
     )}
 
     <h1 class="hero__title">
-      {site.name}
-      <span class="hero__title-role" data-roles={JSON.stringify(rolesList)}>
-        {rolesList[0]}
-      </span>
+      <span class="hero__title-line">{firstName}</span>
+      <span class="hero__title-line hero__title-line--last">{lastName}</span>
     </h1>
+
+    <p class="hero__role">
+      <span class="hero__role-prefix" aria-hidden="true">field:</span>
+      <span class="hero__role-text" data-roles={JSON.stringify(rolesList)}>{rolesList[0]}</span>
+    </p>
 
     <p class="hero__tagline">{site.tagline}</p>
 
     <div class="hero__actions">
-      <a class="btn btn--primary" href="#projects" data-cursor-hover data-magnetic>View projects</a>
+      <a class="btn btn--primary" href="#work" data-cursor-hover data-magnetic>View work</a>
       <a class="btn btn--ghost" href="#contact" data-cursor-hover data-magnetic>Get in touch</a>
     </div>
   </div>
 
-  <a class="hero__scroll-cue" href="#about" aria-label="Scroll to about section" data-cursor-hover>
+  <a class="hero__scroll-cue" href="#work" aria-label="Scroll to work section" data-cursor-hover>
     <span></span>
   </a>
+
+  <div class="hero__marquee marquee" aria-hidden="true">
+    <div class="marquee__track" style="--marquee-speed: 34s;">
+      <span class="marquee__group">
+        {marqueeItems.map((item) => (
+          <>
+            <span class="hero__marquee-item">{item}</span>
+            <span class="hero__marquee-leaf"></span>
+          </>
+        ))}
+      </span>
+      <span class="marquee__group">
+        {marqueeItems.map((item) => (
+          <>
+            <span class="hero__marquee-item">{item}</span>
+            <span class="hero__marquee-leaf"></span>
+          </>
+        ))}
+      </span>
+    </div>
+  </div>
 </section>
 
 <script>
@@ -41,16 +67,14 @@ const rolesList = site.roles || [site.role];
   import { scrambleTo } from '@/scripts/scramble';
   import { initMagnetic } from '@/scripts/cursor';
 
-  // Canvas Init
   const canvas = document.querySelector<HTMLCanvasElement>('[data-wave-canvas]');
   if (canvas) {
     initWaveField(canvas);
   }
 
-  // Magnetic hero CTAs
   initMagnetic('.hero [data-magnetic]', 70, 0.3);
 
-  // Role text rotation, now scrambling into place instead of fading.
+  // Role text rotation, scrambling into place.
   const roleElement = document.querySelector<HTMLElement>('[data-roles]');
   if (roleElement) {
     const roles: string[] = JSON.parse(roleElement.dataset.roles || '[]');
@@ -70,9 +94,10 @@ const rolesList = site.roles || [site.role];
     position: relative;
     min-height: 100svh;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
     overflow: hidden;
-    background: radial-gradient(120% 100% at 50% 0%, var(--ctp-base) 0%, var(--bg-page) 65%);
+    background: radial-gradient(120% 100% at 50% 0%, var(--paper-raised) 0%, var(--paper) 65%);
   }
 
   .hero__canvas {
@@ -80,13 +105,12 @@ const rolesList = site.roles || [site.role];
     inset: 0;
     width: 100%;
     height: 100%;
-    cursor: none;
   }
 
   .hero__content {
     position: relative;
     z-index: 1;
-    padding-block: 6rem;
+    padding-block: 7rem 9rem;
     pointer-events: none;
   }
 
@@ -100,43 +124,64 @@ const rolesList = site.roles || [site.role];
     gap: 0.55rem;
     font-family: var(--font-mono);
     font-size: 0.8rem;
-    color: var(--accent-teal);
-    margin-bottom: 1.5rem;
-    padding: 0.4em 0.85em;
-    border: 1px solid var(--border-subtle);
+    color: var(--ink-soft);
+    margin-bottom: 2rem;
+    padding: 0.45em 0.95em;
+    border: 1px solid var(--line);
     border-radius: 999px;
-    background: color-mix(in srgb, var(--bg-surface) 60%, transparent);
+    background: color-mix(in srgb, var(--paper-raised) 75%, transparent);
   }
 
   .hero__status-dot {
     width: 0.5em;
     height: 0.5em;
     border-radius: 50%;
-    background: var(--accent-teal);
-    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-teal) 25%, transparent);
+    background: var(--teal);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--coral) 45%, transparent);
+    animation: hero-pulse 2.4s ease-in-out infinite;
+  }
+
+  @keyframes hero-pulse {
+    50% {
+      box-shadow: 0 0 0 6px color-mix(in srgb, var(--coral) 20%, transparent);
+    }
   }
 
   .hero__title {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    font-size: clamp(2.6rem, 7vw, 5rem);
-    color: var(--fg-primary);
-    max-width: 16ch;
+    font-size: clamp(3.4rem, 13vw, 9.5rem);
+    font-weight: 700;
+    line-height: 0.92;
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+    color: var(--ink);
   }
 
-  .hero__title-role {
-    display: inline-block;
+  .hero__title-line--last {
+    color: transparent;
+    -webkit-text-stroke: 2px var(--ink);
+    margin-left: 0.35em;
+  }
+
+  .hero__role {
+    margin-top: 1.5rem;
     font-family: var(--font-mono);
-    font-size: clamp(1rem, 2vw, 1.35rem);
-    font-weight: 400;
-    color: var(--accent-mauve);
-    letter-spacing: 0.01em;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--teal);
+    display: flex;
+    align-items: baseline;
+    gap: 0.6em;
     white-space: pre;
   }
 
+  .hero__role-prefix {
+    color: var(--slate);
+    font-size: 0.85em;
+  }
+
   .hero__tagline {
-    margin-top: 1.75rem;
+    margin-top: 1.25rem;
     max-width: 42ch;
     font-size: clamp(1.05rem, 2vw, 1.25rem);
     color: var(--fg-muted);
@@ -151,12 +196,12 @@ const rolesList = site.roles || [site.role];
 
   .hero__scroll-cue {
     position: absolute;
-    bottom: 2rem;
+    bottom: 5.5rem;
     left: 50%;
     transform: translateX(-50%);
     width: 1.5rem;
     height: 2.5rem;
-    border: 1px solid var(--border-strong);
+    border: 1px solid var(--line-strong);
     border-radius: 999px;
     display: flex;
     justify-content: center;
@@ -168,7 +213,7 @@ const rolesList = site.roles || [site.role];
     width: 0.3rem;
     height: 0.3rem;
     border-radius: 50%;
-    background: var(--accent-primary);
+    background: var(--teal);
     animation: hero-scroll-cue 1.8s ease-in-out infinite;
   }
 
@@ -187,15 +232,50 @@ const rolesList = site.roles || [site.role];
     }
   }
 
+  .hero__marquee {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    border-top: 1px solid var(--line);
+    background: color-mix(in srgb, var(--paper-raised) 70%, transparent);
+    backdrop-filter: blur(4px);
+    padding-block: 0.8rem;
+  }
+
+  .hero__marquee-item {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--slate);
+    text-transform: uppercase;
+  }
+
+  .hero__marquee-leaf {
+    width: 0.7em;
+    height: 0.7em;
+    border-radius: 0 60% 0 60%;
+    background: var(--teal);
+    transform: rotate(-8deg);
+    flex-shrink: 0;
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .hero__scroll-cue span {
+    .hero__scroll-cue span,
+    .hero__status-dot {
       animation: none;
     }
   }
 
   @media (max-width: 640px) {
-    .hero__canvas {
-      cursor: auto;
+    .hero__title-line--last {
+      margin-left: 0.15em;
+    }
+
+    .hero__scroll-cue {
+      display: none;
     }
   }
 </style>

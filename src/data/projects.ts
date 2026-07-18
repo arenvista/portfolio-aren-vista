@@ -4,46 +4,104 @@ export interface Project {
   summary: string;
   year: string;
   tags: string[];
+  /** Where the frame / title link goes: case study, live site, or repo. */
   href: string;
   repo?: string;
   featured?: boolean;
+  /** Appears in the scroll-driven work showcase. */
+  showcase?: boolean;
+  /** Which live canvas scene plays as this project's "footage" (see src/scripts/previews.ts). */
+  preview?: string;
+  /**
+   * Optional real footage. Drop an mp4/webm into /public (e.g. /previews/slug.mp4)
+   * and set this — the showcase will use the video instead of the canvas scene.
+   */
+  video?: string;
 }
 
-// NOTE: several entries in your original resume shared the same repo link
-// and description ("Terminal-based text editor in C++ utilizing Ncurses"),
-// which was almost certainly a copy/paste artifact rather than accurate for
-// each project. I've kept titles distinct but left summaries generic where
-// the source data didn't distinguish them — update these with the real repo
-// links and one-line descriptions when you have a minute.
+// Descriptions and repo links restored from resume.astro — the previous file
+// had "update this description" placeholders and several projects pointing at
+// the wrong repository (a copy/paste artifact). TinyOS and Math-o-nomicon
+// still lack dedicated repos on your profile, so they point at your GitHub
+// until you publish them.
 export const projects: Project[] = [
-  {
-    slug: 'portfolio-me',
-    title: 'portfolio.me',
-    summary: 'React/Node personal portfolio, hosted on AWS.',
-    year: '2026',
-    tags: ['React', 'Node.js', 'AWS'],
-    href: 'https://portfolio.arenvista.me',
-    repo: 'https://github.com/arenvista/portfolio',
-    featured: true,
-  },
   {
     slug: 'game-of-life',
     title: 'Game of Life',
-    summary: "Conway's Game of Life implemented in C++ using Raylib.",
+    summary: "Conway's Game of Life implemented in C++ using Raylib — cellular automata at 60fps.",
     year: '2025',
     tags: ['C++', 'Raylib'],
-    href: '#',
+    href: 'https://github.com/arenvista/game_of_life',
     repo: 'https://github.com/arenvista/game_of_life',
     featured: true,
+    showcase: true,
+    preview: 'life',
+  },
+  {
+    slug: 'audio-recommendation',
+    title: 'Audio Recommendation',
+    summary: 'A music recommender using aligned audio and lyric embeddings to bypass metadata and collaborative filtering.',
+    year: '2025',
+    tags: ['Python', 'PyTorch'],
+    href: 'https://github.com/arenvista/AudioRecomendation',
+    repo: 'https://github.com/arenvista/AudioRecomendation',
+    featured: true,
+    showcase: true,
+    preview: 'waveform',
+  },
+  {
+    slug: 'snapdaemon',
+    title: 'SnapDaemon',
+    summary: "Software implementation of Wooting keyboards' SnapTap feature — last-input-wins key resolution as a background daemon.",
+    year: '2024',
+    tags: ['C++', 'Linux'],
+    href: '/projects/snapdaemon',
+    repo: 'https://github.com/arenvista',
+    showcase: true,
+    preview: 'keys',
+  },
+  {
+    slug: 'tinyos',
+    title: 'TinyOS',
+    summary: 'A tiny operating system written in x86 assembly and C++ — bootloader to shell. Work in progress.',
+    year: '2023',
+    tags: ['ASM', 'C++'],
+    href: 'https://github.com/arenvista',
+    repo: 'https://github.com/arenvista',
+    showcase: true,
+    preview: 'boot',
   },
   {
     slug: 'chess-cpp',
     title: 'ChessC++',
-    summary: 'Command-line chess engine in C++ using Ncurses.',
+    summary: 'Command-line chess engine in C++ using Ncurses — my first real exposure to programming.',
     year: '2025',
     tags: ['C++', 'Ncurses'],
-    href: '#',
+    href: 'https://github.com/arenvista/chess',
     repo: 'https://github.com/arenvista/chess',
+    showcase: true,
+    preview: 'chess',
+  },
+  {
+    slug: 'math-o-nomicon',
+    title: 'Math-o-nomicon',
+    summary: 'A LaTeX compendium covering topics from Numerical Linear Algebra to Real Analysis.',
+    year: '2024',
+    tags: ['LaTeX'],
+    href: 'https://github.com/arenvista',
+    repo: 'https://github.com/arenvista',
+    showcase: true,
+    preview: 'math',
+  },
+  {
+    slug: 'blood-on-the-clocktower',
+    title: 'Blood on the Clocktower',
+    summary: "Discord bot that helps run the board game 'Blood on the Clocktower' — roles, nominations, night order.",
+    year: '2023',
+    tags: ['Python', 'Discord'],
+    href: 'https://github.com/arenvista/BotCT',
+    repo: 'https://github.com/arenvista/BotCT',
+    preview: 'clock',
   },
   {
     slug: 'textedit',
@@ -51,70 +109,39 @@ export const projects: Project[] = [
     summary: 'Terminal-based text editor in C++ using Ncurses.',
     year: '2024',
     tags: ['C++', 'Ncurses'],
-    href: '#',
+    href: 'https://github.com/arenvista/textedit',
     repo: 'https://github.com/arenvista/textedit',
-  },
-  {
-    slug: 'math-o-nomicon',
-    title: 'Math-o-nomicon',
-    summary: 'Project — update this description with what it actually does.',
-    year: '2024',
-    tags: ['C++'],
-    href: '#',
-    repo: 'https://github.com/arenvista',
-  },
-  {
-    slug: 'snapdaemon',
-    title: 'SnapDaemon',
-    summary: 'Project — update this description with what it actually does.',
-    year: '2024',
-    tags: ['C++'],
-    href: '#',
-    repo: 'https://github.com/arenvista',
+    preview: 'edit',
   },
   {
     slug: 'mango-nana',
     title: 'Mango Nana',
-    summary: 'Project — update this description with what it actually does.',
+    summary: 'Storefront selling figurines and sculptures — Astro, TSX, and Stripe.',
     year: '2023',
-    tags: ['C++'],
-    href: '#',
+    tags: ['Astro', 'TypeScript', 'Stripe'],
+    href: 'https://github.com/arenvista',
     repo: 'https://github.com/arenvista',
+    preview: 'browser',
   },
   {
-    slug: 'tinyos',
-    title: 'TinyOS',
-    summary: 'Project — update this description with what it actually does.',
-    year: '2023',
-    tags: ['C++'],
-    href: '#',
-    repo: 'https://github.com/arenvista',
+    slug: 'portfolio-me',
+    title: 'portfolio.me',
+    summary: 'This site — Astro + TypeScript with live canvas work previews, hosted on AWS.',
+    year: '2026',
+    tags: ['Astro', 'TypeScript', 'AWS'],
+    href: 'https://portfolio.arenvista.me',
+    repo: 'https://github.com/arenvista/portfolio',
+    featured: true,
+    preview: 'browser',
   },
   {
-    slug: 'blood-on-the-clocktower',
-    title: 'Blood on the Clocktower',
-    summary: 'Project — update this description with what it actually does.',
-    year: '2023',
-    tags: ['C++'],
-    href: '#',
-    repo: 'https://github.com/arenvista',
-  },
-  {
-    slug: 'audio-recommendation',
-    title: 'Audio Recommendation',
-    summary: 'A music recommender using aligned audio and lyric embeddings to bypass metadata and collaborative filtering.',
-    year: '2025',
-    tags: ['Python'],
-    href: '#',
-    repo: 'https://github.com/arenvista/AudioRecomendation',
-  },
-  {
-    slug: 'autopayroll',
-    title: 'Autopayroll',
-    summary: 'Project — update this description with what it actually does.',
+    slug: 'ascautopayroll',
+    title: 'ASCAutopayroll',
+    summary: 'A Selenium tool automating UMBC student timesheets — auto-filling PeopleSoft.',
     year: '2022',
-    tags: ['Python'],
-    href: '#',
-    repo: 'https://github.com/arenvista',
+    tags: ['Python', 'Selenium'],
+    href: 'https://github.com/arenvista/ASCAutoPayroll',
+    repo: 'https://github.com/arenvista/ASCAutoPayroll',
+    preview: 'form',
   },
 ];

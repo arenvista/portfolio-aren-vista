@@ -1,25 +1,27 @@
 ---
 import Layout from '@/layouts/Layout.astro';
+import Preloader from '@/components/Preloader.astro';
 import Header from '@/components/Header.astro';
 import WaveHero from '@/components/WaveHero.astro';
+import WorkShowcase from '@/components/WorkShowcase.astro';
 import About from '@/components/About.astro';
 import Experience from '@/components/Experience.astro';
 import Recognition from '@/components/Recognition.astro';
-import Projects from '@/components/Projects.astro';
 import Blog from '@/components/Blog.astro';
 import Contact from '@/components/Contact.astro';
 import Footer from '@/components/Footer.astro';
 import { site } from '@/data/site';
 ---
 
-<Layout title={`${site.name} — ${site.role}`}>
+<Layout title={`${site.name} — ${site.roles[0]}`}>
+  <Preloader />
   <Header />
   <main>
     <WaveHero />
+    <WorkShowcase />
     <About />
     <Experience />
     <Recognition />
-    <Projects />
     <Blog />
     <Contact />
   </main>

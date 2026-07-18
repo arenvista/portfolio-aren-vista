@@ -6,7 +6,8 @@
  *
  * initStatRotator(el) expects [data-stats] on the element: a JSON array of
  * { value, label } pairs. It cycles through them, count-up-animating the
- * number each time and cross-fading the label.
+ * number each time, cross-fading the label, and lighting the matching
+ * [data-stat-dot] indicator (fix: the dots previously never updated).
  */
 
 interface StatEntry {
@@ -63,6 +64,7 @@ export function initStatRotator(selector: string, intervalMs = 3200): () => void
 
   const numberEl = root.querySelector<HTMLElement>('[data-stat-number]');
   const labelEl = root.querySelector<HTMLElement>('[data-stat-label]');
+  const dots = Array.from(root.querySelectorAll<HTMLElement>('[data-stat-dot]'));
   if (!numberEl || !labelEl) return () => {};
 
   let stats: StatEntry[] = [];
@@ -78,10 +80,15 @@ export function initStatRotator(selector: string, intervalMs = 3200): () => void
   let started = false;
   let timerId = 0;
 
+  function setDot(i: number) {
+    dots.forEach((dot, d) => dot.classList.toggle('is-active', d === i));
+  }
+
   function show(i: number, animate: boolean) {
     const entry = stats[i];
     labelEl!.classList.add('stat-fade');
     numberEl!.classList.add('stat-fade');
+    setDot(i);
 
     window.setTimeout(() => {
       labelEl!.textContent = entry.label;

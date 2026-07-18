@@ -1,8 +1,7 @@
 /**
  * skillbars.ts — animates [data-skill-fill] elements from 0 width to their
- * target (read from --target custom property, a 0-100 number) once they
- * scroll into view. Staggers slightly by index within each group for a
- * cascading fill effect.
+ * target (read from data-skill-level, a 0-100 number) once they scroll
+ * into view. Staggers slightly by index within each group.
  */
 export function initSkillBars(selector: string): () => void {
   const bars = Array.from(document.querySelectorAll<HTMLElement>(selector));

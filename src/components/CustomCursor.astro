@@ -22,14 +22,18 @@
     height: 6px;
     margin: -3px 0 0 -3px;
     border-radius: 50%;
-    background: var(--accent-primary);
+    background: var(--teal);
     pointer-events: none;
     z-index: 200;
-    transition: transform 0.05s linear;
+    transition: transform 0.05s linear, opacity 0.2s ease;
   }
 
   .cc-dot--hover {
-    background: var(--accent-teal);
+    background: var(--slate);
+  }
+
+  .cc-dot--hidden {
+    opacity: 0;
   }
 
   .cc-ring {
@@ -40,17 +44,46 @@
     height: 34px;
     margin: -17px 0 0 -17px;
     border-radius: 50%;
-    border: 1px solid var(--fg-faint);
+    border: 1px solid var(--slate);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     pointer-events: none;
     z-index: 199;
-    transition: width 0.2s ease, height 0.2s ease, margin 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+    background: transparent;
+    transition: width 0.25s ease, height 0.25s ease, margin 0.25s ease,
+      border-color 0.25s ease, background-color 0.25s ease, opacity 0.2s ease;
+  }
+
+  .cc-ring__label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    opacity: 0;
+    transition: opacity 0.15s ease;
   }
 
   .cc-ring--hover {
     width: 54px;
     height: 54px;
     margin: -27px 0 0 -27px;
-    border-color: var(--accent-teal);
+    border-color: var(--slate);
+  }
+
+  /* Filled "View" badge over the work frames. */
+  .cc-ring--label {
+    width: 76px;
+    height: 76px;
+    margin: -38px 0 0 -38px;
+    background: var(--coral);
+    border-color: var(--coral);
+  }
+
+  .cc-ring--label .cc-ring__label {
+    opacity: 1;
   }
 
   @media (hover: none), (pointer: coarse) {

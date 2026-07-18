@@ -1,0 +1,85 @@
+---
+import { site } from '@/data/site';
+---
+
+<div class="preloader" data-preloader aria-hidden="true">
+  <span class="preloader__name">{site.name}</span>
+  <span class="preloader__count" data-preloader-count>0</span>
+</div>
+
+<script>
+  const el = document.querySelector<HTMLElement>('[data-preloader]');
+  const countEl = document.querySelector<HTMLElement>('[data-preloader-count]');
+
+  if (el && countEl) {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const seen = sessionStorage.getItem('preloader-seen') === '1';
+
+    if (reduce || seen) {
+      el.remove();
+    } else {
+      document.body.style.overflow = 'hidden';
+      const DURATION = 950;
+      const start = performance.now();
+
+      const tick = (now: number) => {
+        const p = Math.min(1, (now - start) / DURATION);
+        const eased = 1 - Math.pow(1 - p, 3);
+        countEl.textContent = String(Math.round(eased * 100));
+        if (p < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          sessionStorage.setItem('preloader-seen', '1');
+          el.classList.add('preloader--done');
+          document.body.style.overflow = '';
+          window.setTimeout(() => el.remove(), 700);
+        }
+      };
+      requestAnimationFrame(tick);
+    }
+  }
+</script>
+
+<style>
+  .preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 250;
+    background: var(--ink);
+    color: var(--paper);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: clamp(1.5rem, 5vw, 3.5rem);
+    transition: transform 0.65s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  .preloader--done {
+    transform: translateY(-100%);
+  }
+
+  .preloader__name {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--steel);
+  }
+
+  .preloader__count {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(5rem, 18vw, 12rem);
+    line-height: 1;
+    color: var(--coral);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .preloader__count::after {
+    content: '%';
+    font-size: 0.35em;
+    color: var(--steel);
+    margin-left: 0.1em;
+  }
+</style>

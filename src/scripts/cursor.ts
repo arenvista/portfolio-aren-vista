@@ -3,8 +3,13 @@
  *
  * initCustomCursor() drives a small dot + trailing ring that replaces the
  * system cursor on pointer (non-touch) devices. It grows/highlights when
- * hovering anything with [data-cursor-hover], and elements can additionally
- * opt into initMagnetic() to physically pull toward the pointer when nearby.
+ * hovering anything with [data-cursor-hover].
+ *
+ * New: elements with [data-cursor-label="View"] turn the ring into a
+ * filled badge showing that label — used by the work showcase frames.
+ *
+ * Elements can additionally opt into initMagnetic() to physically pull
+ * toward the pointer when nearby.
  */
 
 export function initCustomCursor(): () => void {
@@ -16,6 +21,9 @@ export function initCustomCursor(): () => void {
   dot.className = 'cc-dot';
   const ring = document.createElement('div');
   ring.className = 'cc-ring';
+  const label = document.createElement('span');
+  label.className = 'cc-ring__label';
+  ring.appendChild(label);
   document.body.append(dot, ring);
   document.documentElement.classList.add('cc-active');
 
@@ -23,7 +31,6 @@ export function initCustomCursor(): () => void {
   let mouseY = -100;
   let ringX = -100;
   let ringY = -100;
-  let hovering = false;
 
   const handleMove = (e: MouseEvent) => {
     mouseX = e.clientX;
@@ -33,8 +40,19 @@ export function initCustomCursor(): () => void {
 
   const handleOver = (e: MouseEvent) => {
     const target = e.target as HTMLElement;
-    hovering = !!target.closest('[data-cursor-hover]');
-    ring.classList.toggle('cc-ring--hover', hovering);
+    const labelled = target.closest<HTMLElement>('[data-cursor-label]');
+    const hovering = !!target.closest('[data-cursor-hover]') || !!labelled;
+
+    if (labelled) {
+      label.textContent = labelled.dataset.cursorLabel ?? '';
+      ring.classList.add('cc-ring--label');
+      dot.classList.add('cc-dot--hidden');
+    } else {
+      ring.classList.remove('cc-ring--label');
+      dot.classList.remove('cc-dot--hidden');
+    }
+
+    ring.classList.toggle('cc-ring--hover', hovering && !labelled);
     dot.classList.toggle('cc-dot--hover', hovering);
   };
 
@@ -67,7 +85,8 @@ export function initCustomCursor(): () => void {
  */
 export function initMagnetic(selector: string, radius = 90, strength = 0.35): () => void {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduceMotion) return () => {};
+  const isTouch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+  if (reduceMotion || isTouch) return () => {};
 
   const els = Array.from(document.querySelectorAll<HTMLElement>(selector));
   if (els.length === 0) return () => {};

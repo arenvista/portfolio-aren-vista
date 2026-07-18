@@ -11,21 +11,23 @@ const formatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numer
   <div class="wrap">
     <div class="section-head">
       <div>
-        <span class="eyebrow">03 — Writing</span>
+        <span class="eyebrow">Writing</span>
         <h2 class="section-title section-title--with-eyebrow">From the blog</h2>
       </div>
-      <a class="section-note blog__all-link" href="/blog">All posts →</a>
+      <a class="section-note blog__all-link" href="/blog" data-cursor-hover>All posts →</a>
     </div>
 
     <ul class="blog__list">
       {posts.map((post) => (
         <li class="blog__item">
-          <a href={`/blog/${post.slug}`} class="blog__link">
+          <a href={`/blog/${post.slug}`} class="blog__link" data-cursor-hover>
             <time class="blog__date" datetime={post.data.date.toISOString()}>
               {formatter.format(post.data.date)}
             </time>
-            <h3 class="blog__title">{post.data.title}</h3>
-            <p class="blog__excerpt">{post.data.excerpt}</p>
+            <span class="blog__body">
+              <h3 class="blog__title">{post.data.title}</h3>
+              <p class="blog__excerpt">{post.data.excerpt}</p>
+            </span>
             <span class="blog__read-more">Read post →</span>
           </a>
         </li>
@@ -37,7 +39,7 @@ const formatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numer
 <style>
   .blog__all-link {
     text-decoration: none;
-    color: var(--accent-teal);
+    color: var(--teal);
   }
 
   .blog__list {
@@ -46,11 +48,11 @@ const formatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numer
   }
 
   .blog__item {
-    border-top: 1px solid var(--border-subtle);
+    border-top: 1px solid var(--line);
   }
 
   .blog__item:last-child {
-    border-bottom: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--line);
   }
 
   .blog__link {
@@ -61,11 +63,14 @@ const formatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numer
     padding-block: 1.75rem;
     text-decoration: none;
     color: inherit;
-    transition: opacity 0.2s ease;
   }
 
-  .blog__link:hover {
-    opacity: 0.75;
+  .blog__link:hover .blog__title {
+    color: var(--teal);
+  }
+
+  .blog__link:hover .blog__read-more {
+    transform: translateX(4px);
   }
 
   .blog__date {
@@ -76,9 +81,10 @@ const formatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numer
   }
 
   .blog__title {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     color: var(--fg-primary);
     margin-bottom: 0.45rem;
+    transition: color 0.2s ease;
   }
 
   .blog__excerpt {
@@ -90,9 +96,10 @@ const formatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numer
   .blog__read-more {
     font-family: var(--font-mono);
     font-size: 0.8rem;
-    color: var(--accent-blue);
+    color: var(--teal);
     white-space: nowrap;
     padding-top: 0.25rem;
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   @media (max-width: 700px) {

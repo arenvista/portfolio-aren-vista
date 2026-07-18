@@ -1,0 +1,171 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+
+// NOTE: This replaces src/pages/projects/snapdaemon.astro, which was an
+// empty file rendering a blank page. The copy below is written from your
+// resume's one-liner ("Software based implementation of Wooting Keyboards'
+// SnapTap feature") — flesh it out with the real implementation details
+// when you have a minute.
+---
+
+<Layout
+  title="SnapDaemon — case study"
+  description="A software implementation of Wooting's SnapTap: last-input-wins key resolution as a background daemon."
+>
+  <Header />
+  <main>
+    <article class="cs section">
+      <div class="wrap cs__wrap">
+        <a class="cs__back" href="/#work" data-cursor-hover>← Back to work</a>
+
+        <header class="cs__head">
+          <span class="eyebrow">Case study — 2024</span>
+          <h1 class="cs__title">SnapDaemon</h1>
+          <p class="cs__lede">
+            A software implementation of Wooting keyboards' SnapTap feature — last-input-wins
+            key resolution, running as a background daemon on any keyboard.
+          </p>
+
+          <dl class="cs__meta">
+            <div>
+              <dt>Stack</dt>
+              <dd>C++ · Linux input events</dd>
+            </div>
+            <div>
+              <dt>Type</dt>
+              <dd>System daemon</dd>
+            </div>
+            <div>
+              <dt>Source</dt>
+              <dd><a href="https://github.com/arenvista" target="_blank" rel="noopener noreferrer" data-cursor-hover>github.com/arenvista ↗</a></dd>
+            </div>
+          </dl>
+        </header>
+
+        <section class="cs__section">
+          <h2>The problem</h2>
+          <p>
+            Wooting's SnapTap (a form of SOCD handling) resolves the classic counter-strafe
+            conflict: when both <code>A</code> and <code>D</code> are held, the keyboard reports
+            only the most recently pressed key instead of both or neither. On Wooting hardware
+            it's a firmware feature — SnapDaemon brings the same behavior to ordinary keyboards
+            in software.
+          </p>
+        </section>
+
+        <section class="cs__section">
+          <h2>The approach</h2>
+          <p>
+            The daemon sits between the physical device and the applications reading from it.
+            It watches raw key events for the configured opposing pairs, tracks press order, and
+            rewrites the emitted state so the last pressed key always wins — releasing it hands
+            control straight back to the still-held opposite key, with no gap where both or
+            neither register.
+          </p>
+          <p>
+            Because it operates at the input-event level rather than inside any one game, the
+            behavior is universal and the pairs are configurable.
+          </p>
+        </section>
+
+        <section class="cs__section">
+          <h2>What I took away</h2>
+          <p>
+            Input handling is a timing problem before it's a logic problem. Getting the
+            resolution to feel instant meant treating every event as state to reconcile, not a
+            message to forward — the same shift in thinking that shows up in the interfaces I
+            build now.
+          </p>
+        </section>
+      </div>
+    </article>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .cs__wrap {
+    max-width: 46rem;
+  }
+
+  .cs__back {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  .cs__head {
+    margin-top: 2rem;
+  }
+
+  .cs__title {
+    margin-top: 0.75rem;
+    font-size: clamp(2.6rem, 8vw, 4.5rem);
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+  }
+
+  .cs__lede {
+    margin-top: 1.25rem;
+    font-size: 1.15rem;
+    color: var(--fg-muted);
+    max-width: 55ch;
+  }
+
+  .cs__meta {
+    margin: 2.5rem 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2.5rem;
+    padding-block: 1.5rem;
+    border-block: 1px solid var(--line);
+  }
+
+  .cs__meta dt {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg-faint);
+  }
+
+  .cs__meta dd {
+    margin: 0.35rem 0 0;
+    font-size: 0.95rem;
+    color: var(--fg-primary);
+  }
+
+  .cs__meta a {
+    color: var(--teal);
+    text-decoration: none;
+  }
+
+  .cs__section {
+    margin-top: 3rem;
+  }
+
+  .cs__section h2 {
+    font-size: 1.35rem;
+    margin-bottom: 1rem;
+  }
+
+  .cs__section p {
+    color: var(--fg-muted);
+    line-height: 1.75;
+  }
+
+  .cs__section p + p {
+    margin-top: 1.25rem;
+  }
+
+  .cs__section code {
+    font-family: var(--font-mono);
+    background: var(--paper-deep);
+    padding: 0.15em 0.4em;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+</style>

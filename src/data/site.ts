@@ -5,14 +5,14 @@
 
 export const site = {
     name: 'Aren Vista',
-    roles: ["Software Engineer", "Mathematician", "Computational Biologist"],
+    roles: ['Software Engineer', 'Mathematician', 'Computational Biologist'],
     tagline: 'I build fast, considered interfaces and the systems behind them.',
     location: 'UMBC · Baltimore, MD',
     email: 'arenv1@umbc.edu',
     // Set to false to hide the "Available for new work" badge in the hero.
     available: true,
     bio: [
-        "I'm a guy who likes making stuff — too many things, really. I find, design, and build things to make my life a little easier and to explore my many hobbies. This site is where I share what I know, in the hopes I get to see some cool things back. I live out on the East Coast with my wonderful girlfriend and one crazy dog, and work hard to keep myself supplied in coffee.  To learn more about the site and what I'm trying to do with it, start here. From there, you'll find a big list of sections and pages over on the left (or tucked into the menu if you're on mobile). There's a lot to explore, much of it is really just for me, and for my students who keep asking for my material.",
+        "I'm a guy who likes making stuff — too many things, really. I find, design, and build things to make my life a little easier and to explore my many hobbies. This site is where I share what I know, in the hopes I get to see some cool things back. I live out on the East Coast with my wonderful girlfriend and one crazy dog, and work hard to keep myself supplied in coffee. Much of what's here is really just for me — and for my students, who keep asking for my material.",
         'Outside of work I write stories, paint, and bake pottery with friends.',
     ],
 } as const;
@@ -115,13 +115,14 @@ export interface SocialLink {
 
 export const socials: SocialLink[] = [
     { label: 'GitHub', href: 'https://github.com/arenvista' },
-    { label: 'RSS', href: '/rss.xml' },
+    { label: 'GitLab', href: 'https://gitlab.com/arenvista' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/aren-vista-079199203/' },
 ];
 
 export const nav = [
+    { label: 'Work', href: '#work' },
     { label: 'About', href: '#about' },
     { label: 'Recognition', href: '#recognition' },
-    { label: 'Projects', href: '#projects' },
     { label: 'Blog', href: '#blog' },
     { label: 'Contact', href: '#contact' },
 ];
