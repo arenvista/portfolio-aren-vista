@@ -38,13 +38,19 @@ export function initShowcase(rootSelector: string): () => void {
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Mount media controllers.
+  // Mount media controllers. A single scene that fails to mount must not
+  // abort the whole showcase — otherwise frame navigation, the meta header,
+  // and the counter all fall back to the CSS "first frame only" state.
   const controllers: Array<PreviewController | HTMLVideoElement | null> = frames.map((frame) => {
     const media = frame.querySelector<HTMLElement>('[data-media]');
     if (!media) return null;
     if (media instanceof HTMLVideoElement) return media;
     if (media instanceof HTMLCanvasElement) {
-      return mountPreview(media, media.dataset.preview ?? 'boot');
+      try {
+        return mountPreview(media, media.dataset.preview ?? 'boot');
+      } catch {
+        return null; // degrade to a blank frame, keep the rest working
+      }
     }
     return null;
   });
@@ -71,7 +77,13 @@ export function initShowcase(rootSelector: string): () => void {
 
   // Static first paint for every canvas so nothing is blank pre-scroll.
   controllers.forEach((ctl) => {
-    if (ctl && !(ctl instanceof HTMLVideoElement)) ctl.renderStatic();
+    if (ctl && !(ctl instanceof HTMLVideoElement)) {
+      try {
+        ctl.renderStatic();
+      } catch {
+        /* a bad first paint must not abort setup below */
+      }
+    }
   });
 
   let vh = window.innerHeight;
