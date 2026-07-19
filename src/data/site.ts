@@ -6,7 +6,7 @@
 export const site = {
     name: "Aren Vista",
     roles: ["Software Engineer", "Mathematician", "Computational Biologist"],
-    tagline: "I build fast, considered interfaces and the systems behind them.",
+    tagline: "Insert some witty quote here.",
     location: "UMBC · Baltimore, MD",
     email: "arenv1@umbc.edu",
     // Set to false to hide the "Available for new work" badge in the hero.
