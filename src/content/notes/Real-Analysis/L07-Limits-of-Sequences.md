@@ -1,13 +1,13 @@
 ---
 id: L07
-aliases: []
+aliases: ["Limit of a Sequence", "Limit Laws", "Algebra of Limits", "Bounded Sequence"]
 tags: []
 ---
 # Boundedness and the Algebra of Limits
 
 ## Limit of a Sequence
 
-We recall the definition of convergence from the previous lecture, since everything in this lecture builds directly on manipulating this $\varepsilon$–$N$ statement algebraically.
+We recall the definition of [[Convergence|convergence]] from the previous lecture, since everything in this lecture builds directly on manipulating this $\varepsilon$–$N$ statement algebraically.
 
 > [!def] Limit of a Sequence
 > A sequence $(x_n)$ converges to $x$ if

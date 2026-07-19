@@ -1,18 +1,18 @@
 ---
 id: L07
-aliases: []
+aliases: ["Gram–Schmidt", "Gram-Schmidt", "Gram–Schmidt Algorithm", "QR Factorization", "QR Decomposition"]
 tags: []
 ---
 
 # The Gram–Schmidt Algorithm and QR Factorization
 
-The previous chapter closed with a lemma about orthogonal projectors: if $Q$ has orthonormal columns, then $P = QQ^{\mathsf T}$ projects any vector onto $R(Q)$. That lemma was stated for a $Q$ we already had in hand. This chapter answers the natural next question — given an arbitrary linearly independent set of vectors, how do we actually *build* such a $Q$? The answer is the Gram–Schmidt algorithm, and it turns out to be nothing more than repeated application of the projector idea: take a new vector, project out everything already covered by the vectors built so far, and normalize whatever remains. Carrying this out on the columns of a matrix $A$ produces exactly the $QR$ factorization promised back in our very first list of matrix factorizations — and, as we'll see, $QR$ gives us a numerically superior alternative to $LU$ for both solving square systems and tackling least-squares problems.
+The previous chapter closed with a lemma about [[Orthogonal Projector|orthogonal projectors]]: if $Q$ has orthonormal columns, then $P = QQ^{\mathsf T}$ projects any vector onto $R(Q)$. That lemma was stated for a $Q$ we already had in hand. This chapter answers the natural next question — given an arbitrary linearly independent set of vectors, how do we actually *build* such a $Q$? The answer is the Gram–Schmidt algorithm, and it turns out to be nothing more than repeated application of the projector idea: take a new vector, project out everything already covered by the vectors built so far, and normalize whatever remains. Carrying this out on the columns of a matrix $A$ produces exactly the $QR$ factorization promised back in our very first list of matrix factorizations — and, as we'll see, $QR$ gives us a numerically superior alternative to [[LU Factorization|$LU$]] for both solving square systems and tackling [[Least Squares|least-squares problems]].
 
 ## Objective and Orthogonal Projection
 
 > Given a linearly independent set $B = \{x_1, x_2, \dots, x_n\}$ in an inner-product space (e.g., $\mathbb{R}^m$ with $\langle y,z\rangle = y^{\mathsf T}z$), construct an orthonormal set $U = \{u_1, u_2, \dots, u_n\}$ with $\operatorname{Span}(U) = \operatorname{Span}(B)$.
 
-The tool we'll lean on throughout is the Fourier-expansion projection formula from the previous chapter, restated here for a general orthonormal set rather than a full basis.
+The tool we'll lean on throughout is the [[Orthogonal Projection|Fourier-expansion projection formula]] from the previous chapter, restated here for a general orthonormal set rather than a full basis.
 
 > [!def] Orthogonal Projection (Fourier Expansion)
 > If $\{u_1, \dots, u_k\}$ is an orthonormal set, then for any $x$,

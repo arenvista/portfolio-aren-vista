@@ -1,6 +1,6 @@
 ---
 id: L12
-aliases: []
+aliases: ["Singular Value Decomposition", "SVD", "Singular Values", "Singular Value", "Spectral Norm", "Condition Number"]
 tags: []
 ---
 
@@ -10,7 +10,7 @@ The previous chapter left off with a cliffhanger: eigenvalue decomposition is a 
 
 ## The Limitations of the Eigenvalue Decomposition
 
-Recall the eigenvalue decomposition (EVD) from the previous chapter: if $A\in\mathbb{R}^{n\times n}$ is diagonalizable, then
+Recall the [[Eigenvalue Decomposition|eigenvalue decomposition (EVD)]] from the previous chapter: if $A\in\mathbb{R}^{n\times n}$ is diagonalizable, then
 $$A = X\Lambda X^{-1}.$$
 
 A particularly nice case arose when $A$ was real and symmetric — there, the eigenvectors could always be chosen orthonormal, giving
@@ -73,7 +73,7 @@ The factorization $A = U\Sigma V^T$ isn't just algebra — it's a recipe for wha
 2. **$\Sigma$** — a pure stretch or compression along the coordinate axes (no rotation at all).
 3. **$U$** — an orthogonal rotation or reflection into the output space $\mathbb{R}^n$.
 
-Every linear map, however complicated it looks in its original coordinates, is secretly just "rotate, stretch along axes, rotate again" once you view it through the right pair of orthonormal bases. This is a direct generalization of the reflectors and rotators from earlier in the course — there, orthogonal matrices were built by hand to introduce zeros; here, $U$ and $V$ arise naturally as the coordinate systems in which $A$'s action becomes as simple as possible.
+Every linear map, however complicated it looks in its original coordinates, is secretly just "rotate, stretch along axes, rotate again" once you view it through the right pair of orthonormal bases. This is a direct generalization of the [[Orthogonal Matrices|reflectors and rotators]] from earlier in the course — there, orthogonal matrices were built by hand to introduce zeros; here, $U$ and $V$ arise naturally as the coordinate systems in which $A$'s action becomes as simple as possible.
 
 ### The unit sphere becomes a hyperellipse
 
@@ -130,7 +130,7 @@ $$\|A\|_F = \big(\operatorname{trace}(A^TA)\big)^{1/2} = \sqrt{\sigma_1^2+\sigma
 
 ### Matrix condition number, revisited
 
-Recall the condition number $\kappa_2(A) = \|A\|_2\|A^{-1}\|_2$ from the numerical-stability chapter. The SVD makes this quantity completely explicit. If $A = U\Sigma V^T$, then $A^{-1} = V\Sigma^{-1}U^T$, so the singular values of $A^{-1}$ are simply the reciprocals $1/\sigma_1,\dots,1/\sigma_n$ of those of $A$. This gives $\|A^{-1}\|_2 = 1/\sigma_n$, and therefore:
+Recall the condition number $\kappa_2(A) = \|A\|_2\|A^{-1}\|_2$ from the [[Numerical Stability|numerical-stability chapter]]. The SVD makes this quantity completely explicit. If $A = U\Sigma V^T$, then $A^{-1} = V\Sigma^{-1}U^T$, so the singular values of $A^{-1}$ are simply the reciprocals $1/\sigma_1,\dots,1/\sigma_n$ of those of $A$. This gives $\|A^{-1}\|_2 = 1/\sigma_n$, and therefore:
 
 > [!thm] Condition number in terms of singular values
 > $$\kappa_2(A) = \frac{\sigma_1}{\sigma_n}$$
@@ -140,7 +140,7 @@ Recall the condition number $\kappa_2(A) = \|A\|_2\|A^{-1}\|_2$ from the numeric
 
 ### Least squares: why SVD and QR dominate the normal equations
 
-This closes the loop all the way back to the least-squares chapters. Recall the normal equations $A^TAx = A^Tb$, and the recurring warning that forming $A^TA$ explicitly is numerically dangerous. The SVD makes precisely *why* fully transparent: since the singular values of $A^TA$ are the squares of the singular values of $A$,
+This closes the loop all the way back to the [[Least Squares|least-squares chapters]]. Recall the [[Normal Equations|normal equations]] $A^TAx = A^Tb$, and the recurring warning that forming $A^TA$ explicitly is numerically dangerous. The SVD makes precisely *why* fully transparent: since the singular values of $A^TA$ are the squares of the singular values of $A$,
 $$\kappa_2(A^TA) = \frac{\sigma_1^2}{\sigma_r^2} = \kappa_2(A)^2.$$
 
 > [!imp] Numerical consequence

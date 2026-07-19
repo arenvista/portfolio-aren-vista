@@ -1,3 +1,7 @@
+---
+aliases: ["Absolute Value", "Supremum", "Infimum", "Bounded Set", "Bounded Sets", "Order Properties"]
+tags: []
+---
 # Order, Absolute Value, and Completeness of ℝ
 
 ## Ordering Properties of ℝ
@@ -193,7 +197,7 @@ We now have exactly the tool needed to prove the single most important inequalit
 
 ## Completeness of ℝ
 
-Everything so far — field axioms, order, absolute value — is also satisfied by $\mathbb{Q}$. Yet we proved earlier that $\sqrt{2} \notin \mathbb{Q}$, so $\mathbb{Q}$ has "gaps" that $\mathbb{R}$ does not. The property that finally distinguishes $\mathbb{R}$ from $\mathbb{Q}$ is **completeness**, which we develop now.
+Everything so far — field axioms, order, absolute value — is also satisfied by $\mathbb{Q}$. Yet we proved earlier that [[Irrationality of √2|$\sqrt{2} \notin \mathbb{Q}$]], so $\mathbb{Q}$ has "gaps" that $\mathbb{R}$ does not. The property that finally distinguishes $\mathbb{R}$ from $\mathbb{Q}$ is **[[Completeness|completeness]]**, which we develop now.
 
 > [!def] Upper and Lower Bounds; Bounded Sets
 > Let $S \subseteq \mathbb{R}$ be nonempty.

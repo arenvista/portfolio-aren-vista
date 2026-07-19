@@ -1,6 +1,6 @@
 ---
 id: L01
-aliases: []
+aliases: ["Finite and Infinite Sets", "Finite Set", "Infinite Set", "Cardinality"]
 tags: []
 ---
 # Finite and Infinite Sets

@@ -1,13 +1,13 @@
 ---
 id: L08
-aliases: []
+aliases: ["Monotone Sequence", "Monotone Sequences", "Monotone Convergence Theorem"]
 tags: []
 ---
 # Algebraic Facts, Limit Laws in Practice, and Monotone Convergence
 
 ## Bounded Sequences
 
-Recall from the previous lecture that boundedness is a basic structural property every convergent sequence must satisfy. We restate the definition here since it plays a supporting role throughout this lecture, particularly in the product and quotient limit laws below.
+Recall from the previous lecture that [[Bounded Sequence|boundedness]] is a basic structural property every convergent sequence must satisfy. We restate the definition here since it plays a supporting role throughout this lecture, particularly in the product and quotient limit laws below.
 
 > [!def] Bounded Sequence
 > A sequence $X = (x_n)$ of real numbers is **bounded** if there exists $M > 0$ such that $|x_n| \le M$ for all $n \in \mathbb{N}$.
@@ -102,7 +102,7 @@ We now return to sequences and prove the product and reciprocal limit laws state
 
 ## Monotone Sequences
 
-The limit laws above let us compute limits once we already suspect what they are. But how do we know a limit exists in the first place, without guessing it? For an important class of sequences — those that move consistently in one direction — boundedness alone turns out to be enough to guarantee convergence, echoing the way boundedness and completeness combined earlier to produce suprema.
+The limit laws above let us compute limits once we already suspect what they are. But how do we know a limit exists in the first place, without guessing it? For an important class of sequences — those that move consistently in one direction — boundedness alone turns out to be enough to guarantee convergence, echoing the way boundedness and [[Completeness|completeness]] combined earlier to produce [[Supremum|suprema]].
 
 > [!def] Monotone Sequence
 > Let $X = (x_n)$ be a sequence.

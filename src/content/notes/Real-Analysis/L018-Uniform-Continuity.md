@@ -1,3 +1,7 @@
+---
+aliases: ["Uniform Continuity", "Continuity", "Lipschitz Function", "Lipschitz", "Nonuniform Continuity Criterion"]
+tags: []
+---
 # Uniform Continuity
 
 ## Intuition: "One Size Fits All"
@@ -120,7 +124,7 @@ Contrast this with the restricted domain $(a,\infty)$ above, where $1/x$ *was* u
 
 ## The Uniform Continuity Theorem
 
-We now arrive at the main result: on a closed, bounded interval, continuity — a purely local, pointwise condition — automatically upgrades to uniform continuity. The proof follows precisely the same three-step template as the Boundedness and Min-Max Theorems from the previous lecture: build a sequence witnessing the failure, extract a convergent subsequence via Bolzano–Weierstrass, then use sequential continuity to derive a contradiction.
+We now arrive at the main result: on a closed, bounded interval, continuity — a purely local, pointwise condition — automatically upgrades to uniform continuity. The proof follows precisely the same three-step template as the [[Boundedness Theorem|Boundedness]] and [[Min-Max Theorem|Min-Max Theorems]] from the previous lecture: build a sequence witnessing the failure, extract a convergent subsequence via [[Bolzano–Weierstrass Theorem|Bolzano–Weierstrass]], then use sequential continuity to derive a contradiction.
 
 > [!thm] Uniform Continuity Theorem
 > Let $I$ be a closed and bounded interval. If $f: I \to \mathbb{R}$ is continuous on $I$, then $f$ is uniformly continuous on $I$.

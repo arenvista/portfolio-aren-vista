@@ -1,12 +1,12 @@
 ---
 id: L06
-aliases: []
+aliases: ["Fundamental Theorem of Linear Algebra", "Orthonormal Basis", "Orthogonal Projector", "Orthogonal Projection"]
 tags: []
 ---
 
 # The Fundamental Theorem of Linear Algebra, Orthonormal Bases, and Orthogonal Projectors
 
-The previous chapter established that the four fundamental subspaces of $A \in \mathbb{R}^{m\times n}$ pair up into two orthogonal complements: $R(A)^\perp = N(A^{\mathsf T})$ and $R(A^{\mathsf T})^\perp = N(A)$. This chapter puts that fact to work. We'll first repackage it as the **Fundamental Theorem of Linear Algebra** — a clean geometric picture of how $A$, viewed as a transformation, splits both its domain and codomain in two. From there we turn to a question that picture raises naturally: among all the possible bases for a subspace, is there a *best* one? The answer is yes — an orthonormal basis — and understanding why leads us through Fourier expansion, orthogonal matrices, and orthogonal projectors, the last of which is the essential tool behind the $QR$ factorization we'll build in the next chapter.
+The previous chapter established that the [[Four Fundamental Subspaces|four fundamental subspaces]] of $A \in \mathbb{R}^{m\times n}$ pair up into two [[Orthogonal Complement|orthogonal complements]]: $R(A)^\perp = N(A^{\mathsf T})$ and $R(A^{\mathsf T})^\perp = N(A)$. This chapter puts that fact to work. We'll first repackage it as the **Fundamental Theorem of Linear Algebra** — a clean geometric picture of how $A$, viewed as a transformation, splits both its domain and codomain in two. From there we turn to a question that picture raises naturally: among all the possible bases for a subspace, is there a *best* one? The answer is yes — an orthonormal basis — and understanding why leads us through Fourier expansion, [[Orthogonal Matrices|orthogonal matrices]], and orthogonal projectors, the last of which is the essential tool behind the [[QR Factorization|$QR$ factorization]] we'll build in the next chapter.
 
 ## Recap: Orthogonal Complements of the Fundamental Subspaces
 

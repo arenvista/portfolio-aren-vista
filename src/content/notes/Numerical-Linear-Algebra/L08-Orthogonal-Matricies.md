@@ -1,12 +1,12 @@
 ---
 id: L08
-aliases: []
+aliases: ["Orthogonal Matrices", "Orthogonal Matrix", "Householder Reflector", "Householder Reflectors", "Givens Rotation", "Givens Rotations", "Plane Rotator", "Householder QR"]
 tags: []
 ---
 
 # Orthogonal Matrices: Projectors, Reflectors, and Rotators
 
-Orthogonal matrices are the workhorses of numerical linear algebra. What makes them so useful is a single beautiful property: they preserve length. If $Q$ is orthogonal ($Q^TQ = I$), then $\|Qx\| = \|x\|$ for every vector $x$. Multiplying by an orthogonal matrix never amplifies rounding error, which is exactly why these matrices show up everywhere numerical stability matters — especially in factorizations like QR.
+Orthogonal matrices are the workhorses of numerical linear algebra. What makes them so useful is a single beautiful property: they preserve length. If $Q$ is orthogonal ($Q^TQ = I$), then $\|Qx\| = \|x\|$ for every vector $x$. Multiplying by an orthogonal matrix never amplifies rounding error, which is exactly why these matrices show up everywhere [[Numerical Stability|numerical stability]] matters — especially in factorizations like [[QR Factorization|QR]].
 
 This chapter builds up three families of orthogonal (or projection) matrices, in increasing order of what they *do* to a vector:
 

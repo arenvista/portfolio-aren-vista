@@ -1,12 +1,12 @@
 ---
 id: L13
-aliases: []
+aliases: ["Low-Rank Approximation", "Truncated SVD", "Compact SVD", "Eckart–Young Theorem", "Eckart-Young", "Moore–Penrose Pseudoinverse", "Pseudoinverse", "Numerical Rank"]
 tags: []
 ---
 
 # Working with the SVD: Low-Rank Approximation, Least Squares, and the Pseudoinverse
 
-The previous chapter introduced the singular value decomposition and used it to explain matrix norms, conditioning, and the four fundamental subspaces. This chapter puts the SVD to work. We'll see that the factorization $A = U\Sigma V^T$ can be repackaged as a sum of simple rank-one pieces, that truncating this sum gives the *provably best possible* low-rank approximation of $A$, and that the whole machinery combines into a single formula — the Moore–Penrose pseudoinverse — that solves every least-squares problem this course has considered, even the ones with no unique solution.
+The previous chapter introduced the [[Singular Value Decomposition|singular value decomposition]] and used it to explain matrix norms, conditioning, and the [[Four Fundamental Subspaces|four fundamental subspaces]]. This chapter puts the SVD to work. We'll see that the factorization $A = U\Sigma V^T$ can be repackaged as a sum of simple rank-one pieces, that truncating this sum gives the *provably best possible* low-rank approximation of $A$, and that the whole machinery combines into a single formula — the Moore–Penrose pseudoinverse — that solves every [[Least Squares|least-squares problem]] this course has considered, even the ones with no unique solution.
 
 We start by restating the definition precisely, since the exact shapes of $U$, $\Sigma$, $V$ matter for the algebra that follows.
 

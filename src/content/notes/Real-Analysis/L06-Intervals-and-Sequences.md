@@ -1,6 +1,6 @@
 ---
 id: L06
-aliases: []
+aliases: ["Nested Intervals", "Nested Intervals Property", "Sequence", "Convergence", "Divergence", "Tail of a Sequence"]
 tags: []
 ---
 # Nested Intervals and the Foundations of Sequences

@@ -1,6 +1,6 @@
 ---
 id: L09
-aliases: []
+aliases: ["Least Squares", "Normal Equations", "Overdetermined System", "Residual", "SSE", "RMSE"]
 tags: []
 ---
 
@@ -21,9 +21,9 @@ For an overdetermined system, an exact solution $Ax = b$ typically does not exis
 
 ### Geometric perspective
 
-The columns of $A$ span a subspace of $\mathbb{R}^m$ called the **column space**, $\operatorname{Col}(A)$. The equation $Ax = b$ has an exact solution only when $b$ happens to land inside this subspace. When it doesn't — which is the typical case — the best we can do is find the point in $\operatorname{Col}(A)$ that is *closest* to $b$.
+The columns of $A$ span a subspace of $\mathbb{R}^m$ called the **[[Column Space|column space]]**, $\operatorname{Col}(A)$. The equation $Ax = b$ has an exact solution only when $b$ happens to land inside this subspace. When it doesn't — which is the typical case — the best we can do is find the point in $\operatorname{Col}(A)$ that is *closest* to $b$.
 
-That closest point has a name: it's the **orthogonal projection** of $b$ onto $\operatorname{Col}(A)$, an idea that connects directly back to the projector matrices from the previous chapter. Just as $P_u = uu^T$ projected a vector onto a single direction $u$, here we're projecting onto the entire span of $A$'s columns.
+That closest point has a name: it's the **[[Orthogonal Projection|orthogonal projection]]** of $b$ onto $\operatorname{Col}(A)$, an idea that connects directly back to the [[Orthogonal Projector|projector matrices]] from the previous chapter. Just as $P_u = uu^T$ projected a vector onto a single direction $u$, here we're projecting onto the entire span of $A$'s columns.
 
 > [!important] Why orthogonality is the right criterion
 > If $A\hat{x}$ is the closest point in $\operatorname{Col}(A)$ to $b$, then the leftover error — the **residual** $r = b - A\hat{x}$ — must be perpendicular to every vector in $\operatorname{Col}(A)$. If it weren't, you could tilt $A\hat{x}$ slightly toward $b$ along the column space and shrink the error further, contradicting that $A\hat{x}$ was already the closest point.
@@ -175,11 +175,11 @@ The normal-equations approach is conceptually clean, but it has a serious practi
 > [!important] Remark on numerical stability
 > Forming $A^TA$ squares the matrix's condition number:
 > $$\kappa_2(A^TA) = \kappa_2(A)^2.$$
-> A moderately ill-conditioned $A$ can become severely ill-conditioned once squared, amplifying rounding error and making $\hat x = (A^TA)^{-1}A^Tb$ unreliable in floating-point arithmetic — even though the formula is mathematically exact. This is precisely the failure mode that orthogonal matrices are designed to avoid (recall: orthogonal transformations preserve length and don't amplify error).
+> A moderately ill-conditioned $A$ can become severely ill-conditioned once squared, amplifying rounding error and making $\hat x = (A^TA)^{-1}A^Tb$ unreliable in floating-point arithmetic — even though the formula is mathematically exact. This is precisely the failure mode that [[Orthogonal Matrices|orthogonal matrices]] are designed to avoid (recall: orthogonal transformations preserve length and don't amplify error).
 
 ### Solving least squares with QR — without ever forming $A^TA$
 
-This is where the Householder QR factorization from the previous chapter pays off directly. Substitute $A = QR$ into the least-squares objective:
+This is where the [[Householder QR|Householder QR factorization]] from the previous chapter pays off directly. Substitute $A = QR$ into the least-squares objective:
 $$\min_x \|Ax-b\|_2 = \min_x \|QRx-b\|_2.$$
 
 Because $Q$ is orthogonal, multiplying by $Q^T$ inside the norm doesn't change its value (this is the same length-preservation property that made reflectors and rotators safe to chain together in the previous chapter):

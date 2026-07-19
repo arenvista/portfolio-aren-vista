@@ -1,13 +1,13 @@
 ---
 id: L05
-aliases: []
+aliases: ["Density of the Rationals", "Density of the Irrationals", "Density", "Existence of √2", "Intervals", "Interval"]
 tags: []
 ---
 # Existence of √2, Density, and Intervals
 
 ## Existence of √2
 
-The Archimedean property from the previous lecture showed that completeness has real teeth — it lets us prove facts about $\mathbb{N}$ that field and order axioms alone cannot. We now put completeness to its most famous use: constructing a real number that $\mathbb{Q}$ provably lacks. Recall from Lecture 2 that no rational squares to $2$; we now show a *real* number doing so does exist, and that it is unique.
+The [[Archimedean Property|Archimedean property]] from the previous lecture showed that [[Completeness|completeness]] has real teeth — it lets us prove facts about $\mathbb{N}$ that field and order axioms alone cannot. We now put completeness to its most famous use: constructing a real number that $\mathbb{Q}$ provably lacks. Recall from Lecture 2 that [[Irrationality of √2|no rational squares to $2$]]; we now show a *real* number doing so does exist, and that it is unique.
 
 > [!thm] Existence and Uniqueness of √2
 > There exists a unique $x \in \mathbb{R}_{\ge 0}$ such that $x^2 = 2$.

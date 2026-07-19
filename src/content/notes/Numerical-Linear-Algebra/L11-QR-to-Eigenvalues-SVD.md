@@ -1,11 +1,11 @@
 ---
 id: L11
-aliases: []
+aliases: ["Full QR Factorization", "Similar Matrices", "Eigenvalue Decomposition", "EVD"]
 tags: []
 ---
 # From QR to Eigenvalues: Full QR, Diagonalization, and the Road to SVD
 
-The last few chapters built the QR factorization as a tool for solving least-squares problems stably. This chapter does two things. First, it fills in a detail we glossed over: QR actually comes in two flavors — "thin" and "full" — and understanding the difference reveals something structural about the four fundamental subspaces of $A$. Second, it pivots toward an entirely new question: instead of factoring $A$ to solve $Ax=b$, can we factor $A$ to understand how it *acts* as a transformation — stretching space along certain special directions? That question leads to eigenvalues, diagonalization, and ultimately the singular value decomposition (SVD), which generalizes eigen-decomposition to matrices that aren't even square.
+The last few chapters built the [[QR Factorization|QR factorization]] as a tool for solving [[Least Squares|least-squares problems]] stably. This chapter does two things. First, it fills in a detail we glossed over: QR actually comes in two flavors — "thin" and "full" — and understanding the difference reveals something structural about the [[Four Fundamental Subspaces|four fundamental subspaces]] of $A$. Second, it pivots toward an entirely new question: instead of factoring $A$ to solve $Ax=b$, can we factor $A$ to understand how it *acts* as a transformation — stretching space along certain special directions? That question leads to eigenvalues, diagonalization, and ultimately the [[Singular Value Decomposition|singular value decomposition (SVD)]], which generalizes eigen-decomposition to matrices that aren't even square.
 
 ---
 
@@ -74,7 +74,7 @@ Why is $AX=X\Lambda$ equivalent to stacking up the eigenvector equations? Multip
 
 ### A well-behaved special case: symmetric positive definite matrices
 
-For one important class of matrices, diagonalizability is guaranteed, and even better, the eigenvector matrix can be chosen to be *orthogonal* — directly reconnecting this section to the reflectors and rotators built earlier in the course.
+For one important class of matrices, diagonalizability is guaranteed, and even better, the eigenvector matrix can be chosen to be *orthogonal* — directly reconnecting this section to the [[Orthogonal Matrices|reflectors and rotators]] built earlier in the course.
 
 > [!cor] Spectral decomposition of SPD matrices
 > If $A$ is symmetric positive definite (SPD), its eigenvectors can be chosen orthonormal, and the decomposition can be written as a sum of rank-one pieces:
@@ -99,4 +99,4 @@ Eigenvalue decomposition has a hard requirement built into its definition: $A$ m
 The relationship between SVD and eigen-decomposition is direct rather than coincidental: the columns of $V$ are eigenvectors of $A^TA$, the columns of $U$ are eigenvectors of $AA^T$, and the singular values satisfy $\sigma_i = \sqrt{\lambda_i(A^TA)}$. In other words, SVD is what you get by applying eigen-decomposition to the *square, symmetric* matrices $A^TA$ and $AA^T$ built from $A$ — which brings the discussion full circle back to the SPD spectral decomposition above, since $A^TA$ is always symmetric positive semi-definite.
 
 > [!note] Why this matters going forward
-> Recall from the least-squares chapters that forming $A^TA$ is exactly the numerically dangerous step we worked hard to avoid, because it squares the condition number. SVD is the tool that lets us understand and work with $A^TA$'s eigenstructure *without* ever forming that unstable product directly — which is precisely why SVD was flagged earlier as the most numerically robust (if most expensive) way to solve least-squares problems, and why it will be the natural next topic to develop in full.
+> Recall from the [[Least Squares|least-squares chapters]] that forming $A^TA$ is exactly the numerically dangerous step we worked hard to avoid, because it squares the [[Condition Number|condition number]]. SVD is the tool that lets us understand and work with $A^TA$'s eigenstructure *without* ever forming that unstable product directly — which is precisely why SVD was flagged earlier as the most numerically robust (if most expensive) way to solve least-squares problems, and why it will be the natural next topic to develop in full.

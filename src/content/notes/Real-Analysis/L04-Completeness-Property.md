@@ -1,13 +1,13 @@
 ---
 id: L04
-aliases: []
+aliases: ["Completeness", "Completeness Property", "Least Upper Bound Property", "Archimedean Property"]
 tags: []
 ---
 # Completeness, Suprema of Transformed Sets, and the Archimedean Property
 
 ## Completeness Property
 
-Lecture 3 introduced $\sup S$ and $\inf S$ via a two-part definition — upper bound, plus *least* upper bound. In practice, the second part is the hard one to verify directly, since it quantifies over every possible upper bound. We start by tightening this into a checkable criterion before putting suprema to work.
+Lecture 3 introduced [[Supremum|$\sup S$]] and [[Infimum|$\inf S$]] via a two-part definition — upper bound, plus *least* upper bound. In practice, the second part is the hard one to verify directly, since it quantifies over every possible upper bound. We start by tightening this into a checkable criterion before putting suprema to work.
 
 > [!def] Supremum (Least Upper Bound)
 > Let $S \subseteq \mathbb{R}$ be nonempty. A number $u \in \mathbb{R}$ is the supremum of $S$, written $\sup S = u$, if:

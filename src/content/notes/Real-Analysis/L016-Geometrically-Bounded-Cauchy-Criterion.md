@@ -1,8 +1,12 @@
+---
+aliases: ["Geometrically-Bounded Cauchy Criterion"]
+tags: []
+---
 # Finding $\delta$ for $\sqrt{x}$, and a Geometrically-Bounded Cauchy Criterion
 
 ## Finding $\delta$ for a Square Root Limit
 
-Having established the $\varepsilon$–$\delta$ definition of a limit at a cluster point (Lecture 13), we now work a concrete example: finding an explicit $\delta$ that makes $|\sqrt{x}-2|<\tfrac12$ follow from $|x-4|<\delta$. Two different strategies are given below — one solves for the exact boundary directly, the other uses the Conjugate Trick (Lecture 6) to bound a factor. Both are valid; they simply produce different (equally correct) values of $\delta$.
+Having established the $\varepsilon$–$\delta$ definition of a [[Cluster Point|limit at a cluster point]] (Lecture 13), we now work a concrete example: finding an explicit $\delta$ that makes $|\sqrt{x}-2|<\tfrac12$ follow from $|x-4|<\delta$. Two different strategies are given below — one solves for the exact boundary directly, the other uses the [[L06|Conjugate Trick]] (Lecture 6) to bound a factor. Both are valid; they simply produce different (equally correct) values of $\delta$.
 
 ### Problem Statement
 

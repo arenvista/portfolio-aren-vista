@@ -1,12 +1,12 @@
 ---
 id: L18
-aliases: []
+aliases: ["Newton's Method", "Newton Iteration", "Jacobian", "Jacobian Matrix", "Quadratic Convergence"]
 tags: []
 ---
 
 # Solving Nonlinear Equations: Newton's Method in One and Many Dimensions
 
-Every method in the previous chapters solved *linear* problems: $Ax=b$, eigenvalue equations, least squares. This chapter steps outside that world to ask a more general question — how do we solve $f(x)=0$ when $f$ isn't linear at all, and no algebraic formula for the solution exists? The strategy turns out to be the same idea used throughout calculus for approximating hard problems with easy ones: replace the nonlinear function, locally, with something linear — a tangent line, or in higher dimensions, a tangent plane — and solve *that* instead. Do this repeatedly, and (under the right conditions) the sequence of approximations races toward the true root. By the end of the chapter, solving a system of nonlinear equations will come down to repeatedly solving a linear system, bringing the entire toolkit from the earlier chapters — Gaussian elimination, LU, QR — back into play.
+Every method in the previous chapters solved *linear* problems: $Ax=b$, [[Eigenvalues|eigenvalue equations]], [[Least Squares|least squares]]. This chapter steps outside that world to ask a more general question — how do we solve $f(x)=0$ when $f$ isn't linear at all, and no algebraic formula for the solution exists? The strategy turns out to be the same idea used throughout calculus for approximating hard problems with easy ones: replace the nonlinear function, locally, with something linear — a tangent line, or in higher dimensions, a tangent plane — and solve *that* instead. Do this repeatedly, and (under the right conditions) the sequence of approximations races toward the true root. By the end of the chapter, solving a system of nonlinear equations will come down to repeatedly solving a linear system, bringing the entire toolkit from the earlier chapters — Gaussian elimination, [[LU Factorization|LU]], [[QR Factorization|QR]] — back into play.
 
 ## The Root-Finding Problem
 
@@ -14,7 +14,7 @@ We want to solve
 $$f(x) = 0.$$
 For most functions that show up in practice, no closed-form solution exists, so we turn to **numerical methods** that approximate a root to any desired accuracy.
 
-Before approximating anything, it helps to know a root actually *exists* in the region we're searching. That guarantee comes from a familiar calculus fact, restated here in the language of root-finding.
+Before approximating anything, it helps to know a root actually *exists* in the region we're searching. That guarantee comes from a [[Intermediate Value Theorem|familiar calculus fact]], restated here in the language of root-finding.
 
 > [!thm] Intermediate Value Theorem
 > Let $f:[a,b]\to\mathbb{R}$ be continuous. If $f(a)<0<f(b)$ or $f(a)>0>f(b)$ — that is, if $f$ changes sign across the interval — then there exists $c\in(a,b)$ with $f(c)=0$.
@@ -157,7 +157,7 @@ Two common relaxations of full Newton's method trade some convergence speed for 
 > Rather than solving $DF(X_k)\Delta X=-F(X_k)$ exactly, solve it only approximately at each step. This is especially useful for large-scale problems where an exact linear solve is prohibitively expensive.
 
 > [!cor] Frozen Jacobian method
-> Rather than recomputing the Jacobian at every iteration, reuse a previously computed one for several steps. This lowers the cost of each iteration (skipping both the Jacobian evaluation and, if reusing a factorization, the linear solve setup), at the cost of slower convergence — directly mirroring the earlier advice to factor $A-\sigma I$ once and reuse it across repeated shifted-inverse-iteration steps.
+> Rather than recomputing the Jacobian at every iteration, reuse a previously computed one for several steps. This lowers the cost of each iteration (skipping both the Jacobian evaluation and, if reusing a factorization, the linear solve setup), at the cost of slower convergence — directly mirroring the earlier advice to factor $A-\sigma I$ once and reuse it across repeated [[Shifted Inverse Iteration|shifted-inverse-iteration]] steps.
 
 ## Summary
 

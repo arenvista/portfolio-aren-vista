@@ -1,6 +1,6 @@
 ---
 id: L015
-aliases: []
+aliases: ["Boundedness Theorem", "Bounded Function", "Min-Max Theorem", "Extreme Value Theorem", "Absolute Maximum", "Absolute Minimum"]
 tags: []
 ---
 # Continuous Functions on Intervals
@@ -57,7 +57,7 @@ This result parallels the Subadditivity of Limsup proved in the previous lecture
 > $$
 
 > [!pf] Proof
-> As in the previous lecture, write the limsups as limits of tail suprema:
+> As in the previous lecture, write the [[Limit Superior|limsups]] as limits of tail suprema:
 > $$
 > \limsup a_n = \lim_{n\to\infty} s_n^a, \quad s_n^a := \sup\{a_k : k\ge n\}; \qquad
 > \limsup b_n = \lim_{n\to\infty} s_n^b, \quad s_n^b := \sup\{b_k : k\ge n\};

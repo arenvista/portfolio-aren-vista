@@ -1,13 +1,13 @@
 ---
 id: L013
-aliases: []
+aliases: ["p-Series", "Proper Divergence", "Cluster Point", "Limit of a Function", "Limit of Functions"]
 tags: []
 ---
 # p-Series, Proper Divergence, and Limits of Functions
 
 ## p-Series Partial Sums
 
-Lecture 12 showed the harmonic series diverges by proving its partial sums fail to be Cauchy. This raises a natural question: what happens if we weaken each term from $1/k$ to $1/k^p$? The answer turns out to hinge entirely on whether $p > 1$ or $p \le 1$.
+Lecture 12 showed the harmonic series diverges by proving its partial sums [[Cauchy Sequence|fail to be Cauchy]]. This raises a natural question: what happens if we weaken each term from $1/k$ to $1/k^p$? The answer turns out to hinge entirely on whether $p > 1$ or $p \le 1$.
 
 > [!note] Recall: The Harmonic Series Diverges
 > For the harmonic series partial sums

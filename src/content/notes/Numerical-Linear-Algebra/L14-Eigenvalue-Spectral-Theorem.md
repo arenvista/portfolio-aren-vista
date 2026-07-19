@@ -1,12 +1,12 @@
 ---
 id: L14
-aliases: []
+aliases: ["Eigenvalues", "Eigenvectors", "Eigenvalue", "Eigenvector", "Spectrum", "Spectral Radius", "Eigenspace", "Algebraic Multiplicity", "Geometric Multiplicity", "Characteristic Polynomial", "Spectral Theorem", "Diagonalizable"]
 tags: []
 ---
 
 # Eigenvalues, Eigenvectors, and the Spectral Theorem
 
-We closed the previous chapter with the pseudoinverse, $x = A^\dagger b$ — a single formula that solves the least-squares problem for *any* matrix, rank-deficient or not. That result is worth restating briefly here as a bridge, before this chapter turns to a different question entirely: not "how do we solve $Ax\approx b$?" but "what does $A$ *do*, intrinsically, as a transformation?" That second question is where eigenvalues and eigenvectors, first introduced a few chapters back, get their full treatment — multiplicities, diagonalizability, similarity, and the spectral theorem that makes symmetric matrices so exceptionally well-behaved.
+We closed the previous chapter with the [[Pseudoinverse|pseudoinverse]], $x = A^\dagger b$ — a single formula that solves the [[Least Squares|least-squares problem]] for *any* matrix, rank-deficient or not. That result is worth restating briefly here as a bridge, before this chapter turns to a different question entirely: not "how do we solve $Ax\approx b$?" but "what does $A$ *do*, intrinsically, as a transformation?" That second question is where eigenvalues and eigenvectors, first introduced a few chapters back, get their full treatment — multiplicities, diagonalizability, similarity, and the spectral theorem that makes symmetric matrices so exceptionally well-behaved.
 
 ## Least Squares via SVD, Revisited
 

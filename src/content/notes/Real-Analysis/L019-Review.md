@@ -101,11 +101,11 @@ This is the "reciprocal tends to zero" corollary from Lecture 13, adapted to a r
 
 ## Combination Theorems for Uniform Continuity
 
-We now return to uniform continuity (Lecture 18) and develop three ways of building new uniformly continuous functions from old ones: taking reciprocals, taking products, and gluing pieces together across a shared boundary point.
+We now return to [[Uniform Continuity|uniform continuity]] (Lecture 18) and develop three ways of building new uniformly continuous functions from old ones: taking reciprocals, taking products, and gluing pieces together across a shared boundary point.
 
 ### Reciprocals of Uniformly Continuous Functions
 
-The reciprocal map $t \mapsto 1/t$ is itself only Lipschitz (hence uniformly continuous) away from $0$ — precisely the obstruction seen with $f(x)=1/x$ near $0$ in Lecture 18. The theorem below shows that composing with a uniformly continuous $f$ bounded away from $0$ avoids this obstruction entirely.
+The reciprocal map $t \mapsto 1/t$ is itself only [[Lipschitz Function|Lipschitz]] (hence uniformly continuous) away from $0$ — precisely the obstruction seen with $f(x)=1/x$ near $0$ in Lecture 18. The theorem below shows that composing with a uniformly continuous $f$ bounded away from $0$ avoids this obstruction entirely.
 
 > [!thm] Reciprocal of a Uniformly Continuous Function
 > Let $f$ be uniformly continuous on $A \subseteq \mathbb{R}$, and suppose there exists $k > 0$ such that $|f(x)| \ge k$ for all $x \in A$. Then $g(x) := \dfrac{1}{f(x)}$ is uniformly continuous on $A$.

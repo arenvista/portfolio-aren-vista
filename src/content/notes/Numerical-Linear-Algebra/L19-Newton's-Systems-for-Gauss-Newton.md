@@ -1,6 +1,6 @@
 ---
 id: L19u
-aliases: []
+aliases: ["Gauss–Newton", "Gauss-Newton", "Nonlinear Least Squares", "Newton's Method for Systems"]
 tags: []
 ---
 # Newton's Method for Systems, Vector Calculus, and Gauss–Newton
@@ -23,7 +23,7 @@ $$DF(\vec x_k)\,\Delta\vec x = -F(\vec x_k), \qquad \vec x_{k+1} = \vec x_k+\Del
 
 ## Local Convergence Theorem
 
-The scalar convergence theorem from the previous chapter — quadratic convergence near a simple root — has a direct multivariable analogue, with "$f'(r)\neq0$" replaced by the natural vector condition: the Jacobian at the root must be invertible.
+The scalar convergence theorem from the previous chapter — [[Quadratic Convergence|quadratic convergence]] near a simple root — has a direct multivariable analogue, with "$f'(r)\neq0$" replaced by the natural vector condition: the [[Jacobian]] at the root must be invertible.
 
 > [!thm] Newton's method — local convergence
 > Let $F\in C^1(D)$ on a bounded, closed, convex set $D\subset\mathbb{R}^n$. Suppose $\vec x^*\in D$ satisfies $F(\vec x^*)=\vec0$ and $\det(DF(\vec x^*))\neq0$. Then there exists $\varepsilon>0$ such that whenever $\|\vec x_0-\vec x^*\|<\varepsilon$, the iterates
@@ -117,7 +117,7 @@ Two product rules will be needed shortly, both direct generalizations of the fam
 
 ## Nonlinear Least Squares and Gauss–Newton
 
-Recall the linear least-squares problem from much earlier in this course: given an overdetermined $A\vec x\approx\vec b$, find $\bar{\vec x}$ minimizing $\|\vec b-A\vec x\|_2$, solvable via the normal equations, QR, or SVD. What if the residual isn't linear in $\vec x$ at all?
+Recall the linear [[Least Squares|least-squares problem]] from much earlier in this course: given an [[Overdetermined System|overdetermined]] $A\vec x\approx\vec b$, find $\bar{\vec x}$ minimizing $\|\vec b-A\vec x\|_2$, solvable via the [[Normal Equations|normal equations]], [[QR Factorization|QR]], or [[Singular Value Decomposition|SVD]]. What if the residual isn't linear in $\vec x$ at all?
 
 > [!def] Nonlinear least squares setup
 > Given residual functions $r_1(\vec x),\dots,r_m(\vec x)$, collect them as $\vec r(\vec x) = \begin{bmatrix}r_1(\vec x)\\\vdots\\r_m(\vec x)\end{bmatrix}$, and minimize

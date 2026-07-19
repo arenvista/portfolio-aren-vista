@@ -1,6 +1,6 @@
 ---
 id: L03
-aliases: []
+aliases: ["LU Factorization", "Permutation Matrix", "Permutation Matrices", "Partial Pivoting", "Pivoting", "Kronecker Delta"]
 tags: []
 ---
 

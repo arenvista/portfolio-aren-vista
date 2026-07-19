@@ -1,6 +1,6 @@
 ---
 id: L09
-aliases: []
+aliases: ["Subsequence", "Subsequences", "Divergence Criteria"]
 tags: []
 ---
 # Subsequences and Their Role in Convergence and Divergence
@@ -60,7 +60,7 @@ The corollary above asserted that a "bad" subsequence exists when $x_n \not\to L
 
 ## Boundedness and Unboundedness
 
-Before applying these ideas to divergence, we restate boundedness from the previous lecture and give its natural negation, phrased in a form that will feed directly into the construction below.
+Before applying these ideas to divergence, we restate [[Bounded Sequence|boundedness]] from the previous lecture and give its natural negation, phrased in a form that will feed directly into the construction below.
 
 > [!def] Bounded and Unbounded Sequences
 > - **Bounded:** $X$ is bounded if there exists $M > 0$ such that $|x_n| \le M$ for all $n \in \mathbb{N}$.

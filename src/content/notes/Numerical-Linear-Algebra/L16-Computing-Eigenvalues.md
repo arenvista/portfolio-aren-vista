@@ -1,13 +1,13 @@
 ---
 id: L16
-aliases: []
+aliases: ["Power Method", "Subspace Iteration", "Shifted Inverse Iteration", "Rayleigh Quotient", "Rayleigh Quotient Iteration", "QR Algorithm", "Hessenberg Matrix"]
 tags: []
 ---
 # Computing Eigenvalues: Iterative Methods and the QR Algorithm
 
-The last few chapters treated eigenvalues and eigenvectors as objects that simply *exist*, guaranteed by theorems like the spectral theorem and Schur factorization. This chapter asks the practical question those theorems sidestepped: given an actual matrix, how do you actually *find* its eigenvalues? Recall from the discussion of computing eigenvalues a few chapters back that root-finding on the characteristic polynomial is both theoretically limited (no closed form for $n\ge5$, by Abel–Ruffini) and numerically unstable. Every method in this chapter avoids the characteristic polynomial entirely, working instead through repeated matrix multiplication or repeated linear solves.
+The last few chapters treated [[Eigenvalues|eigenvalues and eigenvectors]] as objects that simply *exist*, guaranteed by theorems like the [[Spectral Theorem|spectral theorem]] and [[Schur Factorization|Schur factorization]]. This chapter asks the practical question those theorems sidestepped: given an actual matrix, how do you actually *find* its eigenvalues? Recall from the discussion of computing eigenvalues a few chapters back that root-finding on the [[Characteristic Polynomial|characteristic polynomial]] is both theoretically limited (no closed form for $n\ge5$, by Abel–Ruffini) and numerically unstable. Every method in this chapter avoids the characteristic polynomial entirely, working instead through repeated matrix multiplication or repeated linear solves.
 
-We build up four iterative methods in order of increasing sophistication — each fixing a specific limitation of the one before — and then show how their common ancestor, repeated QR factorization, scales up into the algorithm actually used to compute the full spectrum of a dense matrix.
+We build up four iterative methods in order of increasing sophistication — each fixing a specific limitation of the one before — and then show how their common ancestor, repeated [[QR Factorization|QR factorization]], scales up into the algorithm actually used to compute the full spectrum of a dense matrix.
 
 > [!note] Overview
 > These methods target different parts of a matrix's spectrum:

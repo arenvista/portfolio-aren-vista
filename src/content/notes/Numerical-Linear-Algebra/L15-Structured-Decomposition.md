@@ -1,11 +1,11 @@
 ---
 id: L15
-aliases: []
+aliases: ["Diagonalization", "Schur Factorization", "Real Schur Factorization", "Unitary Matrix", "Hermitian Matrix", "Normal Matrix", "Symmetric Positive Definite", "SPD", "SPSD"]
 tags: []
 ---
 # Structured Decompositions: Diagonalization, Schur Factorization, and the SVD Revisited
 
-The previous chapter established the basic vocabulary of eigenvalues — algebraic vs. geometric multiplicity, diagonalizability, similarity. This chapter asks a more refined question: given that structure, what extra guarantees does a matrix get if it belongs to a special class (symmetric, positive definite, unitary, normal)? And what can we fall back on when a matrix *isn't* diagonalizable at all? The answer to the second question — Schur factorization — turns out to be a genuinely new tool: a decomposition that exists for *every* square matrix, no exceptions, making it the natural complement to the SVD's guarantee that *every* rectangular matrix factors nicely too. We close by watching the SVD get built by hand, tying the abstract $A^TA/AA^T$ machinery to concrete numbers.
+The previous chapter established the basic vocabulary of [[Eigenvalues|eigenvalues]] — algebraic vs. geometric multiplicity, diagonalizability, similarity. This chapter asks a more refined question: given that structure, what extra guarantees does a matrix get if it belongs to a special class (symmetric, positive definite, unitary, normal)? And what can we fall back on when a matrix *isn't* diagonalizable at all? The answer to the second question — Schur factorization — turns out to be a genuinely new tool: a decomposition that exists for *every* square matrix, no exceptions, making it the natural complement to the [[Singular Value Decomposition|SVD]]'s guarantee that *every* rectangular matrix factors nicely too. We close by watching the SVD get built by hand, tying the abstract $A^TA/AA^T$ machinery to concrete numbers.
 
 ## Diagonalization: General Form, Revisited
 
@@ -78,7 +78,7 @@ The guarantee here is strictly stronger than diagonalization's: it works for *ev
 
 ### Real Schur factorization
 
-If $A$ is real, we'd like to stay in real arithmetic throughout — but a real matrix can still have complex eigenvalues (recall the conjugate-pair property from the previous chapter). A complex number simply cannot sit as a single entry on the diagonal of a *real* triangular matrix, so the real version of Schur's theorem has to compromise.
+If $A$ is real, we'd like to stay in real arithmetic throughout — but a real matrix can still have complex eigenvalues (recall the [[Eigenvalues|conjugate-pair property]] from the previous chapter). A complex number simply cannot sit as a single entry on the diagonal of a *real* triangular matrix, so the real version of Schur's theorem has to compromise.
 
 > [!thm] Real Schur factorization
 > For every $A\in\mathbb{R}^{n\times n}$, there exists an orthogonal $Q$ such that
@@ -142,7 +142,7 @@ The derivation above is also a recipe. Two equivalent starting points:
 **Starting from $AA^T$:** solve $AA^Tu_i = \sigma_i^2u_i$, take the orthonormal eigenvectors as the columns of $U$, then for each $\sigma_i>0$ recover $v_i = A^Tu_i/\sigma_i$.
 
 > [!important] When $\sigma_i=0$
-> Neither recovery formula works when $\sigma_i=0$ — division by zero. In that case, simply fill in the remaining columns of $U$ or $V$ with any orthonormal basis for the appropriate null space (recall from the SVD chapters that these directions correspond exactly to $\operatorname{Null}(A)$ or $\operatorname{Null}(A^T)$, so any orthonormal completion is valid).
+> Neither recovery formula works when $\sigma_i=0$ — division by zero. In that case, simply fill in the remaining columns of $U$ or $V$ with any orthonormal basis for the appropriate null space (recall from the SVD chapters that these directions correspond exactly to [[Null Space|$\operatorname{Null}(A)$]] or $\operatorname{Null}(A^T)$, so any orthonormal completion is valid).
 
 ## Worked Example: Computing an SVD by Hand
 

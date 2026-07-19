@@ -1,12 +1,12 @@
 ---
 id: L10
-aliases: []
+aliases: ["Numerical Stability", "Conditioning", "Least Squares via QR"]
 tags: []
 ---
 
 # Least Squares via QR Factorization (Wrap-up)
 
-Recall from previous notes that solving the least squares problem $\min \|Ax-b\|_2$ using the Normal Equations ($A^TAx = A^Tb$) can be numerically unstable. Using the QR factorization ($A = QR$) provides a more stable approach.
+Recall from previous notes that solving the [[Least Squares|least squares problem]] $\min \|Ax-b\|_2$ using the [[Normal Equations]] ($A^TAx = A^Tb$) can be numerically unstable. Using the [[QR Factorization|QR factorization]] ($A = QR$) provides a more stable approach.
 
 Let $A \in \mathbb{R}^{m \times n}$ with $m \ge n$. Suppose $A$ has full column rank $n$ and admits a (thin) QR factorization
 

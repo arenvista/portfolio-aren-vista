@@ -1,13 +1,13 @@
 ---
 id: L02
-aliases: []
+aliases: ["Countability", "Countable Set", "Countable", "Denumerable", "Field Axioms", "Irrationality of √2"]
 tags: []
 ---
 # Countability, the Real Numbers, and Order
 
 ## Countable Sets
 
-Having established what it means for a set to be finite (Lecture 1), we now extend the classification scheme to infinite sets, distinguishing those infinite sets that can still be "listed" from those that cannot.
+Having established what it means for a set to be [[Finite and Infinite Sets|finite]] (Lecture 1), we now extend the classification scheme to infinite sets, distinguishing those infinite sets that can still be "listed" from those that cannot.
 
 > [!def] Finite Set ($n$ elements)
 > A set $S$ is said to have $n$ elements if there exists a bijection $\{1,2,\dots,n\} \to S$.

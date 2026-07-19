@@ -1,6 +1,6 @@
 ---
 id: L01
-aliases: []
+aliases: ["Vectors", "Vector Space", "Dot Product", "Vector Norm", "Orthonormal Vectors", "Orthonormality", "Column Space", "Rank"]
 tags: []
 ---
 # Vectors, Vector Operations, and the Column Space of a Matrix

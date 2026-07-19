@@ -1,6 +1,6 @@
 ---
 id: L12
-aliases: []
+aliases: ["Cauchy Sequence", "Cauchy Criterion", "Cauchy Convergence Criterion", "Contractive Sequence"]
 tags: []
 ---
 # The Cauchy Criterion
@@ -114,7 +114,7 @@ The forward direction is a routine application of the triangle inequality, split
 > $$
 > Hence $(x_n)$ is Cauchy.
 
-The converse is the harder direction, and it is where the machinery from earlier lectures pays off: boundedness (Lecture 7), Bolzano–Weierstrass (Lecture 10), and the triangle inequality all combine in a three-step argument.
+The converse is the harder direction, and it is where the machinery from earlier lectures pays off: [[Bounded Sequence|boundedness]] (Lecture 7), [[Bolzano–Weierstrass Theorem|Bolzano–Weierstrass]] (Lecture 10), and the triangle inequality all combine in a three-step argument.
 
 > [!pf] ($\Leftarrow$) Cauchy Implies Convergent
 > **Step 1: $(x_n)$ is bounded.** Since $(x_n)$ is Cauchy, take $\epsilon = 1$: there exists $h_1$ such that $|x_n - x_m| < 1$ for all $m,n \ge h_1$. In particular, fixing $m = h_1$, we get $|x_n - x_{h_1}| < 1$ for all $n \ge h_1$. By the triangle inequality,

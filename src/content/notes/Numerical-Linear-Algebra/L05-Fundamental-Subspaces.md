@@ -1,11 +1,11 @@
 ---
 id: L05
-aliases: []
+aliases: ["Four Fundamental Subspaces", "Fundamental Subspaces", "Null Space", "Row Space", "Left Null Space", "Orthogonal Complement", "Direct Sum"]
 tags: []
 ---
 # Parametric Solutions and the Four Fundamental Subspaces
 
-The previous chapter introduced the column space as the first example of a subspace naturally attached to a matrix, and showed that its dimension — the rank — falls straight out of counting pivots in echelon form. This chapter finishes that story. We first show how the *free variables* left over after row reduction parametrize the full solution set of $Ax=b$, for both the homogeneous case ($b=\vec 0$) and the general case. That machinery then lets us define all **four** fundamental subspaces of a matrix — column space, row space, null space, and left null space — and, in the second half of the chapter, uncover a striking fact about them: they come in two orthogonal pairs.
+The previous chapter introduced the [[Column Space|column space]] as the first example of a subspace naturally attached to a matrix, and showed that its dimension — the [[Rank|rank]] — falls straight out of counting pivots in echelon form. This chapter finishes that story. We first show how the *free variables* left over after row reduction parametrize the full solution set of $Ax=b$, for both the homogeneous case ($b=\vec 0$) and the general case. That machinery then lets us define all **four** fundamental subspaces of a matrix — column space, row space, null space, and left null space — and, in the second half of the chapter, uncover a striking fact about them: they come in two orthogonal pairs.
 
 ## Echelon Form and Parametric Solutions
 

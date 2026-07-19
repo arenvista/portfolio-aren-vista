@@ -1,12 +1,12 @@
 ---
 id: L04
-aliases: []
+aliases: ["Cholesky Factorization", "Positive Definite", "Symmetric Matrix", "Block Matrices", "Schur Complement"]
 tags: []
 ---
 
 # Cholesky Factorization, Block Matrices, and Fundamental Subspaces
 
-So far every factorization we've built — $LU$, and its pivoted cousin $PA=LU$ — has worked on general square matrices, with no assumptions beyond invertibility. Many matrices that show up in practice, however, carry extra structure worth exploiting: they are symmetric, and every quadratic form they define is strictly positive. Such matrices arise constantly in applications (covariance matrices, for instance, always have this shape), and they admit a factorization that is both simpler and cheaper than general $LU$: the Cholesky factorization. To understand and manipulate factorizations like this one, it also helps to have a language for working with matrices in *blocks* rather than individual entries — a tool we develop in the second half of this chapter and immediately put to use inverting block matrices via the Schur complement. We then step back from square, invertible matrices altogether and ask what happens when $A$ isn't square at all, which leads us to the first of four fundamental subspaces associated with any matrix: the column space.
+So far every factorization we've built — [[LU Factorization|$LU$]], and its pivoted cousin $PA=LU$ — has worked on general square matrices, with no assumptions beyond invertibility. Many matrices that show up in practice, however, carry extra structure worth exploiting: they are symmetric, and every quadratic form they define is strictly positive. Such matrices arise constantly in applications (covariance matrices, for instance, always have this shape), and they admit a factorization that is both simpler and cheaper than general $LU$: the Cholesky factorization. To understand and manipulate factorizations like this one, it also helps to have a language for working with matrices in *blocks* rather than individual entries — a tool we develop in the second half of this chapter and immediately put to use inverting block matrices via the Schur complement. We then step back from square, invertible matrices altogether and ask what happens when $A$ isn't square at all, which leads us to the first of [[Four Fundamental Subspaces|four fundamental subspaces]] associated with any matrix: the [[Column Space|column space]].
 
 ## Cholesky Factorization
 
@@ -179,7 +179,7 @@ Every matrix has four subspaces naturally associated with it, each capturing a d
 
 ### Column Space
 
-Recall from an earlier chapter that $\text{Col}(A)$ is the set of all linear combinations of $A$'s columns — equivalently, the set of all vectors $b$ for which $Ax = b$ has a solution. To find a *basis* for $\text{Col}(A)$ in practice, we row-reduce $A$ to echelon form and read off which columns end up containing pivots.
+Recall from an earlier chapter that [[Column Space|$\text{Col}(A)$]] is the set of all linear combinations of $A$'s columns — equivalently, the set of all vectors $b$ for which $Ax = b$ has a solution. To find a *basis* for $\text{Col}(A)$ in practice, we row-reduce $A$ to echelon form and read off which columns end up containing pivots.
 
 > [!def] Column Space
 > Consider the matrix

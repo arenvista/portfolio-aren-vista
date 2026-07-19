@@ -1,13 +1,13 @@
 ---
 id: L10
-aliases: []
+aliases: ["Bolzano–Weierstrass Theorem", "Bolzano-Weierstrass", "Limit Superior", "Limit Inferior", "limsup", "liminf"]
 tags: []
 ---
 # The Bolzano–Weierstrass Theorem and Limit Superior/Inferior
 
 ## The Bolzano–Weierstrass Theorem
 
-Lecture 9 showed that convergent sequences pass every property down to their subsequences, and that unbounded sequences necessarily diverge. A natural question remains: does *every* bounded sequence — even one that itself diverges, like $((-1)^n)$ — still contain some convergent subsequence hiding inside it? The Bolzano–Weierstrass theorem answers yes, using the Nested Intervals Property from Lecture 6 as its engine.
+Lecture 9 showed that convergent sequences pass every property down to their [[Subsequence|subsequences]], and that unbounded sequences necessarily diverge. A natural question remains: does *every* bounded sequence — even one that itself diverges, like $((-1)^n)$ — still contain some convergent subsequence hiding inside it? The Bolzano–Weierstrass theorem answers yes, using the [[Nested Intervals Property]] from Lecture 6 as its engine.
 
 > [!thm] Bolzano–Weierstrass Theorem
 > Every bounded sequence in $\mathbb{R}$ has a convergent subsequence.

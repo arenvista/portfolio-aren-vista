@@ -5,11 +5,11 @@ tags: []
 ---
 # Review: Limsup/Liminf, p-Series, Iterative Sequences, and Subsequences
 
-This lecture consolidates several threads from earlier material — limsup/liminf (Lecture 11), the p-series test and Cauchy criterion (Lectures 12–13), monotone and contractive convergence (Lecture 8, 12), and subsequences (Lecture 9) — through a set of worked examples in preparation for the quiz.
+This lecture consolidates several threads from earlier material — [[Limit Superior|limsup/liminf]] (Lecture 11), the [[p-Series|p-series test]] and [[Cauchy Criterion|Cauchy criterion]] (Lectures 12–13), [[Monotone Convergence Theorem|monotone]] and [[Contractive Sequence|contractive]] convergence (Lecture 8, 12), and [[Subsequence|subsequences]] (Lecture 9) — through a set of worked examples in preparation for the quiz.
 
 ## Limsup/Liminf: Definitions and Basic Inequalities
 
-We first recall the tail-based characterization of $\limsup$ and $\liminf$ from Lecture 11, since the remaining results in this section build directly on it.
+We first recall the tail-based characterization of [[Limit Superior|$\limsup$ and $\liminf$]] from Lecture 11, since the remaining results in this section build directly on it.
 
 > [!def] Limsup and Liminf via Tails
 > Let $(x_n)$ be a real sequence and define the tail suprema and infima by

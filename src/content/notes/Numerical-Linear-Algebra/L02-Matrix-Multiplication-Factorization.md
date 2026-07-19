@@ -1,11 +1,11 @@
 ---
 id: L02
-aliases: []
+aliases: ["Matrix Multiplication", "Matrix–Vector Multiplication", "CR Factorization", "Invertible Matrix Theorem", "Solving Linear Systems"]
 tags: []
 ---
 # Matrix Multiplication, Factorization, and Solving Linear Systems
 
-In the previous chapter we treated $Ax$ as a linear combination of the columns of $A$. That single idea is the seed from which almost everything in this chapter grows. We first extend it from *matrix times vector* to *matrix times matrix*, viewing the result in two complementary ways — as a collection of inner products and as a sum of outer products. That second view turns out to be more than a curiosity: it hands us the key insight behind our first true matrix factorization, the CR factorization, which expresses any matrix in terms of its independent columns. From there we introduce the LU factorization, a tool purpose-built for solving $Ax = b$ efficiently, and close by formalizing what it means for a matrix to be invertible and how that concept relates back to solving linear systems in practice.
+In the previous chapter we treated $Ax$ as a [[Column Space|linear combination of the columns]] of $A$. That single idea is the seed from which almost everything in this chapter grows. We first extend it from *matrix times vector* to *matrix times matrix*, viewing the result in two complementary ways — as a collection of inner products and as a sum of outer products. That second view turns out to be more than a curiosity: it hands us the key insight behind our first true matrix factorization, the CR factorization, which expresses any matrix in terms of its independent columns. From there we introduce the [[LU Factorization|LU factorization]], a tool purpose-built for solving $Ax = b$ efficiently, and close by formalizing what it means for a matrix to be invertible and how that concept relates back to solving linear systems in practice.
 
 ## Matrix–Vector Multiplication
 
