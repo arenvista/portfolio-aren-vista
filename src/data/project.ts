@@ -5,7 +5,7 @@ export interface Project {
     year: string;
     tags: string[];
     /** Where the frame / title link goes: case study, live site, or repo. */
-    href: "/projects/";
+    href: string;
     repo?: string;
     featured?: boolean;
     /** Appears in the scroll-driven work showcase. */
