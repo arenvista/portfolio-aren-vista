@@ -1,0 +1,109 @@
+---
+import 'katex/dist/katex.min.css';
+import '@/styles/global.css';
+import '@/styles/notes.css';
+import CustomCursor from '@/components/CustomCursor.astro';
+import NotesSidebar from '@/components/NotesSidebar.astro';
+import { getTopics } from '@/lib/notes.mjs';
+
+interface Props {
+  title: string;
+  description?: string;
+  activeSlug?: string;
+  hasTikz?: boolean;
+}
+
+const {
+  title,
+  description = 'Lecture notes in numerical linear algebra and real analysis, rewritten as one book.',
+  activeSlug,
+  hasTikz = false,
+} = Astro.props;
+
+const topics = getTopics();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#faf3e6" />
+
+    <meta property="og:title" content={`${title} · Notes`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="article" />
+    <meta name="twitter:card" content="summary" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    {hasTikz && <link rel="stylesheet" href="/tikzjax-fonts.css" />}
+
+    <title>{title} · Notes</title>
+  </head>
+  <body class="notes-body">
+    <CustomCursor />
+
+    <button type="button" class="notes-menu-toggle" data-notes-toggle aria-label="Open notes menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <div class="notes-shell">
+      <NotesSidebar topics={topics} activeSlug={activeSlug} />
+      <div class="notes-scrim" data-notes-scrim aria-hidden="true"></div>
+      <main class="notes-main">
+        <slot />
+      </main>
+    </div>
+
+    {hasTikz && <script src="/tikzjax.js" is:inline></script>}
+
+    <script>
+      // Foldable callouts (`> [!type]-` / `+`).
+      document.querySelectorAll('.callout.is-foldable > .callout-title').forEach((title) => {
+        title.addEventListener('click', () => {
+          title.parentElement?.classList.toggle('is-collapsed');
+        });
+      });
+
+      // Sidebar filter.
+      const filter = document.querySelector<HTMLInputElement>('[data-notes-filter]');
+      const items = Array.from(document.querySelectorAll<HTMLElement>('[data-note-item]'));
+      const topicsEls = Array.from(document.querySelectorAll<HTMLElement>('[data-topic]'));
+      filter?.addEventListener('input', () => {
+        const q = filter.value.trim().toLowerCase();
+        items.forEach((li) => {
+          const hay = li.getAttribute('data-note-search') || '';
+          li.style.display = !q || hay.includes(q) ? '' : 'none';
+        });
+        topicsEls.forEach((sec) => {
+          const anyVisible = Array.from(sec.querySelectorAll<HTMLElement>('[data-note-item]')).some(
+            (li) => li.style.display !== 'none'
+          );
+          sec.style.display = anyVisible ? '' : 'none';
+        });
+      });
+
+      // Mobile sidebar drawer.
+      const toggle = document.querySelector<HTMLButtonElement>('[data-notes-toggle]');
+      const shell = document.querySelector<HTMLElement>('.notes-shell');
+      const scrim = document.querySelector<HTMLElement>('[data-notes-scrim]');
+      const setOpen = (open: boolean) => {
+        shell?.classList.toggle('is-nav-open', open);
+        toggle?.setAttribute('aria-label', open ? 'Close notes menu' : 'Open notes menu');
+      };
+      toggle?.addEventListener('click', () => setOpen(!shell?.classList.contains('is-nav-open')));
+      scrim?.addEventListener('click', () => setOpen(false));
+      document
+        .querySelectorAll('.notes-sidebar a')
+        .forEach((a) => a.addEventListener('click', () => setOpen(false)));
+    </script>
+  </body>
+</html>

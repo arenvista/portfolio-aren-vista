@@ -1,0 +1,57 @@
+---
+interface NoteRef {
+  slug: string;
+  title: string;
+  id?: string | null;
+}
+interface Topic {
+  name: string;
+  label: string;
+  notes: NoteRef[];
+}
+interface Props {
+  topics: Topic[];
+  activeSlug?: string;
+}
+const { topics, activeSlug } = Astro.props;
+---
+
+<aside class="notes-sidebar" data-notes-sidebar>
+  <div class="notes-sidebar__head">
+    <a href="/" class="notes-sidebar__brand" data-cursor-hover>← Aren Vista</a>
+    <a href="/notes" class={`notes-sidebar__title${activeSlug ? '' : ' is-active'}`} data-cursor-hover>
+      Math-o-nomicon
+    </a>
+  </div>
+
+  <input
+    class="notes-search"
+    type="search"
+    placeholder="Filter notes…"
+    aria-label="Filter notes"
+    data-notes-filter
+    autocomplete="off"
+  />
+
+  <nav class="notes-nav" aria-label="Notes">
+    {topics.map((t) => (
+      <section class="notes-topic" data-topic>
+        <h2 class="notes-topic__label">{t.label}</h2>
+        <ul>
+          {t.notes.map((n) => (
+            <li data-note-item data-note-search={`${n.title} ${n.id ?? ''}`.toLowerCase()}>
+              <a
+                href={`/notes/${n.slug}`}
+                class={`notes-link${activeSlug === n.slug ? ' is-active' : ''}`}
+                data-cursor-hover
+              >
+                <span class="notes-link__num">{n.id ?? ''}</span>
+                <span class="notes-link__text">{n.title}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))}
+  </nav>
+</aside>

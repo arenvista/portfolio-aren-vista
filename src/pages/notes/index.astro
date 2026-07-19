@@ -1,0 +1,16 @@
+---
+import { getCollection } from 'astro:content';
+import NotesLayout from '@/layouts/NotesLayout.astro';
+
+const entries = await getCollection('notes');
+const index = entries.find((e) => e.id === 'index.md' || e.slug === 'index');
+if (!index) throw new Error('notes/index.md not found');
+const { Content } = await index.render();
+const hasTikz = index.body.includes('```tikz');
+---
+
+<NotesLayout title="Math-o-nomicon" hasTikz={hasTikz}>
+  <article class="note note--landing prose">
+    <Content />
+  </article>
+</NotesLayout>

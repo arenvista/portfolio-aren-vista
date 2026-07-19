@@ -1,0 +1,258 @@
+
+@keyframes mon-morph {
+
+  0%,
+  100% {
+    border-radius: 58% 42% 47% 53% / 48% 55% 45% 52%;
+  }
+
+  33% {
+    border-radius: 44% 56% 62% 38% / 57% 43% 57% 43%;
+  }
+
+  66% {
+    border-radius: 52% 48% 38% 62% / 43% 58% 42% 57%;
+  }
+}
+
+@keyframes mon-bob {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+
+  50% {
+    transform: translateY(-12px) rotate(2deg);
+  }
+}
+
+@keyframes mon-blink {
+
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+
+  95% {
+    transform: scaleY(0.1);
+  }
+}
+
+@keyframes mon-drift {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(10px, -14px);
+  }
+}
+
+@keyframes mon-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.hero-scene {
+  position: relative;
+  height: 300px;
+  margin: 0 0 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+
+  .blob {
+    position: absolute;
+    animation: mon-morph 12s ease-in-out infinite;
+  }
+
+  .blob-main {
+    width: 150px;
+    height: 140px;
+    background: #c97b5a;
+    z-index: 2;
+    animation:
+      mon-morph 12s ease-in-out infinite,
+      mon-bob 6s ease-in-out infinite;
+  }
+
+  .blob-rose {
+    width: 96px;
+    height: 92px;
+    background: #d9909b;
+    left: calc(50% - 130px);
+    top: 52px;
+    opacity: 0.9;
+  }
+
+  .blob-teal {
+    width: 78px;
+    height: 74px;
+    background: #5da8a0;
+    right: calc(50% - 138px);
+    bottom: 46px;
+    opacity: 0.9;
+  }
+
+  .eye {
+    position: absolute;
+    width: 14px;
+    height: 16px;
+    top: 52px;
+    background: #3b2a22;
+    border-radius: 50%;
+    animation: mon-blink 5s infinite;
+
+    &.eye-l {
+      left: 44px;
+    }
+
+    &.eye-r {
+      right: 44px;
+    }
+  }
+
+  .cheek {
+    position: absolute;
+    width: 18px;
+    height: 11px;
+    top: 74px;
+    background: #e8a08e;
+    border-radius: 50%;
+    opacity: 0.75;
+
+    &.cheek-l {
+      left: 30px;
+    }
+
+    &.cheek-r {
+      right: 30px;
+    }
+  }
+
+  .smile {
+    position: absolute;
+    left: 50%;
+    top: 70px;
+    width: 26px;
+    height: 14px;
+    margin-left: -13px;
+    border: 2.5px solid #3b2a22;
+    border-top: none;
+    border-radius: 0 0 26px 26px;
+  }
+
+  .mini {
+    position: absolute;
+    font-size: 20px;
+    color: #8c6a55;
+    animation: mon-drift 7s ease-in-out infinite;
+
+    &.mini-nabla {
+      left: calc(50% - 168px);
+      top: 26px;
+    }
+
+    &.mini-lambda {
+      right: calc(50% - 176px);
+      top: 60px;
+      animation-delay: -2.5s;
+    }
+
+    &.mini-perp {
+      left: calc(50% - 96px);
+      bottom: 24px;
+      animation-delay: -4s;
+    }
+  }
+
+  .badge-spin {
+    position: absolute;
+    right: calc(50% - 250px);
+    top: 24px;
+    width: 118px;
+    height: 118px;
+    animation: mon-spin 22s linear infinite;
+
+    text {
+      font-size: 9.2px;
+      letter-spacing: 0.14em;
+      fill: #8c6a55;
+      text-transform: uppercase;
+    }
+  }
+
+  .badge-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    animation: mon-spin 22s linear infinite reverse;
+  }
+}
+
+// Lift the clay slightly against the dark page so it doesn't go muddy
+:root[saved-theme="dark"] .hero-scene {
+  .blob-main {
+    background: #d98a66;
+  }
+
+  .blob-rose {
+    background: #e09aa5;
+  }
+
+  .blob-teal {
+    background: #6bbcb3;
+  }
+
+  .mini {
+    color: #b08c73;
+  }
+
+  .badge-spin text {
+    fill: #b08c73;
+  }
+}
+
+// Narrow screens: the side blobs and badge fall outside the column
+@media all and (max-width: 800px) {
+  .hero-scene {
+    height: 220px;
+
+    .badge-spin,
+    .badge-center,
+    .mini {
+      display: none;
+    }
+
+    .blob-rose {
+      left: calc(50% - 110px);
+    }
+
+    .blob-teal {
+      right: calc(50% - 116px);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-scene {
+
+    .blob,
+    .blob-main,
+    .eye,
+    .mini,
+    .badge-spin,
+    .badge-center {
+      animation: none;
+    }
+  }
+}

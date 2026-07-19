@@ -1,0 +1,74 @@
+---
+import { getCollection } from 'astro:content';
+import NotesLayout from '@/layouts/NotesLayout.astro';
+import { getFlatNotes } from '@/lib/notes.mjs';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('notes');
+  const flat = getFlatNotes();
+
+  return entries
+    .filter((e) => e.id !== 'index.md')
+    .map((entry) => {
+      // Canonical slug is the relative path minus extension — the same string
+      // notes.mjs uses for sidebar links and wikilink targets.
+      const slug = entry.id.replace(/\.md$/, '');
+      const pos = flat.findIndex((n) => n.slug === slug);
+      const meta = pos >= 0 ? flat[pos] : null;
+      const prev = pos > 0 ? flat[pos - 1] : null;
+      const next = pos >= 0 && pos < flat.length - 1 ? flat[pos + 1] : null;
+      return { params: { slug }, props: { entry, meta, prev, next } };
+    });
+}
+
+const { entry, meta, prev, next } = Astro.props;
+const { Content, headings } = await entry.render();
+
+const slug = entry.id.replace(/\.md$/, '');
+const title = meta?.title ?? entry.data.title ?? slug;
+const topicLabel = meta?.topicLabel ?? '';
+const hasTikz = entry.body.includes('```tikz');
+
+const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+
+<NotesLayout title={title} activeSlug={slug} hasTikz={hasTikz}>
+  <article class="note prose" data-note>
+    <header class="note__head">
+      {topicLabel && <p class="note__topic">{topicLabel}</p>}
+      <h1 class="note__title">{title}</h1>
+    </header>
+
+    <Content />
+
+    <nav class="note__pager" aria-label="Note navigation">
+      {prev ? (
+        <a class="note__pager-link note__pager-prev" href={`/notes/${prev.slug}`} data-cursor-hover>
+          <span class="note__pager-dir">← Previous</span>
+          <span class="note__pager-name">{prev.title}</span>
+        </a>
+      ) : (
+        <span />
+      )}
+      {next && (
+        <a class="note__pager-link note__pager-next" href={`/notes/${next.slug}`} data-cursor-hover>
+          <span class="note__pager-dir">Next →</span>
+          <span class="note__pager-name">{next.title}</span>
+        </a>
+      )}
+    </nav>
+  </article>
+
+  {toc.length > 0 && (
+    <aside class="note-toc" aria-label="On this page">
+      <p class="note-toc__label">On this page</p>
+      <ul>
+        {toc.map((h) => (
+          <li class={`note-toc__item note-toc__item--h${h.depth}`}>
+            <a href={`#${h.slug}`} data-cursor-hover>{h.text}</a>
+          </li>
+        ))}
+      </ul>
+    </aside>
+  )}
+</NotesLayout>
