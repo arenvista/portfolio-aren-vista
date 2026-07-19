@@ -1,4 +1,5 @@
 ---
+import 'katex/dist/katex.min.css';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
 import Header from '@/components/Header.astro';
@@ -121,6 +122,12 @@ const formatter = new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeri
     display: flex;
     gap: 0.5rem;
   }
+
+.post__content :global(.katex-display) {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: 0.25rem;
+}
 
   .post__content {
     margin-top: 2.5rem;
