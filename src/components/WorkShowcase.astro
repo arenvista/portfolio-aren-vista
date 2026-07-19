@@ -32,24 +32,35 @@ const pad = (n: number) => String(n).padStart(2, '0');
             data-cursor-label="View"
             aria-label={`${project.title} — open project`}
           >
-            <div class="show-frame__media-wrap">
-              {project.video ? (
-                <video
-                  data-media
-                  class="show-frame__media"
-                  src={project.video}
-                  muted
-                  loop
-                  playsinline
-                  preload="metadata"
-                ></video>
-              ) : (
-                <canvas data-media data-preview={project.preview ?? 'boot'} class="show-frame__media"></canvas>
-              )}
-            </div>
-            <div class="show-frame__scrim" aria-hidden="true"></div>
+            {/* The plate is what the wipe reveals: media, scrim, and the
+               name/summary. The meta header (fig + tags) lives outside it so
+               the top-down wipe can't clip it — it cross-fades instead. */}
+            <div class="show-frame__plate" data-plate>
+              <div class="show-frame__media-wrap">
+                {project.video ? (
+                  <video
+                    data-media
+                    class="show-frame__media"
+                    src={project.video}
+                    muted
+                    loop
+                    playsinline
+                    preload="metadata"
+                  ></video>
+                ) : (
+                  <canvas data-media data-preview={project.preview ?? 'boot'} class="show-frame__media"></canvas>
+                )}
+              </div>
+              <div class="show-frame__scrim" aria-hidden="true"></div>
 
-            <header class="show-frame__meta">
+              <div class="show-frame__foot">
+                <h3 class="show-frame__name">{project.title}</h3>
+                <p class="show-frame__summary">{project.summary}</p>
+                <span class="show-frame__visit">Visit ↗</span>
+              </div>
+            </div>
+
+            <header class="show-frame__meta" data-meta>
               <span class="show-frame__fig">fig. {pad(i + 1)} — {project.year}</span>
               <ul class="show-frame__tags" aria-label="Technologies used">
                 {project.tags.map((tag) => (
@@ -57,12 +68,6 @@ const pad = (n: number) => String(n).padStart(2, '0');
                 ))}
               </ul>
             </header>
-
-            <div class="show-frame__foot">
-              <h3 class="show-frame__name">{project.title}</h3>
-              <p class="show-frame__summary">{project.summary}</p>
-              <span class="show-frame__visit">Visit ↗</span>
-            </div>
           </a>
         );
       })}
@@ -188,6 +193,17 @@ const pad = (n: number) => String(n).padStart(2, '0');
     text-decoration: none;
     color: var(--paper);
     visibility: hidden;
+    /* Own stacking context so a frame's z-indexed children (meta above the
+       dim, foot inside the plate) never leak across frames. */
+    isolation: isolate;
+  }
+
+  /* The wiped plate: media, scrim, and the name/summary. The wipe clip and
+     the recede transform live here, so the meta header — a sibling — is never
+     clipped. */
+  .show-frame__plate {
+    position: absolute;
+    inset: 0;
     will-change: clip-path, transform;
     transform-origin: center;
   }
@@ -259,7 +275,12 @@ const pad = (n: number) => String(n).padStart(2, '0');
 
   .show-frame__meta {
     position: absolute;
-    z-index: 2;
+    /* Above the recede dim (::before, z-index 3) so the meta fades on its own
+       opacity, driven by the scroller, rather than being dimmed with the
+       plate. */
+    z-index: 4;
+    opacity: 1;
+    will-change: opacity;
     top: clamp(1.75rem, 4vw, 3rem);
     left: clamp(1.75rem, 4vw, 3rem);
     right: clamp(1.75rem, 4vw, 3rem);

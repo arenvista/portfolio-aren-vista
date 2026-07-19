@@ -36,6 +36,12 @@ export function initShowcase(rootSelector: string): () => void {
   const N = frames.length;
   if (N === 0) return () => {};
 
+  // The plate is the wiped/receding layer (media + name/summary); the meta
+  // header sits outside it and cross-fades, so the top-down wipe can't clip
+  // the fig/tags.
+  const plates = frames.map((f) => f.querySelector<HTMLElement>('[data-plate]'));
+  const metas = frames.map((f) => f.querySelector<HTMLElement>('[data-meta]'));
+
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // Mount media controllers. A single scene that fails to mount must not
@@ -112,15 +118,21 @@ export function initShowcase(rootSelector: string): () => void {
 
     frames.forEach((frame, j) => {
       const media = frame.querySelector<HTMLElement>('[data-media]');
+      const plate = plates[j];
+      const meta = metas[j];
       if (j === i) {
         frame.style.visibility = 'visible';
         frame.style.zIndex = '1';
-        frame.style.clipPath = 'none';
+        if (plate) plate.style.clipPath = 'none';
         frame.style.setProperty('--edge', '0');
+        // Fade the meta out as this frame recedes (full at rest, gone as the
+        // next one takes over).
+        if (meta) meta.style.opacity = (1 - local).toFixed(3);
         if (!reduceMotion) {
           // Recede under the incoming frame: shrink slightly, drift up, dim.
-          frame.style.transform =
-            local > 0 ? `scale(${(1 - local * 0.05).toFixed(4)}) translateY(${(local * -2).toFixed(2)}%)` : '';
+          if (plate)
+            plate.style.transform =
+              local > 0 ? `scale(${(1 - local * 0.05).toFixed(4)}) translateY(${(local * -2).toFixed(2)}%)` : '';
           frame.style.setProperty('--dim', (local * 0.55).toFixed(3));
           if (media) {
             media.style.transform = `scale(1.06) translateY(${((f - 0.5) * 2.4).toFixed(2)}%)`;
@@ -129,20 +141,25 @@ export function initShowcase(rootSelector: string): () => void {
       } else if (j === i + 1) {
         frame.style.visibility = 'visible';
         frame.style.zIndex = '2';
-        frame.style.clipPath = `inset(${((1 - local) * 100).toFixed(3)}% 0 0 0)`;
-        frame.style.transform = '';
+        if (plate) {
+          plate.style.clipPath = `inset(${((1 - local) * 100).toFixed(3)}% 0 0 0)`;
+          plate.style.transform = '';
+        }
         frame.style.setProperty('--dim', '0');
         frame.style.setProperty('--wipe', `${((1 - local) * 100).toFixed(3)}%`);
         frame.style.setProperty('--edge', !reduceMotion && local > 0.001 && local < 0.995 ? '1' : '0');
+        // Fade the meta in as this frame wipes over the previous one.
+        if (meta) meta.style.opacity = local.toFixed(3);
         if (media && !reduceMotion) {
           media.style.transform = `scale(${(1.14 - local * 0.08).toFixed(4)}) translateY(${((1 - local) * 5).toFixed(2)}%)`;
         }
       } else {
         frame.style.visibility = 'hidden';
         frame.style.zIndex = '0';
-        frame.style.transform = '';
+        if (plate) plate.style.transform = '';
         frame.style.setProperty('--dim', '0');
         frame.style.setProperty('--edge', '0');
+        if (meta) meta.style.opacity = '0';
       }
     });
 
