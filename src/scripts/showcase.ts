@@ -139,7 +139,9 @@ export function initShowcase(rootSelector: string): () => void {
     if (shown !== lastShownIdx) {
       lastShownIdx = shown;
       dots.forEach((dot, d) => dot.classList.toggle('is-active', d === shown));
-      if (counterCol) counterCol.style.transform = `translateY(${shown * -100}%)`;
+      // The column stacks all N numbers, so a full -100% would scroll the
+      // whole strip out of the clip window. Each step is one number: -100%/N.
+      if (counterCol) counterCol.style.transform = `translateY(${(shown * -100) / N}%)`;
     }
 
     // Keep the active frame and the incoming one alive; rest paused.
