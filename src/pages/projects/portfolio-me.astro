@@ -1,0 +1,34 @@
+---
+import CaseStudy from '@/layouts/CaseStudy.astro';
+
+// PLACEHOLDER — stub page so the project card no longer links to a 404.
+// Everything below is drawn only from the card summary in src/data/projects.ts.
+// Replace the body with a real write-up (the canvas preview system, the build,
+// the AWS deploy) and drop the "Placeholder" status once it's filled in.
+---
+
+<CaseStudy
+	title="portfolio.me — case study"
+	description="This site — an Astro + TypeScript portfolio with live canvas work previews, hosted on AWS."
+	eyebrow="Case study — 2026"
+	heading="portfolio.me"
+	status="Write-up coming soon"
+	lede="The site you're on right now — built with Astro and TypeScript, with live canvas previews standing in for each project's footage, and hosted on AWS."
+	meta={[
+		{ label: 'Stack', value: 'Astro · TypeScript · AWS' },
+		{ label: 'Type', value: 'Personal site' },
+		{ label: 'Source', value: 'github.com/arenvista/portfolio', href: 'https://github.com/arenvista/portfolio' }
+	]}
+>
+	<section class="cs__section">
+		<h2>About</h2>
+		<p>
+			This portfolio, built with Astro and TypeScript. Each project's "footage" in the work
+			showcase is a live canvas scene rather than a video, and the whole thing is served as a
+			static build from AWS.
+		</p>
+		<p>
+			A full write-up is on the way. For now, the source is on GitHub.
+		</p>
+	</section>
+</CaseStudy>

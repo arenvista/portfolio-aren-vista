@@ -1,0 +1,33 @@
+---
+import CaseStudy from '@/layouts/CaseStudy.astro';
+
+// PLACEHOLDER — stub page so the project card no longer links to a 404.
+// Everything below is drawn only from the card summary in src/data/projects.ts.
+// Replace the body with a real write-up (move generation, board model, what
+// this first project taught you) and drop the "Placeholder" status once done.
+---
+
+<CaseStudy
+	title="ChessC++ — case study"
+	description="A command-line chess engine written in C++ with Ncurses."
+	eyebrow="Case study — 2025"
+	heading="ChessC++"
+	status="Write-up coming soon"
+	lede="A command-line chess engine in C++, drawn with Ncurses — and my first real exposure to programming."
+	meta={[
+		{ label: 'Stack', value: 'C++ · Ncurses' },
+		{ label: 'Type', value: 'Terminal game' },
+		{ label: 'Source', value: 'github.com/arenvista/chess', href: 'https://github.com/arenvista/chess' }
+	]}
+>
+	<section class="cs__section">
+		<h2>About</h2>
+		<p>
+			A chess engine that lives entirely in the terminal, with the board and pieces rendered
+			through Ncurses. It was the project that first got me into programming.
+		</p>
+		<p>
+			A full write-up is on the way. In the meantime the source is on GitHub.
+		</p>
+	</section>
+</CaseStudy>

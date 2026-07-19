@@ -1,0 +1,34 @@
+---
+import CaseStudy from '@/layouts/CaseStudy.astro';
+
+// PLACEHOLDER — stub page so the project card no longer links to a 404.
+// Everything below is drawn only from the card summary in src/data/projects.ts.
+// Replace the body with a real write-up (approach, rendering loop, what you
+// learned) and drop the "Placeholder" status once it's filled in.
+---
+
+<CaseStudy
+	title="Game of Life — case study"
+	description="Conway's Game of Life in C++ with Raylib — cellular automata rendered at 60fps."
+	eyebrow="Case study — 2025"
+	heading="Game of Life"
+	status="Write-up coming soon"
+	lede="Conway's Game of Life, implemented in C++ with Raylib — a grid of cells evolving under four rules, drawn every frame at 60fps."
+	meta={[
+		{ label: 'Stack', value: 'C++ · Raylib' },
+		{ label: 'Type', value: 'Cellular automaton' },
+		{ label: 'Source', value: 'github.com/arenvista/game_of_life', href: 'https://github.com/arenvista/game_of_life' }
+	]}
+>
+	<section class="cs__section">
+		<h2>About</h2>
+		<p>
+			A from-scratch take on Conway's Game of Life: an infinite-feeling grid where each cell
+			lives or dies each generation based only on its eight neighbours. Rendering runs through
+			Raylib at 60fps.
+		</p>
+		<p>
+			A full write-up is on the way. In the meantime the source is on GitHub.
+		</p>
+	</section>
+</CaseStudy>

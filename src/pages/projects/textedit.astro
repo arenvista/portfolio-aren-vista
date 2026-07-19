@@ -1,0 +1,33 @@
+---
+import CaseStudy from '@/layouts/CaseStudy.astro';
+
+// PLACEHOLDER — stub page so the project card no longer links to a 404.
+// Everything below is drawn only from the card summary in src/data/projects.ts.
+// Replace the body with a real write-up (buffer model, keybindings, rendering)
+// and drop the "Placeholder" status once it's filled in.
+---
+
+<CaseStudy
+	title="TextEdit — case study"
+	description="A terminal-based text editor written in C++ with Ncurses."
+	eyebrow="Case study — 2024"
+	heading="TextEdit"
+	status="Write-up coming soon"
+	lede="A terminal-based text editor built in C++ with Ncurses — editing text where it started, in the terminal."
+	meta={[
+		{ label: 'Stack', value: 'C++ · Ncurses' },
+		{ label: 'Type', value: 'Terminal editor' },
+		{ label: 'Source', value: 'github.com/arenvista/textedit', href: 'https://github.com/arenvista/textedit' }
+	]}
+>
+	<section class="cs__section">
+		<h2>About</h2>
+		<p>
+			A text editor that runs in the terminal, built in C++ on top of Ncurses for input and
+			screen drawing.
+		</p>
+		<p>
+			A full write-up is on the way. In the meantime the source is on GitHub.
+		</p>
+	</section>
+</CaseStudy>

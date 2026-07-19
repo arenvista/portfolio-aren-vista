@@ -138,7 +138,7 @@ export const projects: Project[] = [
             "This site — Astro + TypeScript with live canvas work previews, hosted on AWS.",
         year: "2026",
         tags: ["Astro", "TypeScript", "AWS"],
-        href: "/projects/",
+        href: "/projects/portfolio-me",
         repo: "https://github.com/arenvista/portfolio",
         featured: true,
         preview: "browser",
