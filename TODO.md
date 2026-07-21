@@ -1,0 +1,3 @@
+- [ ] Fix Navbar on Mobile
+- [ ] Move Quick Fix to Navbar
+- [ ] Fix Window Sizing of WorkShowcase component 
