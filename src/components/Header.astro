@@ -32,6 +32,11 @@ const icons: Record<string, string> = {
     </nav>
 
     <div class="site-header__end">
+      <button type="button" class="cp-trigger" data-cp-trigger data-cursor-hover aria-label="Open quick navigation">
+        <span class="cp-trigger__label">Quick Nav</span>
+        <span class="cp-trigger__kbd">⌘K</span>
+      </button>
+
       <div class="social-icon">
         {socials.map((social) => (
           <a href={social.href} target="_blank" rel="noopener noreferrer" aria-label={social.label} data-cursor-hover>
@@ -56,8 +61,11 @@ const icons: Record<string, string> = {
       </button>
     </div>
   </div>
+</header>
 
-  <div class="mobile-menu" id="mobile-menu" data-mobile-menu>
+<!-- Kept outside <header>: its backdrop-filter would otherwise become the
+     containing block for this fixed overlay, collapsing it to header height. -->
+<div class="mobile-menu" id="mobile-menu" data-mobile-menu>
     <nav aria-label="Mobile">
       <ul class="mobile-menu__list">
         {nav.map((item, i) => (
@@ -72,8 +80,7 @@ const icons: Record<string, string> = {
         <a href={social.href} target="_blank" rel="noopener noreferrer">{social.label} ↗</a>
       ))}
     </div>
-  </div>
-</header>
+</div>
 
 <script>
   import { initNavUnderline } from '@/scripts/navUnderline';
@@ -184,6 +191,40 @@ const icons: Record<string, string> = {
     display: flex;
     align-items: center;
     gap: 0.75rem;
+  }
+
+  /* Command palette trigger — sits in the header rather than floating. */
+  .cp-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 2.4rem;
+    padding-inline: 0.75rem;
+    background: none;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--fg-muted);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: border-color 0.25s ease, color 0.25s ease;
+  }
+
+  .cp-trigger:hover {
+    border-color: var(--teal);
+    color: var(--teal);
+  }
+
+  .cp-trigger__kbd {
+    padding: 0.15em 0.45em;
+    border: 1px solid var(--line-strong);
+    border-radius: 5px;
+    font-size: 0.65rem;
+    color: var(--fg-faint);
+  }
+
+  .cp-trigger:hover .cp-trigger__kbd {
+    border-color: currentColor;
   }
 
   .social-icon {
@@ -320,7 +361,8 @@ const icons: Record<string, string> = {
 
   @media (max-width: 720px) {
     .site-header__nav,
-    .social-icon {
+    .social-icon,
+    .cp-trigger {
       display: none;
     }
 
