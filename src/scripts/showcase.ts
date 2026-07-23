@@ -123,6 +123,10 @@ export function initShowcase(rootSelector: string): () => void {
       if (j === i) {
         frame.style.visibility = 'visible';
         frame.style.zIndex = '1';
+        // The incoming frame (i+1) overlays this one at full size with only its
+        // plate clipped away, so hand it the clicks once it's the perceived
+        // frame — otherwise its anchor swallows clicks meant for this one.
+        frame.style.pointerEvents = local > 0.5 ? 'none' : 'auto';
         if (plate) plate.style.clipPath = 'none';
         frame.style.setProperty('--edge', '0');
         // Fade the meta out as this frame recedes (full at rest, gone as the
@@ -141,6 +145,7 @@ export function initShowcase(rootSelector: string): () => void {
       } else if (j === i + 1) {
         frame.style.visibility = 'visible';
         frame.style.zIndex = '2';
+        frame.style.pointerEvents = local > 0.5 ? 'auto' : 'none';
         if (plate) {
           plate.style.clipPath = `inset(${((1 - local) * 100).toFixed(3)}% 0 0 0)`;
           plate.style.transform = '';
